@@ -1,0 +1,43 @@
+import Background from '@/components/Background'
+import Navbar from '@/components/Navbar'
+import Hero from '@/components/Hero'
+import Experience from '@/components/Experience'
+import Projects from '@/components/Projects'
+import Skills from '@/components/Skills'
+import Certifications from '@/components/Certifications'
+import CareerPath from '@/components/CareerPath'
+import Testimonials from '@/components/Testimonials'
+import Personality from '@/components/Personality'
+import GitHubRepos from '@/components/GitHubRepos'
+import Contact from '@/components/Contact'
+import Footer from '@/components/Footer'
+
+export default function Home() {
+  return (
+    <>
+      <Background />
+      <Navbar />
+      <main className="relative z-10 pt-16">
+        <Hero />
+        <Personality />
+        <hr className="section-divider" />
+        <Experience />
+        <hr className="section-divider" />
+        <Projects />
+        <hr className="section-divider" />
+        <Skills />
+        <hr className="section-divider" />
+        <Certifications />
+        <hr className="section-divider" />
+        <CareerPath />
+        <hr className="section-divider" />
+        <Testimonials />
+        <hr className="section-divider" />
+        <GitHubRepos />
+        <hr className="section-divider" />
+        <Contact />
+        <Footer />
+      </main>
+    </>
+  )
+}
