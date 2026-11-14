@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { Heart, Lightbulb, Compass, Leaf, Users, Brain } from 'lucide-react'
+import { Heart, Lightbulb, Compass, Leaf, Users, Brain, Quote } from 'lucide-react'
 import RevealWrapper from './RevealWrapper'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
@@ -96,6 +96,29 @@ export default function Personality() {
               </div>
             </div>
 
+          </div>
+        </div>
+      </RevealWrapper>
+
+      <RevealWrapper delay={140} className="mt-6">
+        <div className="glass-card p-8 relative overflow-hidden">
+          <div className="absolute top-3 right-6 font-display text-[8rem] font-extrabold gradient-text opacity-10 leading-none select-none pointer-events-none">
+            &ldquo;
+          </div>
+
+          <div className="flex items-start gap-5">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-600 to-blue-500 flex items-center justify-center shadow-[0_6px_16px_rgba(124,58,237,0.3)] shrink-0 icon-box">
+              <Quote size={16} className="text-white" strokeWidth={2} />
+            </div>
+            <div>
+              <div className="text-xs font-bold uppercase tracking-widest text-theme3 mb-3">
+                {T.philosophy.label[lang]}
+              </div>
+              <blockquote className="font-display font-semibold text-[1.05rem] text-theme leading-relaxed max-w-2xl">
+                {T.philosophy.quote[lang]}
+              </blockquote>
+              <div className="mt-3 text-sm text-theme2">{T.philosophy.quoteBy[lang]}</div>
+            </div>
           </div>
         </div>
       </RevealWrapper>

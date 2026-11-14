@@ -124,15 +124,6 @@ export const i18n = {
     },
     edLabel: { en: "Education", th: "การศึกษา" },
     langLabel: { en: "Languages", th: "ภาษา" },
-    philLabel: { en: "Personal Philosophy", th: "ปรัชญาส่วนตัว" },
-    quote: {
-      en: "\"I believe work isn't just about doing my part — it's about making a difference that truly improves the organization.\"",
-      th: '"ผมเชื่อว่างานที่ดีไม่ใช่แค่ทำหน้าที่ของตัวเอง แต่คือการสร้างความเปลี่ยนแปลงที่ทำให้องค์กรดีขึ้นอย่างแท้จริง"',
-    },
-    quoteBy: {
-      en: "— Ittikorn (Aof) Sopawan",
-      th: "— อิทธิกร (อ๊อฟ) โสภาวรรณ",
-    },
   },
   careerPath: {
     eyebrow: { en: "Vision", th: "วิสัยทัศน์" },
@@ -188,6 +179,17 @@ export const i18n = {
     desc: {
       en: 'INFPs are driven by deeply held values and a genuine desire to make a positive difference. As a Turbulent Mediator, I bring thoughtfulness, creativity, and strong empathy to every team and project — always seeking meaningful impact over surface results.',
       th: 'INFP ขับเคลื่อนด้วยค่านิยมที่ยึดมั่นและความปรารถนาที่จะสร้างความแตกต่างที่ดี ในฐานะ Turbulent Mediator ผมนำความคิดรอบคอบ ความคิดสร้างสรรค์ และ Empathy สูงมาสู่ทุกทีมและโปรเจค โดยมุ่งสู่ผลลัพธ์ที่มีความหมายเสมอ',
+    },
+    philosophy: {
+      label: { en: 'Personal Philosophy', th: 'ปรัชญาส่วนตัว' },
+      quote: {
+        en: "\"I believe work isn't just about doing my part — it's about making a difference that truly improves the organization.\"",
+        th: '"ผมเชื่อว่างานที่ดีไม่ใช่แค่ทำหน้าที่ของตัวเอง แต่คือการสร้างความเปลี่ยนแปลงที่ทำให้องค์กรดีขึ้นอย่างแท้จริง"',
+      },
+      quoteBy: {
+        en: '— Ittikorn (Aof) Sopawan',
+        th: '— อิทธิกร (อ๊อฟ) โสภาวรรณ',
+      },
     },
     traits: {
       empathetic:    { en: 'Empathetic',    th: 'เข้าอกเข้าใจ'   },
