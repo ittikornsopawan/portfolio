@@ -1,7 +1,8 @@
 'use client'
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
-import { Sun, Moon, Cpu } from 'lucide-react'
+import { Sun, Moon } from 'lucide-react'
+import Image from 'next/image'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
 
@@ -23,11 +24,11 @@ export default function Navbar() {
 
   const links = [
     { href: '#about',          label: T.about[lang]        },
+    { href: '#personality',    label: T.personality[lang]  },
     { href: '#experience',     label: T.experience[lang]   },
     { href: '#projects',       label: T.projects[lang]     },
     { href: '#skills',         label: T.skills[lang]       },
     { href: '#certifications', label: T.education[lang]    },
-    { href: '#personality',    label: T.personality[lang]  },
     { href: '#careerpath',     label: T.careerPath[lang]   },
     { href: '#testimonials',   label: T.testimonials[lang] },
     { href: '#github',         label: T.github[lang]       },
@@ -36,23 +37,26 @@ export default function Navbar() {
 
   return (
     <nav className={`fixed inset-x-0 top-0 z-50 nav-glass transition-all duration-300 ${scrolled ? 'shadow-[0_1px_30px_rgba(124,58,237,0.1)]' : ''}`}>
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
-
+      <div className="max-w-screen-2xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
         {/* Logo */}
         <a href="#about" className="flex items-center gap-2.5 select-none shrink-0">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-600 to-blue-500 flex items-center justify-center shadow-[0_4px_14px_rgba(124,58,237,0.4)]">
-            <Cpu size={15} className="text-white" strokeWidth={2} />
-          </div>
-          <span className="font-display font-bold text-sm gradient-text tracking-tight">AOF</span>
+          <Image
+            src="/logo.png"
+            alt=""
+            width={40}
+            height={44}
+            className="h-10 w-10 shrink-0 object-contain drop-shadow-[0_0_8px_rgba(34,211,238,0.45)]"
+          />
+          <span className="font-display font-bold text-sm gradient-text tracking-tight">Ittikorn</span>
         </a>
 
         {/* Nav links */}
-        <ul className="hidden xl:flex gap-0.5 list-none">
+        <ul className="hidden xl:flex flex-1 items-center justify-center gap-0.5 list-none mx-4">
           {links.map(l => (
             <li key={l.href}>
               <a
                 href={l.href}
-                className="text-[0.8rem] font-medium px-3 py-1.5 rounded-lg text-theme2 hover:text-theme hover:bg-violet-500/8 transition-all duration-150"
+                className="whitespace-nowrap text-sm font-medium px-2.5 py-2 rounded-lg text-theme2 hover:text-theme hover:bg-violet-500/8 transition-all duration-150"
               >
                 {l.label}
               </a>
@@ -62,7 +66,6 @@ export default function Navbar() {
 
         {/* Right controls */}
         <div className="flex items-center gap-2 shrink-0">
-
           {/* EN / TH switcher */}
           {mounted && (
             <div className="flex items-center bg-[var(--surface2)] border border-[var(--border)] rounded-xl p-0.5 text-xs font-bold">

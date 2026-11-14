@@ -16,9 +16,13 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: 'Ittikorn (Aof) Sopawan · System Analyst & Solution Architect',
+  title: 'Ittikorn (Aof) Sopawan · Technical Product Owner, System Analyst & Solution Architect',
   description:
-    'Portfolio of Ittikorn (Aof) Sopawan — Supervisor-level System Analyst and Solution Architect with 7+ years of experience across enterprise, e-commerce, logistics, and multi-cloud platforms.',
+    'Portfolio of Ittikorn (Aof) Sopawan — Technical Product Owner, System Analyst, and Solution Architect with 10 years of experience across enterprise, e-commerce, logistics, and multi-cloud platforms.',
+  icons: {
+    icon: [{ url: '/logo.png', type: 'image/png' }],
+    apple: '/logo.png',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

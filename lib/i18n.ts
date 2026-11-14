@@ -12,7 +12,7 @@ export const i18n = {
     personality: { en: 'Personality', th: 'บุคลิกภาพ' },
     github: { en: "GitHub", th: "GitHub" },
     contact: { en: "Contact", th: "ติดต่อ" },
-    hireMe: { en: "Hire Me", th: "ว่าจ้างฉัน" },
+    hireMe: { en: "Hire Me", th: "ต้องการจ้างฉัน" },
   },
   hero: {
     badge: {
@@ -20,16 +20,22 @@ export const i18n = {
       th: "พร้อมทำงาน · แจ้งล่วงหน้า 30 วัน",
     },
     name: { en: "Ittikorn (Aof) Sopawan", th: "อิทธิกร (อ๊อฟ) โสภาวรรณ" },
-    h1a: { en: "Your Next", th: "Solution Architect" },
-    h1b: { en: "Solution Architect", th: "คนต่อไปของคุณ" },
+    h1a: {
+      en: "Your Next",
+      th: "Your Next",
+    },
+    h1b: {
+      en: "Technical Product Owner, System Analyst, Solution Architect",
+      th: "Technical Product Owner, System Analyst, Solution Architect",
+    },
     role: {
       en: "System Analyst & Solution Architect",
       th: "System Analyst & Solution Architect",
     },
     levelBadge: { en: "Supervisor", th: "ระดับ Supervisor" },
     desc: {
-      en: "I design enterprise-scale systems that bridge business strategy with technical execution — across cloud, e-commerce, and logistics. 7+ years of proven delivery at supervisor level.",
-      th: "ผมออกแบบระบบระดับ Enterprise ที่เชื่อมโยง Business Strategy กับ Technical Execution ครอบคลุม Cloud, E-Commerce และ Logistics ด้วยประสบการณ์กว่า 7 ปีในระดับ Supervisor",
+      en: "I design enterprise-scale systems that bridge business strategy with technical execution — across cloud, e-commerce, and logistics. 10 years of proven delivery at supervisor level.",
+      th: "ผมออกแบบระบบระดับ Enterprise ที่เชื่อมโยง Business Strategy กับ Technical Execution ครอบคลุม Cloud, E-Commerce และ Logistics ด้วยประสบการณ์ 10 ปีในระดับ Supervisor",
     },
     strengths: {
       s1label: { en: "End-to-End Architecture", th: "End-to-End Architecture" },
@@ -63,8 +69,8 @@ export const i18n = {
     eyebrow: { en: "Career Timeline", th: "ไทม์ไลน์อาชีพ" },
     title: { en: "Work Experience", th: "ประสบการณ์การทำงาน" },
     subtitle: {
-      en: "7+ years across enterprise, e-commerce, logistics, and multi-cloud platforms.",
-      th: "7+ ปีใน Enterprise ครอบคลุม E-Commerce, Logistics และ Multi-Cloud",
+      en: "10 years across enterprise, e-commerce, logistics, and multi-cloud platforms.",
+      th: "ประสบการณ์รวม 10 ปีใน Enterprise ครอบคลุม E-Commerce, Logistics และ Multi-Cloud",
     },
     active: { en: "Active", th: "ปัจจุบัน" },
     contractor: { en: "Contractor", th: "Contractor" },
