@@ -19,6 +19,25 @@ export const i18n = {
       en: "Available · 30-Day Notice",
       th: "พร้อมทำงาน · แจ้งล่วงหน้า 30 วัน",
     },
+    openToWork: {
+      badge: { en: "Open to Work", th: "Open to Work" },
+      title: { en: "Open to the right opportunity", th: "พร้อมรับโอกาสที่ใช่" },
+      description: {
+        en: "Currently open to opportunities in these roles:",
+        th: "เปิดรับโอกาสใหม่ในตำแหน่งต่อไปนี้:",
+      },
+      roles: {
+        en: ["Technical Product Owner", "System Analyst", "Solution Architect"],
+        th: ["Technical Product Owner", "System Analyst", "Solution Architect"],
+      },
+      packageTitle: { en: "Compensation package", th: "แพ็กเกจค่าตอบแทน" },
+      packageDescription: {
+        en: "Package is discussed based on the role and scope. Please get in touch for details.",
+        th: "รายละเอียดแพ็กเกจพิจารณาตามตำแหน่งและขอบเขตงาน กรุณาติดต่อเพื่อสอบถามเพิ่มเติม",
+      },
+      contact: { en: "Discuss role & package", th: "สอบถามตำแหน่งและแพ็กเกจ" },
+      close: { en: "Close dialog", th: "ปิดหน้าต่าง" },
+    },
     name: { en: "Ittikorn (Aof) Sopawan", th: "อิทธิกร (อ๊อฟ) โสภาวรรณ" },
     h1a: {
       en: "Your Next",

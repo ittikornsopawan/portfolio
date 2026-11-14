@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, Space_Grotesk } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
+import AnimatedDocumentTitle from '@/components/AnimatedDocumentTitle'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -16,12 +17,13 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: 'Ittikorn (Aof) Sopawan | Technical Product Owner, System Analyst, Solution Architect',
+  title: '[Open to Work] Ittikorn (Aof) Sopawan | Technical Product Owner, System Analyst, Solution Architect',
   description:
     'Portfolio of Ittikorn (Aof) Sopawan — Technical Product Owner, System Analyst, and Solution Architect with 10 years of experience across enterprise, e-commerce, logistics, and multi-cloud platforms.',
   icons: {
-    icon: [{ url: '/logo.png', type: 'image/png' }],
-    apple: '/logo.png',
+    icon: [{ url: '/logo.png?v=2', type: 'image/png' }],
+    shortcut: ['/logo.png?v=2'],
+    apple: '/logo.png?v=2',
   },
 }
 
@@ -29,6 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
+        <AnimatedDocumentTitle />
         <Providers>{children}</Providers>
       </body>
     </html>

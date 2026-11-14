@@ -1,6 +1,7 @@
 'use client'
 
-import { ArrowRight, Mail, Sparkles, Download, Layers, Users, Briefcase } from 'lucide-react'
+import { useRef } from 'react'
+import { ArrowRight, ArrowUpRight, Mail, Sparkles, Download, Layers, Users, Briefcase, X } from 'lucide-react'
 import Image from 'next/image'
 import RevealWrapper from './RevealWrapper'
 import { useLang } from '@/app/lang-context'
@@ -18,6 +19,7 @@ const techTags = ['DDD', 'EDA', 'Microservices', '.NET Core', 'API Design', 'Mul
 
 export default function Hero() {
   const { lang } = useLang()
+  const openToWorkDialog = useRef<HTMLDialogElement>(null)
 
   const strengths = [
     { Icon: Layers,   label: T.strengths.s1label[lang], desc: T.strengths.s1desc[lang] },
@@ -33,23 +35,38 @@ export default function Hero() {
         <RevealWrapper className="h-full">
           <div className="glass-card p-8 lg:p-10 h-full">
 
-            {/* Availability badge */}
-            <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/25 text-green-600 dark:text-green-400 rounded-full px-4 py-1.5 text-xs font-semibold mb-7">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
-              </span>
-              {T.badge[lang]}
+            <div className="flex flex-wrap items-center gap-2.5 mb-7">
+              <button
+                type="button"
+                onClick={() => openToWorkDialog.current?.showModal()}
+                aria-haspopup="dialog"
+                className="group inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-gradient-to-r from-violet-500/15 to-blue-500/15 px-4 py-1.5 text-xs font-semibold text-violet-700 transition-all hover:border-violet-500/50 hover:shadow-[0_0_20px_rgba(124,58,237,0.2)] dark:text-violet-300"
+              >
+                <Sparkles size={13} strokeWidth={2.2} />
+                {T.openToWork.badge[lang]}
+                <ArrowUpRight size={12} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </button>
+              {/* Availability badge */}
+              <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/25 text-green-600 dark:text-green-400 rounded-full px-4 py-1.5 text-xs font-semibold">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
+                </span>
+                {T.badge[lang]}
+              </div>
             </div>
 
             <div className="flex items-start gap-3 sm:gap-5 mb-6">
-              <Image
-                src="/logo.png"
-                alt=""
-                width={160}
-                height={176}
-                className="h-16 w-14 shrink-0 object-contain sm:h-24 sm:w-20 lg:h-32 lg:w-28 xl:h-44 xl:w-40"
-              />
+              <div className="relative h-16 w-14 shrink-0 sm:h-24 sm:w-20 lg:h-32 lg:w-28 xl:h-44 xl:w-40">
+                <Image
+                  src="/logo.png"
+                  alt=""
+                  fill
+                  sizes="(min-width: 1280px) 160px, (min-width: 1024px) 112px, (min-width: 640px) 80px, 56px"
+                  loading="eager"
+                  className="object-contain"
+                />
+              </div>
               <div className="min-w-0 flex-1">
                 {/* Name */}
                 <p className="text-[0.7rem] font-bold uppercase tracking-[2px] text-theme3 mb-2">
@@ -180,7 +197,7 @@ export default function Hero() {
                 {T.specialties[lang]}
               </div>
               <div className="flex flex-wrap gap-1.5">
-                {['DDD', 'EDA', 'Microservices', '.NET Core', 'Cloud Architecture', 'API Design'].map(tag => (
+                {['DDD', 'EDA', 'Microservices', '.NET Core', 'Cloud Architecture', 'API Design', 'Database Design'].map(tag => (
                   <span
                     key={tag}
                     className="text-[0.72rem] font-medium px-2.5 py-1 rounded-full bg-gradient-to-r from-violet-500/12 to-blue-500/12 border border-violet-500/20 text-violet-600 dark:text-violet-300"
@@ -194,6 +211,86 @@ export default function Hero() {
         </RevealWrapper>
 
       </div>
+
+      <dialog
+        ref={openToWorkDialog}
+        aria-labelledby="open-to-work-title"
+        aria-describedby="open-to-work-description"
+        onCancel={event => {
+          event.preventDefault()
+          event.currentTarget.close()
+        }}
+        onKeyDown={event => {
+          if (event.key === 'Escape') {
+            event.preventDefault()
+            event.currentTarget.close()
+          }
+        }}
+        onClick={event => {
+          if (event.target === event.currentTarget) event.currentTarget.close()
+        }}
+        className="open-to-work-dialog fixed inset-0 m-auto w-[calc(100vw-2rem)] max-w-xl max-h-[calc(100dvh-2rem)] overflow-y-auto border-0 bg-transparent p-0 text-left shadow-none"
+      >
+        <div className="glass-card relative w-full max-w-xl overflow-hidden p-6 shadow-[0_24px_100px_rgba(0,0,0,0.5)] sm:p-8">
+          <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-violet-600/20 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-24 -left-20 h-48 w-48 rounded-full bg-blue-500/15 blur-3xl" />
+          <div className="relative">
+            <div className="mb-6 flex items-start justify-between gap-4">
+              <div>
+                <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-green-500/25 bg-green-500/10 px-3 py-1 text-xs font-semibold text-green-600 dark:text-green-400">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
+                  </span>
+                  {T.badge[lang]}
+                </div>
+                <h2 id="open-to-work-title" className="font-display text-2xl font-extrabold tracking-tight text-theme sm:text-3xl">
+                  {T.openToWork.title[lang]}
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => openToWorkDialog.current?.close()}
+                aria-label={T.openToWork.close[lang]}
+                className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface2)] text-theme2 transition-colors hover:border-violet-500/40 hover:text-theme"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <p id="open-to-work-description" className="mb-5 text-sm leading-relaxed text-theme2">
+              {T.openToWork.description[lang]}
+            </p>
+
+            <div className="mb-6 grid gap-2 sm:grid-cols-3">
+              {T.openToWork.roles[lang].map(role => (
+                <div key={role} className="flex min-h-14 items-center gap-2 rounded-xl border border-violet-500/15 bg-violet-500/5 px-3 py-2.5 text-xs font-semibold leading-snug text-theme">
+                  <Briefcase size={14} className="shrink-0 text-violet-500 dark:text-violet-400" />
+                  {role}
+                </div>
+              ))}
+            </div>
+
+            <div className="mb-6 rounded-2xl border border-blue-500/20 bg-blue-500/5 p-4">
+              <div className="mb-1 flex items-center gap-2 text-sm font-bold text-theme">
+                <Sparkles size={15} className="text-blue-500 dark:text-blue-400" />
+                {T.openToWork.packageTitle[lang]}
+              </div>
+              <p className="text-sm leading-relaxed text-theme2">{T.openToWork.packageDescription[lang]}</p>
+            </div>
+
+            <a
+              href="#contact"
+              onClick={() => openToWorkDialog.current?.close()}
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-blue-500 px-5 py-3 text-sm font-semibold text-white shadow-[0_4px_20px_rgba(124,58,237,0.3)] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(124,58,237,0.45)]"
+            >
+              <Mail size={16} />
+              {T.openToWork.contact[lang]}
+              <ArrowUpRight size={15} />
+            </a>
+          </div>
+        </div>
+      </dialog>
     </section>
   )
 }

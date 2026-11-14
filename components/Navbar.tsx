@@ -40,13 +40,16 @@ export default function Navbar() {
       <div className="max-w-screen-2xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
         {/* Logo */}
         <a href="#about" className="flex items-center gap-2.5 select-none shrink-0">
-          <Image
-            src="/logo.png"
-            alt=""
-            width={40}
-            height={44}
-            className="h-10 w-10 shrink-0 object-contain drop-shadow-[0_0_8px_rgba(34,211,238,0.45)]"
-          />
+          <div className="relative h-10 w-10 shrink-0">
+            <Image
+              src="/logo.png"
+              alt=""
+              fill
+              sizes="40px"
+              loading="eager"
+              className="object-contain drop-shadow-[0_0_8px_rgba(34,211,238,0.45)]"
+            />
+          </div>
           <span className="font-display font-bold text-sm gradient-text tracking-tight">Ittikorn</span>
         </a>
 
