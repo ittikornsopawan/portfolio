@@ -11,7 +11,7 @@ export default function AnimatedDocumentTitle() {
     const intervalId = window.setInterval(() => {
       document.title = cycle.slice(position) + cycle.slice(0, position)
       position = (position + 1) % cycle.length
-    }, 120)
+    }, 50)
 
     return () => {
       window.clearInterval(intervalId)
