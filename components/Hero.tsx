@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ArrowRight, ArrowUpRight, Mail, Sparkles, Download, Layers, Users, Briefcase, X } from 'lucide-react'
 import Image from 'next/image'
 import RevealWrapper from './RevealWrapper'
@@ -9,17 +9,29 @@ import { i18n } from '@/lib/i18n'
 
 const T = i18n.hero
 
-const stats = [
-  { num: '10',  labelKey: 'yearsLabel'     },
-  { num: '6',   labelKey: 'companiesLabel' },
-  { num: '30d', labelKey: 'noticeLabel'    },
-] as const
-
-const techTags = ['DDD', 'EDA', 'Microservices', '.NET Core', 'API Design', 'Multi-Cloud', 'System Architecture']
+function calculateAge() {
+  const today = new Date()
+  const birthdayThisYear = new Date(today.getFullYear(), 6, 9)
+  return today.getFullYear() - 1994 - Number(today < birthdayThisYear)
+}
 
 export default function Hero() {
   const { lang } = useLang()
   const openToWorkDialog = useRef<HTMLDialogElement>(null)
+  const [age, setAge] = useState<number | null>(null)
+
+  useEffect(() => {
+    setAge(calculateAge())
+  }, [])
+
+  const stats = [
+    { num: age?.toString() ?? '—', labelKey: 'ageLabel' },
+    { num: '2', labelKey: 'languagesLabel' },
+    { num: '5', labelKey: 'referencesLabel' },
+    { num: '10', labelKey: 'yearsLabel' },
+    { num: '6', labelKey: 'companiesLabel' },
+    { num: '30d', labelKey: 'noticeLabel' },
+  ] as const
 
   const strengths = [
     { Icon: Layers,   label: T.strengths.s1label[lang], desc: T.strengths.s1desc[lang] },
@@ -107,18 +119,6 @@ export default function Hero() {
                     <div className="text-[0.68rem] text-theme3 mt-0.5 leading-snug">{s.desc}</div>
                   </div>
                 </div>
-              ))}
-            </div>
-
-            {/* Tech tags */}
-            <div className="flex flex-wrap gap-2 mb-9">
-              {techTags.map(tag => (
-                <span
-                  key={tag}
-                  className="text-xs font-medium px-3 py-1.5 rounded-full bg-[var(--surface2)] border border-[var(--border)] text-theme2 hover:border-violet-500/30 hover:bg-violet-500/8 transition-colors duration-150 cursor-default"
-                >
-                  {tag}
-                </span>
               ))}
             </div>
 

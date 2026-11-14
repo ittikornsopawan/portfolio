@@ -18,7 +18,7 @@ const config: Config = {
         'drift-3': 'drift3 16s ease-in-out infinite',
         'pulse-dot': 'pulseDot 2s ease-in-out infinite',
         'spin-slow': 'spin 4s linear infinite',
-        'float': 'float 6s ease-in-out infinite',
+        'float': 'float 5s ease-in-out infinite',
       },
       keyframes: {
         drift1: {
