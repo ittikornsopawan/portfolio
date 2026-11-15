@@ -7,7 +7,7 @@ import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
 
 export default function Navbar() {
-  const { theme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
   const { lang, setLang }   = useLang()
   const [mounted, setMounted]   = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -20,7 +20,7 @@ export default function Navbar() {
   }, [])
 
   const T = i18n.nav
-  const isDark = theme === 'dark'
+  const isDark = resolvedTheme === 'dark'
 
   const links = [
     { href: '#about',          label: T.about[lang]        },

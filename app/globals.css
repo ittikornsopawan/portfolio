@@ -113,6 +113,205 @@
     flex-shrink: 0;
   }
 
+  .vinyl-disc {
+    overflow: hidden;
+    background-color: #cfe2f3;
+    background-image:
+      linear-gradient(135deg, rgba(255,255,255,0.78), transparent 42%, rgba(14,165,233,0.18)),
+      repeating-radial-gradient(circle at center, rgba(30,64,175,0.22) 0 1px, transparent 1px 3px),
+      radial-gradient(circle at center, #f8fafc 0 14%, #8b5cf6 14.5% 21%, #e0f2fe 21.5% 22%, #bfdbfe 22.5% 100%);
+    border: 1px solid rgba(100,116,139,0.5);
+    box-shadow:
+      inset 0 1px 2px rgba(255,255,255,0.9),
+      inset 0 -7px 10px rgba(30,41,59,0.32),
+      0 10px 24px rgba(15,23,42,0.3),
+      0 2px 4px rgba(15,23,42,0.16);
+  }
+
+  .dark .vinyl-disc {
+    background-color: #090b14;
+    background-image:
+      linear-gradient(135deg, rgba(196,181,253,0.3), transparent 42%, rgba(0,0,0,0.5)),
+      repeating-radial-gradient(circle at center, rgba(203,213,225,0.16) 0 1px, transparent 1px 3px),
+      radial-gradient(circle at center, #c4b5fd 0 14%, #3b246e 14.5% 21%, #374151 21.5% 22%, #090b14 22.5% 100%);
+    border-color: rgba(196,181,253,0.32);
+    box-shadow:
+      inset 0 1px 2px rgba(255,255,255,0.22),
+      inset 0 -8px 12px rgba(0,0,0,0.9),
+      0 10px 24px rgba(0,0,0,0.62),
+      0 0 18px rgba(124,58,237,0.2);
+  }
+
+  .vinyl-disc::before {
+    content: '';
+    position: absolute;
+    inset: -8%;
+    border-radius: 42% 58% 64% 36% / 52% 42% 58% 48%;
+    background:
+      radial-gradient(ellipse at 30% 28%, rgba(255,255,255,0.96) 0 6%, transparent 30%),
+      radial-gradient(ellipse at 34% 64%, rgba(255,59,173,0.82), transparent 44%),
+      radial-gradient(ellipse at 68% 38%, rgba(36,214,220,0.84), transparent 46%),
+      conic-gradient(
+        from 45deg at 56% 48%,
+        rgba(255,45,190,0.9),
+        rgba(255,155,55,0.84),
+        rgba(255,239,90,0.78),
+        rgba(40,235,174,0.86),
+        rgba(45,190,255,0.9),
+        rgba(115,90,255,0.9),
+        rgba(255,45,190,0.9)
+      );
+    filter: blur(2px);
+    mix-blend-mode: normal;
+    opacity: 0.86;
+    pointer-events: none;
+  }
+
+  .dark .vinyl-disc::before {
+    mix-blend-mode: screen;
+    opacity: 0.76;
+  }
+
+  .vinyl-liquid {
+    position: absolute;
+    inset: 14px 5px;
+    border-radius: 65% 35% 58% 42% / 42% 59% 41% 58%;
+    background:
+      radial-gradient(ellipse at 34% 34%, rgba(255,255,255,0.96), transparent 22%),
+      linear-gradient(
+        115deg,
+        transparent 2%,
+        rgba(255,48,180,0.94) 22%,
+        rgba(255,169,61,0.9) 38%,
+        rgba(39,239,181,0.92) 54%,
+        rgba(44,190,255,0.96) 72%,
+        rgba(159,92,255,0.94) 87%,
+        transparent 100%
+      );
+    filter: blur(2px);
+    opacity: 0.9;
+    pointer-events: none;
+  }
+
+  .dark .vinyl-liquid {
+    mix-blend-mode: screen;
+    opacity: 0.78;
+  }
+
+  .vinyl-liquid.is-playing {
+    animation: liquid-pour 3.4s ease-in-out infinite alternate;
+  }
+
+  .vinyl-glow {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    background: conic-gradient(
+      #ff35bb,
+      #ff9a36,
+      #fff16b,
+      #39e69b,
+      #30d9ff,
+      #6568ff,
+      #c24dff,
+      #ff35bb
+    );
+    filter: blur(12px);
+    opacity: 0.28;
+    pointer-events: none;
+  }
+
+  .vinyl-glow.is-playing {
+    animation: rainbow-glow 4s linear infinite;
+    opacity: 0.78;
+  }
+
+  .vinyl-disc.is-playing::before {
+    animation: liquid-sheen 3.2s ease-in-out infinite alternate;
+  }
+
+  .vinyl-disc::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border: 1px solid rgba(255,255,255,0.45);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  .vinyl-ripple {
+    position: absolute;
+    inset: -7px;
+    border: 1px solid rgba(14,165,233,0.66);
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(34,211,238,0.28);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .vinyl-ripple.is-playing {
+    animation: liquid-ripple 3s ease-out infinite;
+  }
+
+  .vinyl-ripple.is-delayed {
+    animation-delay: 1.5s;
+  }
+
+  @keyframes liquid-sheen {
+    0% {
+      transform: translate(-8%, -6%) scale(0.78) rotate(-18deg);
+      border-radius: 42% 58% 64% 36% / 52% 42% 58% 48%;
+      opacity: 0.52;
+    }
+    50% {
+      transform: translate(7%, 6%) scale(1.18) rotate(25deg);
+      border-radius: 62% 38% 42% 58% / 38% 58% 42% 62%;
+      opacity: 0.94;
+    }
+    100% {
+      transform: translate(-2%, 3%) scale(0.96) rotate(-8deg);
+      border-radius: 48% 52% 58% 42% / 58% 44% 56% 42%;
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes liquid-pour {
+    0% {
+      transform: translate(-7px, -4px) rotate(-18deg) scale(0.82);
+      border-radius: 65% 35% 58% 42% / 42% 59% 41% 58%;
+    }
+    50% {
+      transform: translate(6px, 3px) rotate(17deg) scale(1.1);
+      border-radius: 38% 62% 42% 58% / 58% 40% 60% 42%;
+    }
+    100% {
+      transform: translate(-2px, 4px) rotate(-8deg) scale(0.94);
+      border-radius: 54% 46% 67% 33% / 48% 62% 38% 52%;
+    }
+  }
+
+  @keyframes liquid-ripple {
+    0% { transform: scale(0.92); opacity: 0.5; }
+    100% { transform: scale(1.34); opacity: 0; }
+  }
+
+  @keyframes rainbow-glow {
+    to { transform: rotate(360deg) scale(1.08); }
+  }
+
+  .dark .vinyl-disc::after {
+    border-color: rgba(255,255,255,0.14);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vinyl-disc.is-playing::before,
+    .vinyl-liquid.is-playing,
+    .vinyl-ripple.is-playing,
+    .vinyl-glow.is-playing {
+      animation: none;
+    }
+  }
+
   /* Section eyebrow pill */
   .eyebrow-pill {
     @apply inline-flex items-center gap-1.5 text-xs font-semibold rounded-full px-3.5 py-1.5;

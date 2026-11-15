@@ -14,6 +14,11 @@ export const i18n = {
     contact: { en: "Contact", th: "ติดต่อ" },
     hireMe: { en: "Hire Me", th: "ต้องการจ้างฉัน" },
   },
+  musicPlayer: {
+    play: { en: "Play background music", th: "เล่นเพลงพื้นหลัง" },
+    pause: { en: "Pause background music", th: "หยุดเพลงพื้นหลัง" },
+    autoplayBlocked: { en: "Click to start music", th: "คลิกเพื่อเริ่มเล่นเพลง" },
+  },
   hero: {
     badge: {
       en: "Available · 30-Day Notice",

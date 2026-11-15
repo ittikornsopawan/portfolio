@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
 import AnimatedDocumentTitle from '@/components/AnimatedDocumentTitle'
+import BackgroundMusicPlayer from '@/components/BackgroundMusicPlayer'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -32,7 +33,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
         <AnimatedDocumentTitle />
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <BackgroundMusicPlayer />
+        </Providers>
       </body>
     </html>
   )
