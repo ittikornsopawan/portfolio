@@ -84,7 +84,7 @@ export default function Personality() {
                 {traits.map(t => (
                   <div
                     key={t.label}
-                    className="flex flex-col items-center text-center p-3.5 rounded-xl bg-[var(--surface2)] border border-[var(--border)] hover:border-violet-500/25 hover:bg-violet-500/6 transition-all duration-200 group"
+                    className="flex flex-col items-center text-center p-3.5 rounded-xl bg-[var(--surface2)] border border-[var(--border)] hover:border-violet-500/25 hover:bg-violet-500/[0.06] transition-all duration-200 group"
                   >
                     <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600/15 to-blue-500/15 border border-violet-500/20 flex items-center justify-center mb-2.5 icon-box group-hover:from-violet-600 group-hover:to-blue-500 transition-all duration-200">
                       <t.Icon size={15} className="text-violet-500 dark:text-violet-400 group-hover:text-white transition-colors" strokeWidth={2} />

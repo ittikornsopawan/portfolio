@@ -1,6 +1,6 @@
 'use client'
 
-import { Quote, Star, MessageSquare } from 'lucide-react'
+import { Star, MessageSquare } from 'lucide-react'
 import RevealWrapper from './RevealWrapper'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
@@ -13,6 +13,8 @@ const testimonials = [
     relation: 'Direct Manager',
     text: "Aof has demonstrated exceptional diligence and dedication. His expertise in system analysis — particularly in developing billing systems for multi-cloud environments — is remarkable. His innovative thinking and proficiency have resulted in the accurate and efficient development of systems that meet clients' needs comprehensively. Aof possesses excellent communication skills and the ability to collaborate effectively with team members, invaluable for complex project work.",
     initials: 'SR',
+    // exact phrases from the quote to emphasize; wording stays untouched
+    highlights: ["exceptional diligence and dedication", "billing systems for multi-cloud environments", "excellent communication skills"],
     gradient: 'from-violet-600 to-blue-500',
   },
   {
@@ -22,6 +24,8 @@ const testimonials = [
     relation: 'Stakeholder',
     text: "Khun Aof was instrumental in finding solutions for the project we worked on, even with its complex details. I also appreciated his ability to coordinate smoothly across departments. He took the lead to ensure the project was completed on time and explained technical knowledge clearly and politely. It was a pleasure working together.",
     initials: 'KU',
+    // exact phrases from the quote to emphasize; wording stays untouched
+    highlights: ["instrumental in finding solutions", "coordinate smoothly across departments", "completed on time"],
     gradient: 'from-blue-500 to-cyan-400',
   },
   {
@@ -31,6 +35,8 @@ const testimonials = [
     relation: 'Product Owner',
     text: "I worked with him for years on web application development projects. His ability to break down complex issues into understandable solutions is exceptional. He is a trustworthy system analyst with an open mind, good teamwork skills, and fast learning.",
     initials: 'TH',
+    // exact phrases from the quote to emphasize; wording stays untouched
+    highlights: ["break down complex issues into understandable solutions", "trustworthy system analyst"],
     gradient: 'from-indigo-500 to-violet-500',
   },
   {
@@ -40,6 +46,8 @@ const testimonials = [
     relation: 'Engineering Lead',
     text: "Despite joining the project at a later stage, he quickly developed a strong understanding of the system architecture and data structures. He consistently proposed thoughtful optimizations that improved system efficiency, and brings valuable experience, standards, and best practices. He communicates well with both technical teams and non-technical stakeholders, and is a fast learner always open to feedback and new technologies. He would be a valuable addition to any team.",
     initials: 'WS',
+    // exact phrases from the quote to emphasize; wording stays untouched
+    highlights: ["quickly developed a strong understanding", "thoughtful optimizations that improved system efficiency", "valuable addition to any team"],
     gradient: 'from-violet-600 to-blue-500',
   },
   {
@@ -49,9 +57,23 @@ const testimonials = [
     relation: 'BA Lead',
     text: "His ability to provide end-to-end consultation — covering enterprise solution architecture, technical design, and data modeling — is consistently impressive and always tailored to client needs. He doesn't just meet requirements — he enhances them. He works with speed, clarity, and a proactive mindset. His multitasking skills and collaborative spirit shine through in both project implementation and pre-sales engagements. A true asset to any team.",
     initials: 'DU',
+    // exact phrases from the quote to emphasize; wording stays untouched
+    highlights: ["end-to-end consultation", "He doesn't just meet requirements — he enhances them.", "A true asset to any team."],
     gradient: 'from-blue-500 to-indigo-500',
   },
 ]
+
+/** Splits the quote so its own key phrases can be emphasized without changing any words. */
+function Highlighted({ text, phrases }: { text: string; phrases: string[] }) {
+  const pattern = new RegExp(`(${phrases.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`)
+  return (
+    <>
+      {text.split(pattern).map((part, i) =>
+        phrases.includes(part) ? <mark key={i} className="testimonial-mark">{part}</mark> : part,
+      )}
+    </>
+  )
+}
 
 export default function Testimonials() {
   const { lang } = useLang()
@@ -83,40 +105,44 @@ export default function Testimonials() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {testimonials.map((t, i) => (
           <RevealWrapper key={t.name} delay={i * 75} className={i === 4 ? 'md:col-span-2' : ''}>
-            <div className="glass-card p-7 h-full flex flex-col gap-5 relative overflow-hidden">
+            <div className={`testimonial-card glass-card group relative flex h-full flex-col gap-5 overflow-hidden p-7 ${i === 4 ? 'md:p-9' : ''}`}>
+              {/* Accent bar in the author's colour */}
+              <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${t.gradient}`} />
+              <div className={`pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-gradient-to-br ${t.gradient} opacity-[0.08] blur-3xl transition-opacity duration-500 group-hover:opacity-20`} />
+
               {/* Decorative quote mark */}
-              <div className="absolute -top-2 -right-2 font-display text-[7rem] font-extrabold gradient-text opacity-[0.06] leading-none select-none pointer-events-none">
+              <div className="absolute right-5 top-2 select-none font-display text-[6.5rem] font-extrabold leading-none gradient-text opacity-[0.14] transition-all duration-500 group-hover:-translate-y-1 group-hover:opacity-25 pointer-events-none">
                 &ldquo;
               </div>
 
-              {/* Stars */}
-              <div className="flex gap-1">
-                {Array.from({ length: 5 }).map((_, j) => (
-                  <Star key={j} size={12} className="text-amber-400 fill-amber-400" />
-                ))}
+              {/* Stars + relation */}
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex gap-1">
+                  {Array.from({ length: 5 }).map((_, j) => (
+                    <Star key={j} size={14} className="text-amber-400 fill-amber-400 drop-shadow-[0_0_6px_rgba(251,191,36,0.45)]" />
+                  ))}
+                </div>
+                <span className={`mr-14 rounded-full bg-gradient-to-r ${t.gradient} px-2.5 py-0.5 text-[0.65rem] font-bold uppercase tracking-wider text-white shadow-sm`}>
+                  {t.relation}
+                </span>
               </div>
 
               {/* Quote */}
-              <div className="flex gap-3 items-start flex-1">
-                <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-violet-600/15 to-blue-500/15 border border-violet-500/20 flex items-center justify-center shrink-0 icon-box">
-                  <Quote size={12} className="text-violet-500 dark:text-violet-400" strokeWidth={2} />
-                </div>
-                <p className="text-[0.875rem] text-theme2 leading-[1.8] italic">
-                  &ldquo;{t.text}&rdquo;
-                </p>
-              </div>
+              <blockquote className={`relative flex-1 text-theme leading-[1.85] ${i === 4 ? 'text-[0.98rem] md:text-[1.05rem]' : 'text-[0.92rem]'}`}>
+                &ldquo;<Highlighted text={t.text} phrases={t.highlights} />&rdquo;
+              </blockquote>
 
               {/* Author */}
-              <div className="flex items-center gap-3.5 pt-4 border-t border-[var(--border2)]">
-                <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${t.gradient} flex items-center justify-center font-display font-bold text-white text-sm shadow-[0_4px_14px_rgba(124,58,237,0.3)] shrink-0`}>
-                  {t.initials}
-                </div>
-                <div>
-                  <div className="font-display font-bold text-[0.9rem] text-theme">{t.name}</div>
-                  <div className="text-[0.78rem] text-theme2">{t.role}</div>
-                  <div className="text-[0.7rem] text-theme3 font-medium mt-0.5">
-                    {t.relation} · {t.company}
+              <div className="flex items-center gap-3.5 border-t border-[var(--border2)] pt-4">
+                <div className={`relative h-12 w-12 shrink-0 rounded-full bg-gradient-to-br ${t.gradient} p-[2px] shadow-[0_6px_18px_rgba(124,58,237,0.35)]`}>
+                  <div className={`flex h-full w-full items-center justify-center rounded-full bg-gradient-to-br ${t.gradient} font-display text-sm font-bold text-white ring-2 ring-white/40`}>
+                    {t.initials}
                   </div>
+                </div>
+                <div className="min-w-0">
+                  <div className="font-display text-[0.95rem] font-bold text-theme">{t.name}</div>
+                  <div className="text-[0.8rem] text-theme2">{t.role}</div>
+                  <div className="mt-0.5 text-[0.72rem] font-semibold gradient-text">{t.company}</div>
                 </div>
               </div>
             </div>

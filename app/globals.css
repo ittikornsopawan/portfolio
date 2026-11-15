@@ -71,7 +71,79 @@
   animation: otw-shine 3.2s ease-in-out 1.2s infinite;
 }
 
+.otw-panel {
+  animation: otw-rise 0.4s ease-out both;
+}
+
+.otw-progress {
+  animation: otw-progress 4.5s linear forwards;
+}
+
+.open-to-work-dialog[open] .otw-celebrate {
+  animation: otw-celebrate 0.7s cubic-bezier(0.3, 1.6, 0.5, 1) 0.25s both;
+}
+
+.otw-attract {
+  animation: otw-attract 2.4s ease-in-out infinite;
+}
+
+.otw-yay {
+  opacity: 0;
+  transform: translateX(-50%);
+  animation: otw-yay 3.2s cubic-bezier(0.3, 1.5, 0.5, 1) both;
+}
+
+.otw-yay-inner {
+  border: 3px solid transparent;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(90deg, #f472b6, #a78bfa, #38bdf8, #4ade80, #facc15, #f472b6) border-box;
+  background-size: 100% 100%, 200% 100%;
+  box-shadow: 0 0 0 6px rgba(255,255,255,0.18), 0 12px 50px rgba(192,38,211,0.55), 0 0 80px rgba(124,58,237,0.45);
+  animation: otw-yay-border 1.6s linear infinite;
+}
+
+.dark .otw-yay-inner {
+  background:
+    linear-gradient(#111525, #111525) padding-box,
+    linear-gradient(90deg, #f472b6, #a78bfa, #38bdf8, #4ade80, #facc15, #f472b6) border-box;
+  background-size: 100% 100%, 200% 100%;
+}
+
+.otw-yay-shout {
+  background: linear-gradient(90deg, #f43f5e, #f59e0b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.otw-yay-text {
+  background: linear-gradient(90deg, #7c3aed, #c026d3, #2563eb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.otw-yay-emoji {
+  display: inline-block;
+  animation: otw-wiggle 0.6s ease-in-out infinite alternate;
+}
+
 @keyframes otw-fade { from { opacity: 0; } }
+@keyframes otw-yay {
+  0% { opacity: 0; transform: translateX(-50%) translateY(-30px) scale(0.3); }
+  14% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1.12); }
+  22%, 82% { opacity: 1; transform: translateX(-50%) scale(1); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-16px) scale(0.92); }
+}
+@keyframes otw-yay-border { to { background-position: 0 0, 200% 0; } }
+@keyframes otw-wiggle { from { transform: rotate(-14deg) scale(1); } to { transform: rotate(14deg) scale(1.15); } }
+@keyframes otw-progress { from { width: 0; } to { width: 100%; } }
+@keyframes otw-celebrate { from { opacity: 0; transform: scale(0.4) rotate(-8deg); } }
+@keyframes otw-attract {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(124,58,237,0.45); }
+  50% { box-shadow: 0 0 0 8px rgba(124,58,237,0); }
+}
 @keyframes otw-twinkle {
   0%, 100% { opacity: 0; transform: translateY(0) scale(0.4); }
   50% { opacity: 0.9; transform: translateY(-10px) scale(1); }
@@ -96,8 +168,101 @@
   .otw-sparkle,
   .otw-swap,
   .otw-shine::after,
+  .otw-panel,
+  .otw-yay,
+  .otw-yay-inner,
+  .otw-yay-emoji,
+  .otw-attract,
+  .open-to-work-dialog[open] .otw-celebrate,
   .open-to-work-dialog[open] .otw-confetti {
     animation: none;
+  }
+}
+
+/* ─── Contact ─── */
+/* animated gradient halo behind the contact card */
+.contact-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 22px;
+  background: conic-gradient(from var(--contact-angle, 0deg), #7c3aed, #3b82f6, #ec4899, #7c3aed);
+  filter: blur(14px);
+  opacity: 0.45;
+  animation: contact-halo 6s linear infinite;
+  pointer-events: none;
+}
+
+@property --contact-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes contact-halo { to { --contact-angle: 360deg; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-card::before { animation: none; }
+}
+
+/* ─── Testimonials ─── */
+.testimonial-card {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 50px rgba(124,58,237,0.18);
+}
+
+/* gradient hairline border that lights up on hover */
+.testimonial-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(124,58,237,0.6), rgba(59,130,246,0.15), rgba(236,72,153,0.5));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.35;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.testimonial-card:hover::after {
+  opacity: 1;
+}
+
+/* marker-pen emphasis on the quote's own key phrases */
+.testimonial-mark {
+  color: var(--text);
+  font-weight: 600;
+  background: linear-gradient(transparent 62%, rgba(167,139,250,0.35) 62%);
+  background-size: 100% 100%;
+  border-radius: 2px;
+  padding: 0 1px;
+  transition: background 0.35s ease;
+}
+
+.dark .testimonial-mark {
+  background: linear-gradient(transparent 60%, rgba(139,92,246,0.4) 60%);
+}
+
+.testimonial-card:hover .testimonial-mark {
+  background: linear-gradient(transparent 40%, rgba(167,139,250,0.45) 40%);
+}
+
+.dark .testimonial-card:hover .testimonial-mark {
+  background: linear-gradient(transparent 38%, rgba(139,92,246,0.5) 38%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonial-card,
+  .testimonial-card:hover {
+    transition: none;
+    transform: none;
   }
 }
 
@@ -210,10 +375,13 @@
   /* --beat (0..1) is set per frame from the music's bass; `scale` stacks on top of the transform animations */
   .vinyl-player {
     --beat: 0;
+    border-radius: 50%;
+    /* outer shadow lives here, not on the clipped, spinning disc */
+    box-shadow: 0 10px 24px rgba(15,23,42,0.3), 0 2px 4px rgba(15,23,42,0.16);
   }
 
-  .vinyl-player .vinyl-disc {
-    scale: calc(1 + var(--beat) * 0.1);
+  .dark .vinyl-player {
+    box-shadow: 0 10px 24px rgba(0,0,0,0.62), 0 0 18px rgba(124,58,237,0.2);
   }
 
   .vinyl-player .vinyl-glow.is-playing {
@@ -241,7 +409,8 @@
   }
 
   .vinyl-disc {
-    overflow: hidden;
+    /* clip-path, not overflow+radius: browsers drop the rounded clip on a spinning layer with blurred children */
+    clip-path: circle(50%);
     background-color: #cfe2f3;
     background-image:
       linear-gradient(135deg, rgba(255,255,255,0.78), transparent 42%, rgba(14,165,233,0.18)),
@@ -250,9 +419,7 @@
     border: 1px solid rgba(100,116,139,0.5);
     box-shadow:
       inset 0 1px 2px rgba(255,255,255,0.9),
-      inset 0 -7px 10px rgba(30,41,59,0.32),
-      0 10px 24px rgba(15,23,42,0.3),
-      0 2px 4px rgba(15,23,42,0.16);
+      inset 0 -7px 10px rgba(30,41,59,0.32);
   }
 
   .dark .vinyl-disc {
@@ -264,9 +431,7 @@
     border-color: rgba(196,181,253,0.32);
     box-shadow:
       inset 0 1px 2px rgba(255,255,255,0.22),
-      inset 0 -8px 12px rgba(0,0,0,0.9),
-      0 10px 24px rgba(0,0,0,0.62),
-      0 0 18px rgba(124,58,237,0.2);
+      inset 0 -8px 12px rgba(0,0,0,0.9);
   }
 
   .vinyl-disc::before {

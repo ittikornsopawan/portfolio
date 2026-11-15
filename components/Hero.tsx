@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { ArrowRight, ArrowUpRight, Mail, Sparkles, Download, Layers, Users, Briefcase, X, CheckCircle2, MapPin } from 'lucide-react'
 import Image from 'next/image'
 import RevealWrapper from './RevealWrapper'
+import Fireworks from './Fireworks'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
 
@@ -25,19 +26,27 @@ export default function Hero() {
   const openToWorkDialog = useRef<HTMLDialogElement>(null)
   const [age, setAge] = useState<number | null>(null)
   const [roleIndex, setRoleIndex] = useState(0)
+  const [rolePicked, setRolePicked] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
 
+  const openModal = () => {
+    const dialog = openToWorkDialog.current
+    if (!dialog || dialog.open) return
+    dialog.showModal()
+    setModalOpen(true)
+  }
+
+  // Auto-cycle the role tabs until the visitor picks one
   useEffect(() => {
-    const timer = setInterval(() => setRoleIndex(i => (i + 1) % T.openToWork.roles.length), 2200)
+    if (rolePicked || !modalOpen) return
+    const timer = setInterval(() => setRoleIndex(i => (i + 1) % T.openToWork.roles.length), 4500)
     return () => clearInterval(timer)
-  }, [])
+  }, [rolePicked, modalOpen])
 
   useEffect(() => {
     setAge(calculateAge())
     // Greet every visitor with the open-to-work modal once the page has settled
-    const timer = setTimeout(() => {
-      const dialog = openToWorkDialog.current
-      if (dialog && !dialog.open) dialog.showModal()
-    }, 700)
+    const timer = setTimeout(openModal, 700)
     return () => clearTimeout(timer)
   }, [])
 
@@ -67,9 +76,9 @@ export default function Hero() {
             <div className="flex flex-wrap items-center gap-2.5 mb-7">
               <button
                 type="button"
-                onClick={() => openToWorkDialog.current?.showModal()}
+                onClick={openModal}
                 aria-haspopup="dialog"
-                className="group inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-gradient-to-r from-violet-500/15 to-blue-500/15 px-4 py-1.5 text-xs font-semibold text-violet-700 transition-all hover:border-violet-500/50 hover:shadow-[0_0_20px_rgba(124,58,237,0.2)] dark:text-violet-300"
+                className="otw-attract group inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-gradient-to-r from-violet-500/15 to-blue-500/15 px-4 py-1.5 text-xs font-semibold text-violet-700 transition-all hover:border-violet-500/50 hover:shadow-[0_0_20px_rgba(124,58,237,0.2)] dark:text-violet-300"
               >
                 <Sparkles size={13} strokeWidth={2.2} />
                 {T.openToWork.badge[lang]}
@@ -151,14 +160,14 @@ export default function Hero() {
               </a>
               <a
                 href="#projects"
-                className="inline-flex items-center gap-2 bg-[var(--surface2)] border border-[var(--border)] text-theme font-semibold px-6 py-3 rounded-xl text-[0.92rem] hover:border-violet-500/30 hover:bg-violet-500/8 hover:-translate-y-0.5 transition-all duration-200"
+                className="inline-flex items-center gap-2 bg-[var(--surface2)] border border-[var(--border)] text-theme font-semibold px-6 py-3 rounded-xl text-[0.92rem] hover:border-violet-500/30 hover:bg-violet-500/[0.08] hover:-translate-y-0.5 transition-all duration-200"
               >
                 <ArrowRight size={15} strokeWidth={2.5} />
                 {T.cta.projects[lang]}
               </a>
               <a
                 href="#contact"
-                className="inline-flex items-center gap-2 bg-[var(--surface2)] border border-[var(--border)] text-theme font-semibold px-6 py-3 rounded-xl text-[0.92rem] hover:border-violet-500/30 hover:bg-violet-500/8 hover:-translate-y-0.5 transition-all duration-200"
+                className="inline-flex items-center gap-2 bg-[var(--surface2)] border border-[var(--border)] text-theme font-semibold px-6 py-3 rounded-xl text-[0.92rem] hover:border-violet-500/30 hover:bg-violet-500/[0.08] hover:-translate-y-0.5 transition-all duration-200"
               >
                 <Mail size={15} strokeWidth={2} />
                 {T.cta.contact[lang]}
@@ -217,7 +226,7 @@ export default function Hero() {
                 {['DDD', 'EDA', 'Microservices', '.NET Core', 'Cloud Architecture', 'API Design', 'Database Design'].map(tag => (
                   <span
                     key={tag}
-                    className="text-[0.72rem] font-medium px-2.5 py-1 rounded-full bg-gradient-to-r from-violet-500/12 to-blue-500/12 border border-violet-500/20 text-violet-600 dark:text-violet-300"
+                    className="text-[0.72rem] font-medium px-2.5 py-1 rounded-full bg-gradient-to-r from-violet-500/[0.12] to-blue-500/[0.12] border border-violet-500/20 text-violet-600 dark:text-violet-300"
                   >
                     {tag}
                   </span>
@@ -233,6 +242,7 @@ export default function Hero() {
         ref={openToWorkDialog}
         aria-labelledby="open-to-work-title"
         aria-describedby="open-to-work-description"
+        onClose={() => setModalOpen(false)}
         onCancel={event => {
           event.preventDefault()
           event.currentTarget.close()
@@ -248,6 +258,7 @@ export default function Hero() {
         }}
         className="open-to-work-dialog fixed inset-0 m-auto w-[calc(100vw-2rem)] max-w-2xl max-h-[calc(100dvh-2rem)] overflow-y-auto border-0 bg-transparent p-0 text-left shadow-none"
       >
+        <Fireworks active={modalOpen} lang={lang} />
         <div className="otw-card glass-card relative w-full overflow-hidden p-0 shadow-[0_24px_100px_rgba(0,0,0,0.5)]">
           {/* Hero banner */}
           <div className="otw-banner relative overflow-hidden px-6 pb-7 pt-6 text-white sm:px-8 sm:pt-8">
@@ -286,12 +297,12 @@ export default function Hero() {
                 </span>
               </div>
               <div className="min-w-0">
-                <div className="otw-rise mb-2 inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-[0.7rem] font-semibold backdrop-blur" style={{ animationDelay: '80ms' }}>
+                <div className="otw-celebrate mb-2 inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-bold backdrop-blur">
                   <span className="relative flex h-2 w-2">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-300 opacity-90" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
                   </span>
-                  {T.badge[lang]}
+                  {T.openToWork.celebrate[lang]}
                 </div>
                 <h2 id="open-to-work-title" className="otw-rise font-display text-[1.7rem] font-extrabold leading-[1.1] tracking-tight drop-shadow-sm sm:text-[2.1rem]" style={{ animationDelay: '140ms' }}>
                   {T.openToWork.title[lang]}
@@ -313,16 +324,132 @@ export default function Hero() {
               {T.openToWork.pitch[lang]}
             </p>
 
-            {/* Roles */}
+            {/* Role tabs */}
             <h3 className="mb-2.5 text-[0.7rem] font-bold uppercase tracking-[2px] text-theme3">{T.openToWork.rolesTitle[lang]}</h3>
-            <div className="mb-6 grid gap-2 sm:grid-cols-3">
-              {T.openToWork.roles.map((role, i) => (
-                <div key={role.name} style={{ animationDelay: `${320 + i * 70}ms` }} className="otw-rise rounded-xl border border-violet-500/20 bg-gradient-to-br from-violet-500/10 to-blue-500/5 p-3 transition-all hover:-translate-y-0.5 hover:border-violet-500/40 hover:shadow-[0_6px_20px_rgba(124,58,237,0.15)]">
-                  <div className="mb-1 flex items-center gap-1.5 text-[0.8rem] font-bold leading-snug text-theme">
-                    <Briefcase size={13} className="shrink-0 text-violet-500 dark:text-violet-400" />
+            <div role="tablist" aria-label={T.openToWork.rolesTitle[lang]} className="otw-rise mb-3 grid grid-cols-3 gap-1.5 rounded-2xl border border-[var(--border2)] bg-[var(--surface2)] p-1.5" style={{ animationDelay: '320ms' }}>
+              {T.openToWork.roles.map((role, i) => {
+                const selected = i === roleIndex
+                return (
+                  <button
+                    key={role.name}
+                    type="button"
+                    role="tab"
+                    id={`otw-tab-${i}`}
+                    aria-selected={selected}
+                    aria-controls="otw-tabpanel"
+                    onClick={() => {
+                      setRoleIndex(i)
+                      setRolePicked(true)
+                    }}
+                    className={`relative overflow-hidden rounded-xl px-2 py-2.5 text-[0.72rem] font-bold leading-tight transition-all sm:text-xs ${
+                      selected
+                        ? 'bg-gradient-to-br from-violet-600 to-blue-500 text-white shadow-[0_4px_16px_rgba(124,58,237,0.35)]'
+                        : 'text-theme2 hover:bg-violet-500/10 hover:text-theme'
+                    }`}
+                  >
                     {role.name}
+                    {selected && !rolePicked && (
+                      <span key={roleIndex} aria-hidden="true" className="otw-progress absolute bottom-0 left-0 h-0.5 bg-white/80" />
+                    )}
+                  </button>
+                )
+              })}
+            </div>
+            <div
+              id="otw-tabpanel"
+              role="tabpanel"
+              aria-labelledby={`otw-tab-${roleIndex}`}
+              key={roleIndex}
+              className="otw-panel mb-6 space-y-5 rounded-2xl border border-violet-500/20 bg-gradient-to-br from-violet-500/10 via-transparent to-blue-500/10 p-4 sm:p-5"
+            >
+              {/* Headline + why me */}
+              <div>
+                <p className="mb-2 font-display text-base font-extrabold leading-snug text-theme sm:text-lg">{T.openToWork.roles[roleIndex].tagline[lang]}</p>
+                <p className="border-l-2 border-violet-500 pl-3 text-sm italic leading-relaxed text-theme2">{T.openToWork.roles[roleIndex].why[lang]}</p>
+              </div>
+
+              {/* Proof metrics */}
+              <div className="grid grid-cols-3 gap-2">
+                {T.openToWork.roles[roleIndex].metrics.map((m, i) => (
+                  <div key={m.value} style={{ animationDelay: `${i * 80}ms` }} className="otw-panel rounded-xl bg-gradient-to-br from-violet-600 to-blue-500 p-3 text-white shadow-[0_6px_20px_rgba(124,58,237,0.25)]">
+                    <div className="font-display text-lg font-extrabold leading-none sm:text-2xl">{m.value}</div>
+                    <div className="mt-1.5 text-[0.65rem] leading-snug text-white/85 sm:text-[0.7rem]">{m.label[lang]}</div>
                   </div>
-                  <p className="text-[0.72rem] leading-snug text-theme2">{role.desc[lang]}</p>
+                ))}
+              </div>
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                {/* Focus areas */}
+                <div>
+                  <h4 className="mb-2 text-[0.68rem] font-bold uppercase tracking-[1.5px] text-violet-600 dark:text-violet-400">{T.openToWork.tabLabels.focus[lang]}</h4>
+                  <ul className="space-y-2">
+                    {T.openToWork.roles[roleIndex].focus.map(f => (
+                      <li key={f.title} className="rounded-xl border border-[var(--border2)] bg-[var(--surface)]/70 p-2.5 transition-all hover:-translate-y-0.5 hover:border-violet-500/40">
+                        <div className="text-[0.8rem] font-bold text-theme">{f.title}</div>
+                        <p className="text-[0.72rem] leading-snug text-theme2">{f.desc[lang]}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Evidence */}
+                <div>
+                  <h4 className="mb-2 text-[0.68rem] font-bold uppercase tracking-[1.5px] text-violet-600 dark:text-violet-400">{T.openToWork.tabLabels.proof[lang]}</h4>
+                  <ol className="relative space-y-3 border-l border-violet-500/30 pl-4">
+                    {T.openToWork.roles[roleIndex].evidence.map(e => (
+                      <li key={e.company} className="relative">
+                        <span className="absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full border-2 border-[var(--surface)] bg-violet-500" />
+                        <div className="text-[0.72rem] font-bold gradient-text">{e.company}</div>
+                        <p className="text-[0.75rem] leading-snug text-theme">{e.text[lang]}</p>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
+
+              {/* Toolkit */}
+              <div>
+                <h4 className="mb-2 text-[0.68rem] font-bold uppercase tracking-[1.5px] text-violet-600 dark:text-violet-400">{T.openToWork.tabLabels.toolkit[lang]}</h4>
+                <div className="flex flex-wrap gap-1.5">
+                  {T.openToWork.roles[roleIndex].toolkit.map(tool => (
+                    <span key={tool} className="rounded-full border border-violet-500/20 bg-gradient-to-r from-violet-500/[0.12] to-blue-500/[0.12] px-2.5 py-1 text-[0.7rem] font-medium text-violet-700 dark:text-violet-300">{tool}</span>
+                  ))}
+                </div>
+              </div>
+
+              {/* First 90 days */}
+              <div>
+                <h4 className="mb-2 text-[0.68rem] font-bold uppercase tracking-[1.5px] text-violet-600 dark:text-violet-400">{T.openToWork.tabLabels.plan[lang]}</h4>
+                <div className="grid gap-2 sm:grid-cols-3">
+                  {T.openToWork.roles[roleIndex].plan.map((step, i) => (
+                    <div key={i} className="flex gap-2.5 rounded-xl border border-[var(--border2)] bg-[var(--surface)]/70 p-2.5">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-600 to-blue-500 text-[0.7rem] font-bold text-white">{i + 1}</span>
+                      <p className="text-[0.72rem] leading-snug text-theme">{step[lang]}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Employment type + work style */}
+            <div className="mb-6 grid gap-4 sm:grid-cols-2">
+              {[
+                { title: T.openToWork.employmentTitle[lang], items: T.openToWork.employment, tone: 'border-blue-500/20 bg-blue-500/5', icon: 'text-blue-500' },
+                { title: T.openToWork.conditionsTitle[lang], items: T.openToWork.conditions, tone: 'border-green-500/20 bg-green-500/5', icon: 'text-green-500' },
+              ].map(group => (
+                <div key={group.title}>
+                  <h3 className="mb-2.5 text-[0.7rem] font-bold uppercase tracking-[2px] text-theme3">{group.title}</h3>
+                  <div className={`grid gap-2 ${group.items.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+                    {group.items.map(c => (
+                      <div key={c.title} className={`flex items-center gap-2.5 rounded-xl border px-3 py-2.5 ${group.tone}`}>
+                        <CheckCircle2 size={16} className={`shrink-0 ${group.icon}`} />
+                        <div>
+                          <div className="text-[0.8rem] font-bold text-theme">{c.title}</div>
+                          <div className="text-[0.68rem] leading-snug text-theme2">{c.desc[lang]}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>

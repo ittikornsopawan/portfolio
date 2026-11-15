@@ -122,8 +122,8 @@ export default function Skills() {
                     key={skill.name}
                     className={`text-[0.8rem] font-medium px-3 py-1.5 rounded-full border transition-all duration-150 cursor-default select-none ${
                       skill.hot
-                        ? 'bg-gradient-to-r from-violet-500/12 to-blue-500/12 border-violet-500/28 text-violet-600 dark:text-violet-300 hover:from-violet-500/22 hover:to-blue-500/22'
-                        : 'surface-2 border-theme text-theme2 hover:border-violet-500/25 hover:bg-violet-500/6'
+                        ? 'bg-gradient-to-r from-violet-500/[0.12] to-blue-500/[0.12] border-violet-500/[0.28] text-violet-600 dark:text-violet-300 hover:from-violet-500/[0.22] hover:to-blue-500/[0.22]'
+                        : 'surface-2 border-theme text-theme2 hover:border-violet-500/25 hover:bg-violet-500/[0.06]'
                     }`}
                   >
                     {skill.name}
@@ -146,9 +146,9 @@ export default function Skills() {
         </h3>
       </RevealWrapper>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         {competencies.map((c, i) => (
-          <RevealWrapper key={c.label} delay={i * 60} className={c.span ? 'col-span-2' : ''}>
+          <RevealWrapper key={c.label} delay={i * 60} className={c.span ? 'sm:col-span-2' : ''}>
             <div className="glass-card p-6 h-full flex flex-col gap-4">
               <div
                 className="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-600 to-blue-500 flex items-center justify-center shadow-[0_6px_16px_rgba(124,58,237,0.32)] shrink-0 icon-box"

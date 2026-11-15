@@ -59,7 +59,7 @@ export default function Navbar() {
             <li key={l.href}>
               <a
                 href={l.href}
-                className="whitespace-nowrap text-sm font-medium px-2.5 py-2 rounded-lg text-theme2 hover:text-theme hover:bg-violet-500/8 transition-all duration-150"
+                className="whitespace-nowrap text-sm font-medium px-2.5 py-2 rounded-lg text-theme2 hover:text-theme hover:bg-violet-500/[0.08] transition-all duration-150"
               >
                 {l.label}
               </a>
@@ -99,7 +99,7 @@ export default function Navbar() {
           <button
             onClick={() => setTheme(isDark ? 'light' : 'dark')}
             aria-label="Toggle theme"
-            className="w-9 h-9 rounded-xl bg-[var(--surface2)] border border-[var(--border)] flex items-center justify-center text-theme2 hover:text-theme hover:border-violet-500/30 hover:bg-violet-500/8 transition-all duration-200"
+            className="w-9 h-9 rounded-xl bg-[var(--surface2)] border border-[var(--border)] flex items-center justify-center text-theme2 hover:text-theme hover:border-violet-500/30 hover:bg-violet-500/[0.08] transition-all duration-200"
           >
             {mounted ? (isDark ? <Sun size={16} /> : <Moon size={16} />) : <span className="w-4 h-4" />}
           </button>

@@ -1,19 +1,19 @@
 'use client'
 
-import { Mail, Phone, Link2, MapPin, Send, Clock } from 'lucide-react'
+import { Mail, Phone, Link2, MapPin, Clock, ArrowUpRight } from 'lucide-react'
 import RevealWrapper from './RevealWrapper'
 import type { LucideIcon } from 'lucide-react'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
 
-interface ContactLink { Icon: LucideIcon; label: string; sub?: string; href: string }
+interface ContactLink { Icon: LucideIcon; label: string; sub?: string; href?: string }
 
 const contactLinks: ContactLink[] = [
   { Icon: Mail,   label: 'Email',        sub: 'ittikorn.sopawan@gmail.com',      href: 'mailto:ittikorn.sopawan@gmail.com'        },
   { Icon: Phone,  label: 'Phone',        sub: '(+66) 09 9116 1274',               href: 'tel:+66099116274'                         },
   { Icon: Link2,  label: 'LinkedIn',     sub: 'linkedin.com/in/ittikorn-sopawan', href: 'https://linkedin.com/in/ittikorn-sopawan' },
-  { Icon: MapPin, label: 'Location',     sub: 'Thailand',                         href: '#'                                        },
-  { Icon: Clock,  label: 'Availability', sub: '30 Days Notice',                   href: '#'                                        },
+  { Icon: MapPin, label: 'Location',     sub: 'Thailand'                                                                           },
+  { Icon: Clock,  label: 'Availability', sub: '30 Days Notice'                                                                     },
 ]
 
 export default function Contact() {
@@ -43,50 +43,71 @@ export default function Contact() {
               <br />
               <span className="gradient-text">{T.title2[lang]}</span>
             </h2>
-            <p className="text-theme2 text-[1rem] leading-relaxed max-w-sm mb-6">
+            <p className="text-theme2 text-[1rem] leading-relaxed max-w-sm">
               {T.subtitle[lang]}
             </p>
-
-            {/* Availability indicator */}
-            <div className="flex items-center gap-2.5 mb-8 p-3.5 rounded-xl card-surface w-fit">
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500" />
-              </span>
-              <span className="text-sm font-medium text-theme2">
-                {T.available[lang]}<strong className="text-theme">{T.notice[lang]}</strong>
-              </span>
-            </div>
-
-            <a
-              href="mailto:ittikorn.sopawan@gmail.com"
-              className="inline-flex items-center gap-2.5 bg-gradient-to-r from-violet-600 to-blue-500 text-white font-semibold px-7 py-3.5 rounded-xl text-[0.92rem] shadow-[0_4px_20px_rgba(124,58,237,0.35)] hover:shadow-[0_8px_30px_rgba(124,58,237,0.5)] hover:-translate-y-0.5 transition-all duration-200"
-            >
-              <Send size={16} strokeWidth={2.5} />
-              {T.sendEmail[lang]}
-            </a>
           </RevealWrapper>
 
           {/* Right */}
           <RevealWrapper delay={120}>
-            <div className="glass-card p-6 flex flex-col gap-2">
-              {contactLinks.map(link => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="flex items-center gap-4 p-4 rounded-xl surface-2 border border-[var(--border2)] hover:border-violet-500/25 hover:bg-violet-500/6 transition-all duration-200 group"
-                >
-                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600/15 to-blue-500/15 border border-violet-500/20 flex items-center justify-center shrink-0 group-hover:from-violet-600 group-hover:to-blue-500 transition-all duration-200 icon-box">
-                    <link.Icon size={15} className="text-violet-500 dark:text-violet-400 group-hover:text-white transition-colors" strokeWidth={2} />
-                  </div>
-                  <div>
-                    <div className="text-xs font-semibold text-theme3 uppercase tracking-wider">{link.label}</div>
-                    <div className="text-sm font-medium text-theme2 group-hover:text-theme transition-colors mt-0.5">
-                      {link.sub}
-                    </div>
-                  </div>
-                </a>
-              ))}
+            <div className="contact-card relative">
+              <div className="glass-card relative flex flex-col gap-2 p-6 shadow-[0_20px_60px_rgba(124,58,237,0.25)]">
+                {contactLinks.map((link, i) => {
+                  const primary = i === 0
+                  const availability = link.label === 'Availability'
+                  const Row = link.href ? 'a' : 'div'
+                  return (
+                    <Row
+                      key={link.label}
+                      {...(link.href ? { href: link.href, ...(link.href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {}) } : {})}
+                      className={`group flex items-center gap-4 rounded-xl p-4 transition-all duration-200 ${
+                        primary
+                          ? 'bg-gradient-to-r from-violet-600 to-blue-500 text-white shadow-[0_8px_24px_rgba(124,58,237,0.4)] hover:-translate-y-0.5 hover:shadow-[0_12px_32px_rgba(124,58,237,0.55)]'
+                          : availability
+                            ? 'bg-gradient-to-r from-violet-600 to-blue-500 text-white shadow-[0_8px_24px_rgba(124,58,237,0.4)]'
+                            : `surface-2 border border-[var(--border2)] ${link.href ? 'hover:border-violet-500/40 hover:bg-violet-500/[0.06] hover:translate-x-1' : ''}`
+                      }`}
+                    >
+                      <div
+                        className={`icon-box flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all duration-200 ${
+                          primary
+                            ? 'bg-white/20'
+                            : availability
+                              ? 'bg-white/20'
+                              : 'border border-violet-500/20 bg-gradient-to-br from-violet-600/15 to-blue-500/15 group-hover:from-violet-600 group-hover:to-blue-500'
+                        }`}
+                      >
+                        {availability ? (
+                          <span className="relative flex h-2.5 w-2.5">
+                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
+                            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-white" />
+                          </span>
+                        ) : (
+                          <link.Icon
+                            size={16}
+                            strokeWidth={2}
+                            className={primary ? 'text-white' : 'text-violet-500 transition-colors group-hover:text-white dark:text-violet-400'}
+                          />
+                        )}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className={`text-xs font-semibold uppercase tracking-wider ${primary ? 'text-white/75' : availability ? 'text-white/75' : 'text-theme3'}`}>
+                          {link.label}
+                        </div>
+                        <div className={`mt-0.5 truncate font-semibold ${primary ? 'text-[0.95rem] text-white' : availability ? 'text-[0.95rem] text-white' : 'text-sm text-theme2 transition-colors group-hover:text-theme'}`}>
+                          {link.sub}
+                        </div>
+                      </div>
+                      {link.href && (
+                        <ArrowUpRight
+                          size={18}
+                          className={`shrink-0 transition-all duration-200 ${primary ? 'text-white' : 'text-theme3 opacity-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100 group-hover:text-violet-500'}`}
+                        />
+                      )}
+                    </Row>
+                  )
+                })}
+              </div>
             </div>
           </RevealWrapper>
 
