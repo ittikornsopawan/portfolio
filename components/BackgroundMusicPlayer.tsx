@@ -7,17 +7,52 @@ import { i18n } from '@/lib/i18n'
 
 export default function BackgroundMusicPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null)
+  const playerRef = useRef<HTMLDivElement>(null)
+  const analyserRef = useRef<AnalyserNode | null>(null)
+  const audioCtxRef = useRef<AudioContext | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [autoplayBlocked, setAutoplayBlocked] = useState(false)
   const { lang } = useLang()
   const T = i18n.musicPlayer
 
+  // Must run inside a user gesture: a suspended AudioContext would silence the routed <audio>.
+  const startVisualizer = () => {
+    const audio = audioRef.current
+    if (!audio) return
+    if (audioCtxRef.current) {
+      void audioCtxRef.current.resume()
+      return
+    }
+    try {
+      const ctx = new AudioContext()
+      const analyser = ctx.createAnalyser()
+      analyser.fftSize = 256
+      analyser.smoothingTimeConstant = 0.6
+      ctx.createMediaElementSource(audio).connect(analyser)
+      analyser.connect(ctx.destination)
+      audioCtxRef.current = ctx
+      analyserRef.current = analyser
+    } catch (error) {
+      console.error('Music visualizer unavailable', error)
+    }
+  }
+
   useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
 
+    // Browsers block autoplay with sound until the first interaction; start on that interaction instead.
+    const events = ['click', 'keydown', 'touchend'] as const
+    const onFirstGesture = (event: Event) => {
+      if (playerRef.current?.contains(event.target as Node)) return // the play button handles itself
+      events.forEach(name => window.removeEventListener(name, onFirstGesture))
+      startVisualizer()
+      if (audio.paused) void audio.play().catch(() => {})
+    }
+    events.forEach(name => window.addEventListener(name, onFirstGesture))
+
     let cancelled = false
-    audio.volume = 0.12
+    audio.volume = 0.05
     void audio.play().catch(error => {
       if (cancelled) return
 
@@ -31,9 +66,36 @@ export default function BackgroundMusicPlayer() {
 
     return () => {
       cancelled = true
+      events.forEach(name => window.removeEventListener(name, onFirstGesture))
       audio.pause()
     }
   }, [])
+
+  // Feed bass energy into --beat (0..1) on the player; CSS turns it into the pulse.
+  useEffect(() => {
+    const el = playerRef.current
+    if (!el) return
+    if (!isPlaying || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.style.setProperty('--beat', '0')
+      return
+    }
+    const bins = new Uint8Array(128)
+    let beat = 0
+    let avg = 0
+    let frame = requestAnimationFrame(function tick() {
+      const analyser = analyserRef.current
+      if (analyser) {
+        analyser.getByteFrequencyData(bins)
+        const bass = (bins[1] + bins[2] + bins[3] + bins[4]) / (4 * 255)
+        avg = avg * 0.95 + bass * 0.05
+        // energy above the running average = a hit; fast attack, smooth decay
+        beat = Math.max(Math.min(1, Math.max(0, (bass - avg) * 6 + 0.1)), beat * 0.9)
+        el.style.setProperty('--beat', beat.toFixed(3))
+      }
+      frame = requestAnimationFrame(tick)
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [isPlaying])
 
   const togglePlayback = async () => {
     const audio = audioRef.current
@@ -44,6 +106,7 @@ export default function BackgroundMusicPlayer() {
       return
     }
 
+    startVisualizer()
     try {
       await audio.play()
       setAutoplayBlocked(false)
@@ -74,11 +137,12 @@ export default function BackgroundMusicPlayer() {
         onPause={() => setIsPlaying(false)}
         onError={() => console.error('Background music failed to load from /background-music.mp3')}
       />
-      <div className="fixed bottom-6 right-6 z-[60] h-[72px] w-[72px]">
+      <div ref={playerRef} className="vinyl-player fixed bottom-6 right-6 z-[60] h-[72px] w-[72px]">
         <span
           aria-hidden="true"
           className={`vinyl-glow ${isPlaying ? 'is-playing' : ''}`}
         />
+        <span aria-hidden="true" className="vinyl-beat-ring" />
         <span
           aria-hidden="true"
           className={`vinyl-ripple ${isPlaying ? 'is-playing' : ''}`}

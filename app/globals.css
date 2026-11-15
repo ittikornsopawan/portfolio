@@ -113,6 +113,39 @@
     flex-shrink: 0;
   }
 
+  /* --beat (0..1) is set per frame from the music's bass; `scale` stacks on top of the transform animations */
+  .vinyl-player {
+    --beat: 0;
+  }
+
+  .vinyl-player .vinyl-disc {
+    scale: calc(1 + var(--beat) * 0.1);
+  }
+
+  .vinyl-player .vinyl-glow.is-playing {
+    scale: calc(1 + var(--beat) * 0.6);
+    opacity: calc(0.5 + var(--beat) * 0.5);
+  }
+
+  .vinyl-player button {
+    scale: calc(1 + var(--beat) * 0.12);
+  }
+
+  .vinyl-beat-ring {
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(139,92,246,0.85);
+    box-shadow: 0 0 18px rgba(236,72,153,0.5), inset 0 0 12px rgba(56,189,248,0.35);
+    opacity: calc(var(--beat) * 1.1 - 0.1);
+    scale: calc(1 + var(--beat) * 0.45);
+    pointer-events: none;
+  }
+
+  .dark .vinyl-beat-ring {
+    border-color: rgba(196,181,253,0.9);
+  }
+
   .vinyl-disc {
     overflow: hidden;
     background-color: #cfe2f3;
