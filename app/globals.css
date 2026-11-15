@@ -7,6 +7,100 @@
   backdrop-filter: blur(8px);
 }
 
+.open-to-work-dialog[open]::backdrop {
+  animation: otw-fade 0.4s ease-out;
+}
+
+.open-to-work-dialog[open] .otw-card {
+  animation: otw-pop 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.15);
+}
+
+.otw-banner {
+  background: linear-gradient(120deg, #7c3aed, #c026d3, #3b82f6, #7c3aed);
+  background-size: 300% 300%;
+  animation: otw-flow 10s ease-in-out infinite;
+}
+
+.otw-ring {
+  background: conic-gradient(#22c55e, #4ade80, #a3e635, #22c55e);
+  animation: spin 4s linear infinite;
+}
+
+.open-to-work-dialog[open] .otw-rise {
+  animation: otw-rise 0.5s ease-out both;
+}
+
+.otw-sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #fff;
+  box-shadow: 0 0 10px 2px rgba(255,255,255,0.8);
+  pointer-events: none;
+  animation: otw-twinkle 3.6s ease-in-out infinite;
+}
+
+.otw-confetti {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px;
+  border-radius: 2px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.open-to-work-dialog[open] .otw-confetti {
+  animation: otw-burst 1.1s cubic-bezier(0.15, 0.8, 0.3, 1) 0.35s both;
+}
+
+.otw-swap {
+  display: inline-block;
+  animation: otw-swap 0.45s ease-out;
+}
+
+.otw-shine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.45) 50%, transparent 65%);
+  transform: translateX(-100%);
+  animation: otw-shine 3.2s ease-in-out 1.2s infinite;
+}
+
+@keyframes otw-fade { from { opacity: 0; } }
+@keyframes otw-twinkle {
+  0%, 100% { opacity: 0; transform: translateY(0) scale(0.4); }
+  50% { opacity: 0.9; transform: translateY(-10px) scale(1); }
+}
+@keyframes otw-burst {
+  0% { opacity: 1; transform: rotate(var(--angle)) translateY(0) rotate(0deg); }
+  70% { opacity: 1; }
+  100% { opacity: 0; transform: rotate(var(--angle)) translateY(-78px) rotate(240deg); }
+}
+@keyframes otw-swap { from { opacity: 0; transform: translateY(8px); filter: blur(4px); } }
+@keyframes otw-shine { 0% { transform: translateX(-100%); } 40%, 100% { transform: translateX(100%); } }
+@keyframes otw-pop { from { opacity: 0; transform: translateY(24px) scale(0.94); } }
+@keyframes otw-rise { from { opacity: 0; transform: translateY(10px); } }
+@keyframes otw-flow { 50% { background-position: 100% 50%; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .open-to-work-dialog[open]::backdrop,
+  .open-to-work-dialog[open] .otw-card,
+  .open-to-work-dialog[open] .otw-rise,
+  .otw-banner,
+  .otw-ring,
+  .otw-sparkle,
+  .otw-swap,
+  .otw-shine::after,
+  .open-to-work-dialog[open] .otw-confetti {
+    animation: none;
+  }
+}
+
 /* ─── Theme tokens ─── */
 @layer base {
   :root {
@@ -127,7 +221,7 @@
     opacity: calc(0.5 + var(--beat) * 0.5);
   }
 
-  .vinyl-player button {
+  .vinyl-player > button {
     scale: calc(1 + var(--beat) * 0.12);
   }
 
@@ -321,6 +415,10 @@
       transform: translate(-2px, 4px) rotate(-8deg) scale(0.94);
       border-radius: 54% 46% 67% 33% / 48% 62% 38% 52%;
     }
+  }
+
+  @keyframes music-prompt-in {
+    from { opacity: 0; transform: translateY(8px) scale(0.96); }
   }
 
   @keyframes liquid-ripple {

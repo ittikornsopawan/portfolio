@@ -18,6 +18,10 @@ export const i18n = {
     play: { en: "Play background music", th: "เล่นเพลงพื้นหลัง" },
     pause: { en: "Pause background music", th: "หยุดเพลงพื้นหลัง" },
     autoplayBlocked: { en: "Click to start music", th: "คลิกเพื่อเริ่มเล่นเพลง" },
+    promptTitle: { en: "This site has background music", th: "เว็บนี้มีเพลงประกอบ" },
+    promptBody: { en: "Your browser paused it. Turn it on for the full experience?", th: "เบราว์เซอร์หยุดเสียงไว้ เปิดเพลงฟังระหว่างดูเว็บไหม?" },
+    promptAccept: { en: "Play music", th: "เปิดเพลง" },
+    promptDismiss: { en: "Not now", th: "ไว้ก่อน" },
   },
   hero: {
     badge: {
@@ -27,18 +31,55 @@ export const i18n = {
     openToWork: {
       badge: { en: "Open to Work", th: "Open to Work" },
       title: { en: "Open to the right opportunity", th: "พร้อมรับโอกาสที่ใช่" },
-      description: {
-        en: "Currently open to opportunities in these roles:",
-        th: "เปิดรับโอกาสใหม่ในตำแหน่งต่อไปนี้:",
+      pitch: {
+        en: "A system analyst and solution architect who turns business goals into systems that ship — 10 years across enterprise, e-commerce, logistics and cloud.",
+        th: "System Analyst และ Solution Architect ที่เปลี่ยนเป้าหมายธุรกิจให้เป็นระบบที่ใช้งานได้จริง ประสบการณ์ 10 ปีใน Enterprise, E-Commerce, Logistics และ Cloud",
       },
-      roles: {
-        en: ["Technical Product Owner", "System Analyst", "Solution Architect"],
-        th: ["Technical Product Owner", "System Analyst", "Solution Architect"],
+      rolesTitle: { en: "Roles I'm looking for", th: "ตำแหน่งที่มองหา" },
+      lookingFor: { en: "Looking for", th: "กำลังมองหา" },
+      roles: [
+        {
+          name: "Technical Product Owner",
+          desc: { en: "Own the backlog and bridge business with engineering", th: "ดูแล Backlog และเชื่อมธุรกิจกับทีมพัฒนา" },
+        },
+        {
+          name: "System Analyst",
+          desc: { en: "Turn requirements into clear specs, flows and data models", th: "แปลง Requirement เป็น Spec, Flow และ Data Model ที่ชัดเจน" },
+        },
+        {
+          name: "Solution Architect",
+          desc: { en: "Design scalable architecture from concept to production", th: "ออกแบบสถาปัตยกรรมที่ขยายได้ ตั้งแต่ Concept ถึง Production" },
+        },
+      ],
+      fitTitle: { en: "We're a great match if you…", th: "เราเหมาะกันถ้าคุณ…" },
+      fit: {
+        en: [
+          "Are building or modernizing an enterprise platform",
+          "Need someone who speaks both business and tech",
+          "Work in complex domains like e-commerce, logistics or cloud",
+          "Are moving toward DDD, event-driven or microservices",
+          "Want a hands-on lead for client-facing solution design",
+        ],
+        th: [
+          "กำลังสร้างหรือปรับปรุงแพลตฟอร์มระดับ Enterprise",
+          "ต้องการคนที่สื่อสารได้ทั้งฝั่งธุรกิจและเทคนิค",
+          "ทำงานในโดเมนซับซ้อน เช่น E-Commerce, Logistics หรือ Cloud",
+          "กำลังขยับไปสู่ DDD, Event-Driven หรือ Microservices",
+          "ต้องการคนนำออกแบบ Solution ที่คุยกับลูกค้าได้",
+        ],
       },
-      packageTitle: { en: "Compensation package", th: "แพ็กเกจค่าตอบแทน" },
-      packageDescription: {
-        en: "Package is discussed based on the role and scope. Please get in touch for details.",
-        th: "รายละเอียดแพ็กเกจพิจารณาตามตำแหน่งและขอบเขตงาน กรุณาติดต่อเพื่อสอบถามเพิ่มเติม",
+      facts: {
+        years: { en: "Years experience", th: "ปีประสบการณ์" },
+        companies: { en: "Companies", th: "บริษัท" },
+        level: { en: "Current level", th: "ระดับปัจจุบัน" },
+        levelValue: { en: "Supervisor", th: "Supervisor" },
+        notice: { en: "Notice period", th: "แจ้งล่วงหน้า" },
+        noticeValue: { en: "30 days", th: "30 วัน" },
+      },
+      location: { en: "Based in Thailand", th: "อยู่ที่ประเทศไทย" },
+      packageNote: {
+        en: "Package discussed based on role & scope",
+        th: "แพ็กเกจพิจารณาตามตำแหน่งและขอบเขตงาน",
       },
       contact: { en: "Discuss role & package", th: "สอบถามตำแหน่งและแพ็กเกจ" },
       close: { en: "Close dialog", th: "ปิดหน้าต่าง" },

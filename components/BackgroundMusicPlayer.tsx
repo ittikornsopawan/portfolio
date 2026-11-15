@@ -12,6 +12,7 @@ export default function BackgroundMusicPlayer() {
   const audioCtxRef = useRef<AudioContext | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [autoplayBlocked, setAutoplayBlocked] = useState(false)
+  const [promptDismissed, setPromptDismissed] = useState(false)
   const { lang } = useLang()
   const T = i18n.musicPlayer
 
@@ -138,6 +139,33 @@ export default function BackgroundMusicPlayer() {
         onError={() => console.error('Background music failed to load from /background-music.mp3')}
       />
       <div ref={playerRef} className="vinyl-player fixed bottom-6 right-6 z-[60] h-[72px] w-[72px]">
+        {/* Inside playerRef so its clicks don't trigger the first-gesture autoplay */}
+        {autoplayBlocked && !isPlaying && !promptDismissed && (
+          <div
+            role="dialog"
+            aria-label={T.promptTitle[lang]}
+            className="absolute bottom-[88px] right-0 w-64 animate-[music-prompt-in_0.35s_ease-out] rounded-2xl border border-violet-200/70 bg-white/90 p-4 text-left shadow-[0_12px_32px_rgba(76,29,149,0.18)] backdrop-blur-md dark:border-violet-400/20 dark:bg-slate-900/90 dark:shadow-[0_12px_32px_rgba(0,0,0,0.55)]"
+          >
+            <p className="text-sm font-semibold text-slate-900 dark:text-white">♪ {T.promptTitle[lang]}</p>
+            <p className="mt-1 text-xs leading-relaxed text-slate-600 dark:text-slate-300">{T.promptBody[lang]}</p>
+            <div className="mt-3 flex gap-2">
+              <button
+                type="button"
+                onClick={togglePlayback}
+                className="flex-1 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-3 py-1.5 text-xs font-semibold text-white shadow-md transition hover:brightness-110"
+              >
+                {T.promptAccept[lang]}
+              </button>
+              <button
+                type="button"
+                onClick={() => setPromptDismissed(true)}
+                className="rounded-full px-3 py-1.5 text-xs font-medium text-slate-500 transition hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-white/5"
+              >
+                {T.promptDismiss[lang]}
+              </button>
+            </div>
+          </div>
+        )}
         <span
           aria-hidden="true"
           className={`vinyl-glow ${isPlaying ? 'is-playing' : ''}`}

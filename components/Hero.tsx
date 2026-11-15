@@ -1,13 +1,18 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { ArrowRight, ArrowUpRight, Mail, Sparkles, Download, Layers, Users, Briefcase, X } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Mail, Sparkles, Download, Layers, Users, Briefcase, X, CheckCircle2, MapPin } from 'lucide-react'
 import Image from 'next/image'
 import RevealWrapper from './RevealWrapper'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
 
 const T = i18n.hero
+
+// Decorative positions for banner sparkles and the confetti burst around the avatar
+const SPARKLES = [[8, 20], [22, 70], [38, 12], [55, 78], [68, 25], [82, 62], [92, 18], [46, 45]]
+const CONFETTI = ['#22c55e', '#facc15', '#f472b6', '#38bdf8', '#a78bfa', '#fb923c']
+  .flatMap((color, i) => [0, 1].map(k => ({ color, angle: (i * 2 + k) * 30 })))
 
 function calculateAge() {
   const today = new Date()
@@ -19,9 +24,21 @@ export default function Hero() {
   const { lang } = useLang()
   const openToWorkDialog = useRef<HTMLDialogElement>(null)
   const [age, setAge] = useState<number | null>(null)
+  const [roleIndex, setRoleIndex] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => setRoleIndex(i => (i + 1) % T.openToWork.roles.length), 2200)
+    return () => clearInterval(timer)
+  }, [])
 
   useEffect(() => {
     setAge(calculateAge())
+    // Greet every visitor with the open-to-work modal once the page has settled
+    const timer = setTimeout(() => {
+      const dialog = openToWorkDialog.current
+      if (dialog && !dialog.open) dialog.showModal()
+    }, 700)
+    return () => clearTimeout(timer)
   }, [])
 
   const stats = [
@@ -229,65 +246,138 @@ export default function Hero() {
         onClick={event => {
           if (event.target === event.currentTarget) event.currentTarget.close()
         }}
-        className="open-to-work-dialog fixed inset-0 m-auto w-[calc(100vw-2rem)] max-w-xl max-h-[calc(100dvh-2rem)] overflow-y-auto border-0 bg-transparent p-0 text-left shadow-none"
+        className="open-to-work-dialog fixed inset-0 m-auto w-[calc(100vw-2rem)] max-w-2xl max-h-[calc(100dvh-2rem)] overflow-y-auto border-0 bg-transparent p-0 text-left shadow-none"
       >
-        <div className="glass-card relative w-full max-w-xl overflow-hidden p-6 shadow-[0_24px_100px_rgba(0,0,0,0.5)] sm:p-8">
-          <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-violet-600/20 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-24 -left-20 h-48 w-48 rounded-full bg-blue-500/15 blur-3xl" />
-          <div className="relative">
-            <div className="mb-6 flex items-start justify-between gap-4">
-              <div>
-                <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-green-500/25 bg-green-500/10 px-3 py-1 text-xs font-semibold text-green-600 dark:text-green-400">
+        <div className="otw-card glass-card relative w-full overflow-hidden p-0 shadow-[0_24px_100px_rgba(0,0,0,0.5)]">
+          {/* Hero banner */}
+          <div className="otw-banner relative overflow-hidden px-6 pb-7 pt-6 text-white sm:px-8 sm:pt-8">
+            <div className="pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full bg-white/20 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-20 left-10 h-40 w-40 rounded-full bg-cyan-300/30 blur-3xl" />
+            {SPARKLES.map(([x, y], i) => (
+              <span
+                key={i}
+                aria-hidden="true"
+                className="otw-sparkle"
+                style={{ left: `${x}%`, top: `${y}%`, animationDelay: `${i * 0.45}s` }}
+              />
+            ))}
+            <button
+              type="button"
+              onClick={() => openToWorkDialog.current?.close()}
+              aria-label={T.openToWork.close[lang]}
+              className="absolute right-4 top-4 z-10 inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/15 text-white backdrop-blur transition-colors hover:bg-white/25"
+            >
+              <X size={18} />
+            </button>
+            <div className="relative flex flex-col items-center text-center sm:flex-row sm:items-center sm:gap-6 sm:text-left">
+              <div className="otw-rise relative mb-4 h-24 w-24 shrink-0 sm:mb-0">
+                <span className="otw-ring absolute -inset-1.5 rounded-full" />
+                {CONFETTI.map(({ color, angle }) => (
+                  <span
+                    key={angle}
+                    aria-hidden="true"
+                    className="otw-confetti"
+                    style={{ background: color, '--angle': `${angle}deg` } as React.CSSProperties}
+                  />
+                ))}
+                <Image src="/profile.jpeg" alt="" width={192} height={192} className="relative h-full w-full rounded-full border-[3px] border-white object-cover object-top shadow-xl" />
+                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-green-500 px-2.5 py-0.5 text-[0.6rem] font-extrabold uppercase tracking-wider text-white shadow-md">
+                  #OpenToWork
+                </span>
+              </div>
+              <div className="min-w-0">
+                <div className="otw-rise mb-2 inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-[0.7rem] font-semibold backdrop-blur" style={{ animationDelay: '80ms' }}>
                   <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-300 opacity-90" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
                   </span>
                   {T.badge[lang]}
                 </div>
-                <h2 id="open-to-work-title" className="font-display text-2xl font-extrabold tracking-tight text-theme sm:text-3xl">
+                <h2 id="open-to-work-title" className="otw-rise font-display text-[1.7rem] font-extrabold leading-[1.1] tracking-tight drop-shadow-sm sm:text-[2.1rem]" style={{ animationDelay: '140ms' }}>
                   {T.openToWork.title[lang]}
                 </h2>
+                <p className="otw-rise mt-1.5 text-sm font-medium text-white/85" style={{ animationDelay: '200ms' }}>
+                  {T.name[lang]}
+                </p>
+                <p className="otw-rise mt-3 inline-flex items-center gap-2 rounded-lg bg-black/15 px-3 py-1.5 text-sm" style={{ animationDelay: '240ms' }} aria-live="polite">
+                  <span className="text-white/75">{T.openToWork.lookingFor[lang]}</span>
+                  <ArrowRight size={14} className="text-white/60" />
+                  <span key={roleIndex} className="otw-swap font-bold">{T.openToWork.roles[roleIndex].name}</span>
+                </p>
               </div>
-              <button
-                type="button"
-                onClick={() => openToWorkDialog.current?.close()}
-                aria-label={T.openToWork.close[lang]}
-                className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface2)] text-theme2 transition-colors hover:border-violet-500/40 hover:text-theme"
-              >
-                <X size={18} />
-              </button>
             </div>
+          </div>
 
-            <p id="open-to-work-description" className="mb-5 text-sm leading-relaxed text-theme2">
-              {T.openToWork.description[lang]}
+          <div className="relative p-6 sm:p-8">
+            <p id="open-to-work-description" className="otw-rise mb-6 text-sm leading-relaxed text-theme2" style={{ animationDelay: '260ms' }}>
+              {T.openToWork.pitch[lang]}
             </p>
 
+            {/* Roles */}
+            <h3 className="mb-2.5 text-[0.7rem] font-bold uppercase tracking-[2px] text-theme3">{T.openToWork.rolesTitle[lang]}</h3>
             <div className="mb-6 grid gap-2 sm:grid-cols-3">
-              {T.openToWork.roles[lang].map(role => (
-                <div key={role} className="flex min-h-14 items-center gap-2 rounded-xl border border-violet-500/15 bg-violet-500/5 px-3 py-2.5 text-xs font-semibold leading-snug text-theme">
-                  <Briefcase size={14} className="shrink-0 text-violet-500 dark:text-violet-400" />
-                  {role}
+              {T.openToWork.roles.map((role, i) => (
+                <div key={role.name} style={{ animationDelay: `${320 + i * 70}ms` }} className="otw-rise rounded-xl border border-violet-500/20 bg-gradient-to-br from-violet-500/10 to-blue-500/5 p-3 transition-all hover:-translate-y-0.5 hover:border-violet-500/40 hover:shadow-[0_6px_20px_rgba(124,58,237,0.15)]">
+                  <div className="mb-1 flex items-center gap-1.5 text-[0.8rem] font-bold leading-snug text-theme">
+                    <Briefcase size={13} className="shrink-0 text-violet-500 dark:text-violet-400" />
+                    {role.name}
+                  </div>
+                  <p className="text-[0.72rem] leading-snug text-theme2">{role.desc[lang]}</p>
                 </div>
               ))}
             </div>
 
-            <div className="mb-6 rounded-2xl border border-blue-500/20 bg-blue-500/5 p-4">
-              <div className="mb-1 flex items-center gap-2 text-sm font-bold text-theme">
-                <Sparkles size={15} className="text-blue-500 dark:text-blue-400" />
-                {T.openToWork.packageTitle[lang]}
-              </div>
-              <p className="text-sm leading-relaxed text-theme2">{T.openToWork.packageDescription[lang]}</p>
+            {/* Fit check */}
+            <h3 className="mb-2.5 text-[0.7rem] font-bold uppercase tracking-[2px] text-theme3">{T.openToWork.fitTitle[lang]}</h3>
+            <ul className="mb-6 space-y-2">
+              {T.openToWork.fit[lang].map((item, i) => (
+                <li key={item} style={{ animationDelay: `${500 + i * 60}ms` }} className="otw-rise flex items-start gap-2.5 text-sm leading-snug text-theme">
+                  <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-green-500" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            {/* Quick facts */}
+            <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+              {[
+                { value: '10+', label: T.openToWork.facts.years[lang] },
+                { value: '6', label: T.openToWork.facts.companies[lang] },
+                { value: T.openToWork.facts.levelValue[lang], label: T.openToWork.facts.level[lang] },
+                { value: T.openToWork.facts.noticeValue[lang], label: T.openToWork.facts.notice[lang] },
+              ].map(f => (
+                <div key={f.label} className="rounded-xl border border-[var(--border2)] bg-[var(--surface2)] px-3 py-2.5 text-center">
+                  <div className="font-display text-base font-extrabold leading-tight gradient-text">{f.value}</div>
+                  <div className="mt-0.5 text-[0.65rem] font-medium text-theme3">{f.label}</div>
+                </div>
+              ))}
             </div>
 
-            <a
-              href="#contact"
-              onClick={() => openToWorkDialog.current?.close()}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-blue-500 px-5 py-3 text-sm font-semibold text-white shadow-[0_4px_20px_rgba(124,58,237,0.3)] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(124,58,237,0.45)]"
-            >
-              <Mail size={16} />
-              {T.openToWork.contact[lang]}
-              <ArrowUpRight size={15} />
-            </a>
+            <div className="mb-6 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-theme2">
+              <span className="inline-flex items-center gap-1.5"><MapPin size={13} className="text-violet-500" />{T.openToWork.location[lang]}</span>
+              <span className="inline-flex items-center gap-1.5"><Sparkles size={13} className="text-blue-500" />{T.openToWork.packageNote[lang]}</span>
+            </div>
+
+            {/* CTAs */}
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <a
+                href="#contact"
+                onClick={() => openToWorkDialog.current?.close()}
+                className="otw-shine relative inline-flex flex-1 items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-violet-600 to-blue-500 px-5 py-3 text-sm font-semibold text-white shadow-[0_4px_20px_rgba(124,58,237,0.3)] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(124,58,237,0.45)]"
+              >
+                <Mail size={16} />
+                {T.openToWork.contact[lang]}
+                <ArrowUpRight size={15} />
+              </a>
+              <a
+                href="/resume.pdf"
+                download="Ittikorn_Sopawan_Resume.pdf"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface2)] px-5 py-3 text-sm font-semibold text-theme transition-colors hover:border-violet-500/40"
+              >
+                <Download size={16} />
+                {T.cta.download[lang]}
+              </a>
+            </div>
           </div>
         </div>
       </dialog>
