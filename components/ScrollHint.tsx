@@ -30,6 +30,20 @@ export default function ScrollHint() {
 
   const handleClick = () => {
     if (atBottom) {
+      const root = document.documentElement
+      root.dataset.scrollHintAction = 'to-top'
+      let fallbackTimer: number | undefined
+      const finishScrollToTop = () => {
+        if (window.scrollY > 40 && fallbackTimer !== undefined) return
+        delete root.dataset.scrollHintAction
+        window.removeEventListener('scroll', finishScrollToTop)
+        if (fallbackTimer !== undefined) window.clearTimeout(fallbackTimer)
+      }
+      window.addEventListener('scroll', finishScrollToTop, { passive: true })
+      fallbackTimer = window.setTimeout(() => {
+        delete root.dataset.scrollHintAction
+        window.removeEventListener('scroll', finishScrollToTop)
+      }, 7000)
       window.scrollTo({ top: 0, behavior: 'smooth' })
       return
     }
