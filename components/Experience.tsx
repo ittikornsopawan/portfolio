@@ -26,8 +26,8 @@ const experiences: Experience[] = [
     period: 'Jun 2024 – Present',
     current: true,
     keyNote: {
-      en: 'Leads system design for manufacturing and logistics workflows.',
-      th: 'นำการออกแบบระบบสำหรับ Workflow ด้าน Manufacturing และ Logistics',
+      en: 'Covered the full client journey—from finding and consulting clients through the sales process, SDLC, and deployment.',
+      th: 'ดูแลครบตั้งแต่หาลูกค้า พูดคุยและนำเสนอขาย ไปจนถึงดำเนินงานตาม SDLC และ Deploy ระบบ',
     },
     bullets: [
       { en: "Collected and analyzed business requirements, translating them into workflows, use cases, and technical solutions.", th: "เก็บและวิเคราะห์ความต้องการทางธุรกิจ แล้วถ่ายทอดออกมาเป็น Workflow, Use Case และแนวทางเชิงเทคนิคที่ทีมนำไปใช้ได้จริง" },
