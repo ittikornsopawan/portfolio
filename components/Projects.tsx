@@ -100,7 +100,7 @@ export default function Projects() {
 
   return (
     <section id="projects" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-      <RevealWrapper className="text-center mb-16">
+      <RevealWrapper className="text-center mb-10 sm:mb-14">
         <div className="eyebrow-pill mb-4 mx-auto w-fit">
           <FolderKanban size={12} />
           {T.eyebrow[lang]}
@@ -129,7 +129,7 @@ export default function Projects() {
                   >
                     <p.Icon size={20} className="text-white" strokeWidth={2} />
                   </div>
-                  <span className="text-xs font-semibold text-green-500 bg-green-500/10 border border-green-500/20 px-2.5 py-1 rounded-full">
+                  <span className="text-xs font-semibold text-green-700 dark:text-green-400 bg-green-500/10 border border-green-500/20 px-2.5 py-1 rounded-full">
                     {p.impact}
                   </span>
                 </div>

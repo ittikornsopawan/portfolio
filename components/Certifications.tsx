@@ -16,7 +16,7 @@ export default function Certifications() {
 
   return (
     <section id="certifications" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-      <RevealWrapper className="text-center mb-16">
+      <RevealWrapper className="text-center mb-10 sm:mb-14">
         <div className="eyebrow-pill mb-4 mx-auto w-fit">
           <BookOpen size={12} />
           {T.eyebrow[lang]}
@@ -46,7 +46,7 @@ export default function Certifications() {
                 <div className="text-sm font-semibold gradient-text mb-1">
                   Rajamangala University of Technology Thanyaburi
                 </div>
-                <div className="text-xs text-theme3 font-medium">Undergraduate Degree</div>
+                <div className="text-xs text-theme3 font-medium">{T.degreeLevel[lang]}</div>
               </div>
             </div>
           </div>

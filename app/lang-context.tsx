@@ -15,6 +15,11 @@ export function LangProvider({ children }: { children: ReactNode }) {
     if (saved === 'en' || saved === 'th') setLangState(saved)
   }, [])
 
+  // keep <html lang> in sync so screen readers and line breaking use the right language
+  useEffect(() => {
+    document.documentElement.lang = lang
+  }, [lang])
+
   const setLang = (l: Lang) => {
     setLangState(l)
     localStorage.setItem('portfolio-lang', l)

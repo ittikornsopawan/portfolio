@@ -20,7 +20,7 @@ export default function Home() {
     <>
       <Background />
       <Navbar />
-      <main className="relative z-10 pt-16">
+      <main id="main" tabIndex={-1} className="relative z-10 pt-16 outline-none">
         <Hero />
         <hr className="section-divider" />
         <AboutQuote />

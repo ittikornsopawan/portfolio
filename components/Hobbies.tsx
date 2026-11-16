@@ -21,7 +21,7 @@ export default function Hobbies() {
 
   return (
     <section id="hobbies" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-      <RevealWrapper className="text-center mb-12 sm:mb-16">
+      <RevealWrapper className="text-center mb-10 sm:mb-14">
         <div className="eyebrow-pill mb-4 mx-auto w-fit">
           <Smile size={12} />
           {T.eyebrow[lang]}
@@ -71,7 +71,7 @@ export default function Hobbies() {
 
               {item.tags && item.tagsLabel && (
                 <div className="mt-4">
-                  <div className="mb-2 text-[0.65rem] font-bold uppercase tracking-[1.5px] text-violet-600 dark:text-violet-400">
+                  <div className="mb-2 text-[0.7rem] font-bold uppercase tracking-[1.5px] text-violet-600 dark:text-violet-400">
                     {item.tagsLabel[lang]}
                   </div>
                   <div className="flex flex-wrap gap-1.5">

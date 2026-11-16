@@ -22,7 +22,7 @@ export default function Personality() {
     <section id="personality" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
 
       {/* Section header */}
-      <RevealWrapper className="text-center mb-16">
+      <RevealWrapper className="text-center mb-10 sm:mb-14">
         <div className="eyebrow-pill mb-4 mx-auto w-fit">
           <Brain size={12} />
           {T.eyebrow[lang]}
@@ -44,7 +44,6 @@ export default function Personality() {
             width={900}
             height={350}
             className="w-full h-auto"
-            priority
           />
         </div>
       </RevealWrapper>
@@ -61,7 +60,7 @@ export default function Personality() {
                   <span className="font-display text-2xl font-extrabold text-white tracking-widest">INFP</span>
                 </div>
                 <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-xl bg-gradient-to-br from-violet-500 to-blue-400 flex items-center justify-center shadow-md icon-box">
-                  <span className="text-white text-[0.6rem] font-bold">-T</span>
+                  <span className="text-white text-[0.65rem] font-bold">-T</span>
                 </div>
               </div>
               <div className="mt-4 text-center lg:text-left">

@@ -49,7 +49,7 @@ export default function CareerPath() {
 
   return (
     <section id="careerpath" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-      <RevealWrapper className="text-center mb-16">
+      <RevealWrapper className="text-center mb-10 sm:mb-14">
         <div className="eyebrow-pill mb-4 mx-auto w-fit">
           <Map size={12} />
           {T.eyebrow[lang]}
@@ -97,7 +97,7 @@ export default function CareerPath() {
                   type="button"
                   onClick={() => setExpanded(e => ({ ...e, [i]: !e[i] }))}
                   aria-expanded={!!expanded[i]}
-                  className="mt-4 inline-flex items-center gap-1.5 rounded-lg px-2 py-1 -ml-2 text-[0.8rem] font-semibold text-violet-600 hover:bg-violet-500/[0.08] dark:text-violet-300"
+                  className="mt-4 inline-flex items-center gap-1.5 rounded-lg px-2 py-2 -ml-2 text-[0.8rem] font-semibold text-violet-600 hover:bg-violet-500/[0.08] dark:text-violet-300"
                 >
                   {expanded[i]
                     ? i18n.experience.showLess[lang]

@@ -24,8 +24,14 @@ export default function Navbar() {
       if (current) setActive(`#${current.id === 'about-me' ? 'about' : current.id}`)
     }
     fn()
+    // the browser jumps to #hash before client sections have their final height; jump again once they do
+    const target = window.location.hash && document.getElementById(decodeURIComponent(window.location.hash.slice(1)))
+    const hashTimer = target ? setTimeout(() => target.scrollIntoView({ behavior: 'instant' }), 150) : undefined
     window.addEventListener('scroll', fn, { passive: true })
-    return () => window.removeEventListener('scroll', fn)
+    return () => {
+      clearTimeout(hashTimer)
+      window.removeEventListener('scroll', fn)
+    }
   }, [])
 
   useEffect(() => {
@@ -53,6 +59,13 @@ export default function Navbar() {
   ]
 
   return (
+    <>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-xl focus:bg-violet-600 focus:px-4 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-white"
+      >
+        {T.skipToContent[lang]}
+      </a>
     <nav className={`fixed inset-x-0 top-0 z-50 nav-glass transition-all duration-300 ${scrolled ? 'shadow-[0_1px_30px_rgba(124,58,237,0.1)]' : ''}`}>
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
         {/* Logo */}
@@ -95,7 +108,7 @@ export default function Navbar() {
             <div className="flex items-center bg-[var(--surface2)] border border-[var(--border)] rounded-xl p-0.5 text-xs font-bold">
               <button
                 onClick={() => setLang('en')}
-                className={`px-2.5 py-1.5 rounded-lg transition-all duration-150 ${
+                className={`h-8 px-2.5 rounded-lg transition-all duration-150 ${
                   lang === 'en'
                     ? 'bg-gradient-to-r from-violet-600 to-blue-500 text-white shadow-sm'
                     : 'text-theme3 hover:text-theme'
@@ -105,7 +118,7 @@ export default function Navbar() {
               </button>
               <button
                 onClick={() => setLang('th')}
-                className={`px-2.5 py-1.5 rounded-lg transition-all duration-150 ${
+                className={`h-8 px-2.5 rounded-lg transition-all duration-150 ${
                   lang === 'th'
                     ? 'bg-gradient-to-r from-violet-600 to-blue-500 text-white shadow-sm'
                     : 'text-theme3 hover:text-theme'
@@ -119,7 +132,7 @@ export default function Navbar() {
           {/* Theme toggle */}
           <button
             onClick={() => setTheme(isDark ? 'light' : 'dark')}
-            aria-label="Toggle theme"
+            aria-label={T.toggleTheme[lang]}
             className="w-9 h-9 rounded-xl bg-[var(--surface2)] border border-[var(--border)] flex items-center justify-center text-theme2 hover:text-theme hover:border-violet-500/30 hover:bg-violet-500/[0.08] transition-all duration-200"
           >
             {mounted ? (isDark ? <Sun size={16} /> : <Moon size={16} />) : <span className="w-4 h-4" />}
@@ -129,7 +142,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setMenuOpen(o => !o)}
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-label={menuOpen ? T.closeMenu[lang] : T.openMenu[lang]}
             aria-expanded={menuOpen}
             aria-controls="site-menu"
             className="2xl:hidden w-9 h-9 rounded-xl bg-[var(--surface2)] border border-[var(--border)] flex items-center justify-center text-theme2 hover:text-theme hover:border-violet-500/30 hover:bg-violet-500/[0.08] transition-all duration-200"
@@ -168,5 +181,6 @@ export default function Navbar() {
         </div>
       )}
     </nav>
+    </>
   )
 }

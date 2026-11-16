@@ -81,7 +81,7 @@ export default function Testimonials() {
 
   return (
     <section id="testimonials" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-      <RevealWrapper className="text-center mb-16">
+      <RevealWrapper className="text-center mb-10 sm:mb-14">
         <div className="eyebrow-pill mb-4 mx-auto w-fit">
           <MessageSquare size={12} />
           {T.eyebrow[lang]}
@@ -122,7 +122,7 @@ export default function Testimonials() {
                     <Star key={j} size={14} className="text-amber-400 fill-amber-400 drop-shadow-[0_0_6px_rgba(251,191,36,0.45)]" />
                   ))}
                 </div>
-                <span className={`mr-14 rounded-full bg-gradient-to-r ${t.gradient} px-2.5 py-0.5 text-[0.65rem] font-bold uppercase tracking-wider text-white shadow-sm`}>
+                <span className={`mr-14 rounded-full bg-gradient-to-r ${t.gradient} px-2.5 py-0.5 text-[0.7rem] font-bold uppercase tracking-wider text-white shadow-sm`}>
                   {t.relation}
                 </span>
               </div>

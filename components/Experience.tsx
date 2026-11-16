@@ -125,7 +125,7 @@ export default function Experience() {
   return (
     <section id="experience" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
 
-      <RevealWrapper className="text-center mb-16">
+      <RevealWrapper className="text-center mb-10 sm:mb-14">
         <div className="eyebrow-pill mb-4 mx-auto w-fit">
           <Briefcase size={12} />
           {T.eyebrow[lang]}
@@ -171,13 +171,13 @@ export default function Experience() {
                         {exp.period}
                       </span>
                       {exp.current && (
-                        <span className="text-xs font-semibold text-green-500 bg-green-500/10 border border-green-500/25 px-3 py-1 rounded-full flex items-center gap-1.5">
+                        <span className="text-xs font-semibold text-green-700 dark:text-green-400 bg-green-500/10 border border-green-500/25 px-3 py-1 rounded-full flex items-center gap-1.5">
                           <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
                           {T.active[lang]}
                         </span>
                       )}
                       {exp.type && (
-                        <span className="text-xs font-medium text-blue-500 dark:text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full">
+                        <span className="text-xs font-medium text-blue-700 dark:text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full">
                           {T.contractor[lang]}
                         </span>
                       )}
@@ -197,7 +197,7 @@ export default function Experience() {
                       type="button"
                       onClick={() => setExpanded(e => ({ ...e, [i]: !e[i] }))}
                       aria-expanded={!!expanded[i]}
-                      className="mt-3 inline-flex items-center gap-1.5 rounded-lg px-2 py-1 -ml-2 text-[0.8rem] font-semibold text-violet-600 hover:bg-violet-500/[0.08] dark:text-violet-300"
+                      className="mt-3 inline-flex items-center gap-1.5 rounded-lg px-2 py-2 -ml-2 text-[0.8rem] font-semibold text-violet-600 hover:bg-violet-500/[0.08] dark:text-violet-300"
                     >
                       {expanded[i]
                         ? T.showLess[lang]

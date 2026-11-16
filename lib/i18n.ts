@@ -2,6 +2,10 @@ export type Lang = "en" | "th";
 
 export const i18n = {
   nav: {
+    toggleTheme: { en: "Toggle light or dark theme", th: "สลับโหมดสว่าง/มืด" },
+    openMenu: { en: "Open menu", th: "เปิดเมนู" },
+    skipToContent: { en: "Skip to content", th: "ข้ามไปที่เนื้อหา" },
+    closeMenu: { en: "Close menu", th: "ปิดเมนู" },
     about: { en: "About", th: "เกี่ยวกับ" },
     experience: { en: "Experience", th: "ประสบการณ์" },
     projects: { en: "Projects", th: "โปรเจค" },
@@ -355,6 +359,7 @@ export const i18n = {
   certifications: {
     eyebrow: { en: "Credentials", th: "คุณวุฒิ" },
     title: { en: "Education & Languages", th: "การศึกษาและภาษา" },
+    degreeLevel: { en: "Undergraduate Degree", th: "ปริญญาตรี" },
     subtitle: {
       en: "Academic foundation and communication capabilities.",
       th: "พื้นฐานทางวิชาการและความสามารถด้านการสื่อสาร",
@@ -390,7 +395,7 @@ export const i18n = {
       th: "Repository ที่คัดสรรและโปรเจคส่วนตัวบน GitHub",
     },
     viewRepo: { en: "View repo →", th: "ดู repo →" },
-    liveDemo: { en: "Live Demo", th: "Live Demo" },
+    liveDemo: { en: "Live Demo", th: "ดูเดโม" },
   },
   contact: {
     eyebrow: { en: "Get in Touch", th: "ติดต่อ" },

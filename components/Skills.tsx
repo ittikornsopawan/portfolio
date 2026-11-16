@@ -93,7 +93,7 @@ export default function Skills() {
 
   return (
     <section id="skills" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-      <RevealWrapper className="text-center mb-16">
+      <RevealWrapper className="text-center mb-10 sm:mb-14">
         <div className="eyebrow-pill mb-4 mx-auto w-fit">
           <Wrench size={12} />
           {T.eyebrow[lang]}
@@ -136,7 +136,7 @@ export default function Skills() {
       </div>
 
       {/* Soft skills */}
-      <RevealWrapper className="text-center mb-10">
+      <RevealWrapper className="text-center mb-10 sm:mb-14">
         <div className="eyebrow-pill mb-4 mx-auto w-fit">
           <Users size={12} />
           {T.softEyebrow[lang]}

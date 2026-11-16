@@ -28,6 +28,7 @@ export default function Hero() {
   const [roleIndex, setRoleIndex] = useState(0)
   const [rolePicked, setRolePicked] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
+  const [cyclePaused, setCyclePaused] = useState(false)
 
   const openModal = () => {
     const dialog = openToWorkDialog.current
@@ -36,16 +37,22 @@ export default function Hero() {
     setModalOpen(true)
   }
 
-  // Auto-cycle the role tabs until the visitor picks one
+  // Auto-cycle the role tabs until the visitor picks one; hold still while they're reading (WCAG 2.2.2)
   useEffect(() => {
-    if (rolePicked || !modalOpen) return
+    if (rolePicked || !modalOpen || cyclePaused) return
     const timer = setInterval(() => setRoleIndex(i => (i + 1) % T.openToWork.roles.length), 4500)
     return () => clearInterval(timer)
-  }, [rolePicked, modalOpen])
+  }, [rolePicked, modalOpen, cyclePaused])
 
   useEffect(() => {
     setAge(calculateAge())
-    // Greet every visitor with the open-to-work modal once the page has settled
+    // Greet each visit once with the modal, but not on reloads or links that point at a section (e.g. #contact)
+    const hash = window.location.hash
+    if (hash && hash !== '#about') return
+    try {
+      if (sessionStorage.getItem('otw-greeted')) return
+      sessionStorage.setItem('otw-greeted', '1')
+    } catch {} // storage blocked (private mode): just show it
     const timer = setTimeout(openModal, 700)
     return () => clearTimeout(timer)
   }, [])
@@ -85,7 +92,7 @@ export default function Hero() {
                 <ArrowUpRight size={12} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </button>
               {/* Availability badge */}
-              <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/25 text-green-600 dark:text-green-400 rounded-full px-4 py-1.5 text-xs font-semibold">
+              <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/25 text-green-700 dark:text-green-400 rounded-full px-4 py-1.5 text-xs font-semibold">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
@@ -142,7 +149,7 @@ export default function Hero() {
                   </div>
                   <div>
                     <div className="text-[0.75rem] font-bold text-theme leading-tight">{s.label}</div>
-                    <div className="text-[0.68rem] text-theme3 mt-0.5 leading-snug">{s.desc}</div>
+                    <div className="text-[0.75rem] text-theme3 mt-0.5 leading-snug">{s.desc}</div>
                   </div>
                 </div>
               ))}
@@ -193,9 +200,10 @@ export default function Hero() {
                 alt={lang === 'en' ? 'Portrait of Ittikorn Sopawan' : 'ภาพถ่ายของอิทธิกร โสภาวรรณ'}
                 width={160}
                 height={160}
+                priority
                 className="relative h-full w-full rounded-full border-[3px] border-white object-cover object-top shadow-xl transition-transform duration-300 group-hover:scale-[1.03] dark:border-slate-900"
               />
-              <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-green-500 px-3 py-0.5 text-[0.65rem] font-extrabold uppercase tracking-wider text-white shadow-[0_4px_12px_rgba(34,197,94,0.5)]">
+              <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-green-700 px-3 py-0.5 text-[0.7rem] font-extrabold uppercase tracking-wider text-white shadow-[0_4px_12px_rgba(34,197,94,0.5)]">
                 #OpenToWork
               </span>
             </button>
@@ -206,7 +214,7 @@ export default function Hero() {
                 {lang === 'en' ? 'Ittikorn Sopawan' : 'อิทธิกร โสภาวรรณ'}
               </div>
               <div className="text-sm text-theme2">{T.role[lang]}</div>
-              <div className="inline-flex items-center gap-1.5 mt-2 text-xs font-semibold text-violet-500 dark:text-violet-400 bg-violet-500/10 border border-violet-500/20 px-3 py-1 rounded-full">
+              <div className="inline-flex items-center gap-1.5 mt-2 text-xs font-semibold text-violet-700 dark:text-violet-400 bg-violet-500/10 border border-violet-500/20 px-3 py-1 rounded-full">
                 <Sparkles size={10} strokeWidth={2.5} />
                 {T.supervisor[lang]}
               </div>
@@ -220,7 +228,7 @@ export default function Hero() {
                   className="bg-[var(--surface2)] border border-[var(--border2)] rounded-2xl py-4 text-center hover:border-violet-500/30 hover:bg-violet-500/5 transition-colors duration-200"
                 >
                   <div className="font-display text-[1.45rem] font-extrabold gradient-text leading-none mb-1">{s.num}</div>
-                  <div className="text-[0.62rem] text-theme3 font-medium leading-tight px-1">{T[s.labelKey][lang]}</div>
+                  <div className="text-[0.7rem] text-theme3 font-medium leading-tight px-1">{T[s.labelKey][lang]}</div>
                 </div>
               ))}
             </div>
@@ -317,7 +325,7 @@ export default function Hero() {
                   />
                 ))}
                 <Image src="/profile.jpeg" alt="" width={192} height={192} className="relative h-full w-full rounded-full border-[3px] border-white object-cover object-top shadow-xl" />
-                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-green-500 px-2.5 py-0.5 text-[0.6rem] font-extrabold uppercase tracking-wider text-white shadow-md">
+                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-green-700 px-2.5 py-0.5 text-[0.65rem] font-extrabold uppercase tracking-wider text-white shadow-md">
                   #OpenToWork
                 </span>
               </div>
@@ -359,7 +367,7 @@ export default function Hero() {
               ].map(f => (
                 <div key={f.label} className="rounded-xl border border-[var(--border2)] bg-[var(--surface2)] px-3 py-2.5 text-center">
                   <div className="font-display text-base font-extrabold leading-tight gradient-text">{f.value}</div>
-                  <div className="mt-0.5 text-[0.65rem] font-medium text-theme3">{f.label}</div>
+                  <div className="mt-0.5 text-[0.75rem] font-medium text-theme3">{f.label}</div>
                 </div>
               ))}
             </div>
@@ -383,7 +391,7 @@ export default function Hero() {
                         <CheckCircle2 size={16} className={`shrink-0 ${group.icon}`} />
                         <div>
                           <div className="text-[0.8rem] font-bold text-theme">{c.title}</div>
-                          <div className="text-[0.68rem] leading-snug text-theme2">{c.desc[lang]}</div>
+                          <div className="text-[0.75rem] leading-snug text-theme2">{c.desc[lang]}</div>
                         </div>
                       </div>
                     ))}
@@ -418,7 +426,15 @@ export default function Hero() {
             </aside>
 
             {/* Right: what I'm looking for, per role */}
-            <section className="flex-1 p-6 sm:p-8 lg:overflow-y-auto">
+            <section
+              className="flex-1 p-6 sm:p-8 lg:overflow-y-auto"
+              onMouseEnter={() => setCyclePaused(true)}
+              onMouseLeave={() => setCyclePaused(false)}
+              onFocus={() => setCyclePaused(true)}
+              onBlur={event => {
+                if (!event.currentTarget.contains(event.relatedTarget)) setCyclePaused(false)
+              }}
+            >
             {/* Role tabs */}
             <h3 className="mb-2.5 text-[0.7rem] font-bold uppercase tracking-[2px] text-theme3">{T.openToWork.rolesTitle[lang]}</h3>
             <div role="tablist" aria-label={T.openToWork.rolesTitle[lang]} className="otw-rise mb-3 flex gap-1.5 overflow-x-auto rounded-2xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-3 border border-[var(--border2)] bg-[var(--surface2)] p-1.5" style={{ animationDelay: '320ms' }}>
