@@ -708,19 +708,6 @@
   transform: translateY(0);
 }
 
-/* ─── Avatar ring ─── */
-.avatar-ring {
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  border: 2px solid transparent;
-  background: linear-gradient(135deg, #7c3aed, #3b82f6) border-box;
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: destination-out;
-  mask-composite: exclude;
-  animation: spin 5s linear infinite;
-}
-
 /* ─── Section divider ─── */
 .section-divider {
   border: none;

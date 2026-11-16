@@ -179,16 +179,26 @@ export default function Hero() {
           <div className="glass-card p-5 sm:p-8 h-full flex flex-col justify-between shadow-[0_8px_40px_rgba(124,58,237,0.2)] animate-float">
 
             {/* Avatar */}
-            <div className="relative w-28 h-28 mx-auto">
+            {/* Same #OpenToWork avatar as the modal; opens it */}
+            <button
+              type="button"
+              onClick={openModal}
+              aria-haspopup="dialog"
+              aria-label={T.openToWork.badge[lang]}
+              className="group relative mx-auto mb-3 block h-28 w-28 rounded-full"
+            >
+              <span className="otw-ring absolute -inset-1.5 rounded-full shadow-[0_0_32px_rgba(34,197,94,0.45)]" />
               <Image
                 src="/profile.jpeg"
                 alt={lang === 'en' ? 'Portrait of Ittikorn Sopawan' : 'ภาพถ่ายของอิทธิกร โสภาวรรณ'}
                 width={160}
                 height={160}
-                className="w-full h-full rounded-full object-cover object-top border-2 border-violet-500/30 shadow-[0_0_40px_rgba(124,58,237,0.35)]"
+                className="relative h-full w-full rounded-full border-[3px] border-white object-cover object-top shadow-xl transition-transform duration-300 group-hover:scale-[1.03] dark:border-slate-900"
               />
-              <div className="avatar-ring" />
-            </div>
+              <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-green-500 px-3 py-0.5 text-[0.65rem] font-extrabold uppercase tracking-wider text-white shadow-[0_4px_12px_rgba(34,197,94,0.5)]">
+                #OpenToWork
+              </span>
+            </button>
 
             {/* Name */}
             <div className="text-center">
