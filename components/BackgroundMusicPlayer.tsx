@@ -83,6 +83,63 @@ export default function BackgroundMusicPlayer() {
     }
   }, [])
 
+  // Keep the mobile dock out of the way of text, links, and buttons beneath it.
+  useEffect(() => {
+    const dock = mobileControlsRef.current
+    if (!dock) return
+
+    const nav = document.querySelector('nav')
+    const candidates = ['top-right', 'bottom-right', 'top-left', 'bottom-left'] as const
+    const blockers = Array.from(document.querySelectorAll<HTMLElement>(
+      'main h1, main h2, main h3, main p, main blockquote, main a, main button, main li',
+    )).filter(blocker => !dock.contains(blocker))
+    let frame = 0
+
+    const placeDock = () => {
+      const navBottom = nav?.getBoundingClientRect().bottom ?? 0
+      const applyPosition = (corner: typeof candidates[number]) => {
+        dock.style.left = corner.endsWith('left') ? '0.5rem' : 'auto'
+        dock.style.right = corner.endsWith('right') ? '0.5rem' : 'auto'
+        dock.style.top = corner.startsWith('top') ? `${navBottom + 8}px` : 'auto'
+        dock.style.bottom = corner.startsWith('bottom') ? 'calc(env(safe-area-inset-bottom) + 0.75rem)' : 'auto'
+        return dock.getBoundingClientRect()
+      }
+      const isClear = (rect: DOMRect) => blockers.every(blocker => {
+        const box = blocker.getBoundingClientRect()
+        return box.width === 0 || box.height === 0 || box.right <= rect.left || box.left >= rect.right || box.bottom <= rect.top || box.top >= rect.bottom
+      })
+
+      const current = dock.dataset.corner as typeof candidates[number] | undefined
+      const ordered = current ? [current, ...candidates.filter(corner => corner !== current)] : [...candidates]
+      const clearCorner = ordered.find(corner => isClear(applyPosition(corner)))
+      dock.style.visibility = clearCorner ? 'visible' : 'hidden'
+      if (clearCorner) {
+        dock.dataset.corner = clearCorner
+      } else {
+        dock.dataset.corner = ''
+      }
+    }
+
+    const schedulePlacement = () => {
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(placeDock)
+    }
+    schedulePlacement()
+    window.addEventListener('scroll', schedulePlacement, { passive: true })
+    window.addEventListener('resize', schedulePlacement)
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', schedulePlacement)
+      window.removeEventListener('resize', schedulePlacement)
+      dock.style.left = ''
+      dock.style.right = ''
+      dock.style.top = ''
+      dock.style.bottom = ''
+      dock.style.visibility = ''
+      delete dock.dataset.corner
+    }
+  }, [])
+
   // Feed bass energy into --beat (0..1) on the player; CSS turns it into the pulse.
   useEffect(() => {
     const el = playerRef.current
