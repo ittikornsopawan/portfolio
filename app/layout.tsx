@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, Space_Grotesk, IBM_Plex_Sans_Thai } from 'next/font/google'
+import 'pixelarticons/fonts/pixelart-icons-font.css'
 import './globals.css'
 import { Providers } from './providers'
 import AnimatedDocumentTitle from '@/components/AnimatedDocumentTitle'

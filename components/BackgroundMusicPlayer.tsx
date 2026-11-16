@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Briefcase, Pause, Play, PhoneCall } from 'lucide-react'
 import Image from 'next/image'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
@@ -250,7 +249,7 @@ export default function BackgroundMusicPlayer() {
             title={!isPlaying && autoplayBlocked ? T.autoplayBlocked[lang] : buttonLabel}
             className="absolute inset-0 m-auto inline-flex h-9 w-9 items-center justify-center rounded-full border-2 border-white/90 bg-gradient-to-br from-white to-violet-100 text-violet-700 shadow-[0_3px_8px_rgba(15,23,42,0.3),inset_0_1px_2px_rgba(255,255,255,0.9)] transition-transform hover:scale-105 dark:border-violet-200/30 dark:from-slate-900 dark:to-violet-950 dark:text-violet-200 dark:shadow-[0_3px_10px_rgba(0,0,0,0.65),inset_0_1px_2px_rgba(255,255,255,0.12)]"
           >
-            {isPlaying ? <Pause size={15} fill="currentColor" aria-hidden="true" /> : <Play size={15} fill="currentColor" aria-hidden="true" />}
+            <i className={`inline-block h-6 w-6 text-[24px] leading-none ${isPlaying ? 'pixelart-icons-font-pause' : 'pixelart-icons-font-play'}`} aria-hidden="true" />
           </button>
         </div>
       </div>
@@ -267,7 +266,7 @@ export default function BackgroundMusicPlayer() {
           className="relative isolate inline-flex h-11 w-11 shrink-0 items-center justify-center overflow-visible rounded-full border border-violet-300/70 bg-white/95 text-violet-700 shadow-[0_5px_18px_rgba(76,29,149,0.28)] backdrop-blur-md transition hover:scale-105 hover:bg-violet-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:border-violet-300/35 dark:bg-slate-950/95 dark:text-violet-200 dark:hover:bg-slate-900 active:scale-95"
         >
           <span aria-hidden="true" className="pointer-events-none absolute -inset-1 rounded-full border border-emerald-400/80 motion-safe:animate-ping" />
-          <Briefcase size={19} strokeWidth={2.3} aria-hidden="true" />
+          <i className="pixelart-icons-font-briefcase inline-block h-6 w-6 text-[24px] leading-none" aria-hidden="true" />
           <span aria-hidden="true" className="absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full border-2 border-white bg-emerald-400 shadow-sm dark:border-slate-950">
             <span className="absolute inset-0 rounded-full bg-emerald-300 motion-safe:animate-ping" />
           </span>
@@ -278,7 +277,7 @@ export default function BackgroundMusicPlayer() {
           title={`${heroT.openToWork.call[lang]}: +66 99 116 1274`}
           className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-emerald-300/70 bg-gradient-to-br from-emerald-600 to-teal-500 text-white shadow-[0_5px_18px_rgba(16,185,129,0.34)] transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 active:scale-95 dark:border-emerald-300/40"
         >
-          <PhoneCall size={18} strokeWidth={2.2} aria-hidden="true" />
+          <i className="pixelart-icons-font-phone-call inline-block h-6 w-6 text-[24px] leading-none" aria-hidden="true" />
         </a>
         <button
           type="button"
@@ -288,17 +287,9 @@ export default function BackgroundMusicPlayer() {
           title={buttonLabel}
           className="relative inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-violet-300/70 bg-gradient-to-br from-violet-600 to-fuchsia-500 text-white shadow-[0_5px_18px_rgba(124,58,237,0.4)] transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 active:scale-95 dark:border-violet-300/35"
         >
-          <span aria-hidden="true" className="relative h-[18px] w-[18px]">
-            <Play
-              size={17}
-              fill="currentColor"
-              className={`absolute inset-0 motion-safe:transition-[opacity,transform] motion-safe:duration-200 motion-safe:ease-out motion-reduce:transition-none ${isPlaying ? 'scale-75 rotate-[-35deg] opacity-0' : 'scale-100 rotate-0 opacity-100'}`}
-            />
-            <Pause
-              size={17}
-              fill="currentColor"
-              className={`absolute inset-0 motion-safe:transition-[opacity,transform] motion-safe:duration-200 motion-safe:ease-out motion-reduce:transition-none ${isPlaying ? 'scale-100 rotate-0 opacity-100' : 'scale-75 rotate-[35deg] opacity-0'}`}
-            />
+          <span aria-hidden="true" className="relative h-6 w-6">
+            <i className={`pixelart-icons-font-play absolute inset-0 text-[24px] leading-none motion-safe:transition-[opacity,transform] motion-safe:duration-200 motion-safe:ease-out motion-reduce:transition-none ${isPlaying ? 'scale-75 rotate-[-35deg] opacity-0' : 'scale-100 rotate-0 opacity-100'}`} />
+            <i className={`pixelart-icons-font-pause absolute inset-0 text-[24px] leading-none motion-safe:transition-[opacity,transform] motion-safe:duration-200 motion-safe:ease-out motion-reduce:transition-none ${isPlaying ? 'scale-100 rotate-0 opacity-100' : 'scale-75 rotate-[35deg] opacity-0'}`} />
           </span>
           {isPlaying && <span aria-hidden="true" className="absolute right-0.5 top-0.5 h-2 w-2 rounded-full bg-emerald-300 ring-2 ring-violet-700 motion-safe:animate-pulse" />}
         </button>
