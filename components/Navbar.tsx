@@ -1,7 +1,7 @@
 'use client'
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
-import { Sun, Moon, Menu, X } from 'lucide-react'
+import { Sun, Moon, Menu, X } from './PixelIcon'
 import Image from 'next/image'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'

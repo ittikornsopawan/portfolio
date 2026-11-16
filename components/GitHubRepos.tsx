@@ -1,6 +1,6 @@
 'use client'
 
-import { GitBranch, BookOpen, FileText, Star, GitFork, ExternalLink, ArrowUpRight } from 'lucide-react'
+import { GitBranch, BookOpen, FileText, Star, GitFork, ExternalLink, ArrowUpRight } from './PixelIcon'
 import RevealWrapper from './RevealWrapper'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'

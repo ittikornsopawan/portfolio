@@ -1,14 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDown, ShieldCheck, Cloud, ShoppingCart, FileCode2, Building2, Code2, Briefcase, Sparkles } from 'lucide-react'
+import { ChevronDown, ShieldCheck, Cloud, ShoppingCart, FileCode2, Building2, Code2, Briefcase, Sparkles } from './PixelIcon'
 import RevealWrapper from './RevealWrapper'
-import type { LucideIcon } from 'lucide-react'
+import type { PixelIconComponent } from './PixelIcon'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
 
 interface Experience {
-  Icon: LucideIcon
+  Icon: PixelIconComponent
   role: string
   company: string
   period: string

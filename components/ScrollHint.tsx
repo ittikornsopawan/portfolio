@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { ArrowUp } from 'lucide-react'
+import { ArrowUp } from './PixelIcon'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
 

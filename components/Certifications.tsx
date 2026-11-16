@@ -1,6 +1,6 @@
 'use client'
 
-import { GraduationCap, Globe, BookOpen, Sparkles } from 'lucide-react'
+import { GraduationCap, Globe, BookOpen, Sparkles } from './PixelIcon'
 import RevealWrapper from './RevealWrapper'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'

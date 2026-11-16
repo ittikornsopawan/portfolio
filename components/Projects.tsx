@@ -1,15 +1,15 @@
 'use client'
 
-import { Cloud, Factory, ShoppingCart, FileCode2, Building2, Lock, FolderKanban } from 'lucide-react'
+import { Cloud, Factory, ShoppingCart, FileCode2, Building2, Lock, FolderKanban } from './PixelIcon'
 import RevealWrapper from './RevealWrapper'
-import type { LucideIcon } from 'lucide-react'
+import type { PixelIconComponent } from './PixelIcon'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
 
 type Accent = 'violet' | 'blue' | 'indigo'
 
 interface Project {
-  Icon: LucideIcon
+  Icon: PixelIconComponent
   accent: Accent
   impact: { en: string; th: string }
   metric?: { value: string; label: { en: string; th: string } } // a hard number, shown big instead of the impact pill

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { ArrowRight, ArrowUpRight, Sparkles, Download, FileText, Layers, Users, Briefcase, X, CheckCircle2, MapPin } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Sparkles, Download, FileText, Layers, Users, Briefcase, X, CheckCircle2, MapPin } from './PixelIcon'
 import Image from 'next/image'
 import RevealWrapper from './RevealWrapper'
 import Fireworks from './Fireworks'

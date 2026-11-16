@@ -1,6 +1,6 @@
 'use client'
 
-import { Star, MessageSquare } from 'lucide-react'
+import { Star, MessageSquare } from './PixelIcon'
 import { useState } from 'react'
 import RevealWrapper from './RevealWrapper'
 import { useLang } from '@/app/lang-context'

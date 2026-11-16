@@ -1,12 +1,12 @@
 'use client'
 
-import { Smile, Tv, Trophy, PawPrint, UtensilsCrossed, Heart, Gamepad2 } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
+import { Smile, Tv, Trophy, PawPrint, UtensilsCrossed, Heart, Gamepad2 } from './PixelIcon'
+import type { PixelIconComponent } from './PixelIcon'
 import RevealWrapper from './RevealWrapper'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
 
-const ICONS: Record<string, LucideIcon> = {
+const ICONS: Record<string, PixelIconComponent> = {
   tv: Tv,
   sport: Trophy,
   paw: PawPrint,

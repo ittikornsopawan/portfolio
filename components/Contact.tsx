@@ -1,12 +1,12 @@
 'use client'
 
-import { Mail, Phone, Link2, MapPin, Clock, ArrowUpRight } from 'lucide-react'
+import { Mail, Phone, Link2, MapPin, Clock, ArrowUpRight } from './PixelIcon'
 import RevealWrapper from './RevealWrapper'
-import type { LucideIcon } from 'lucide-react'
+import type { PixelIconComponent } from './PixelIcon'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
 
-interface ContactLink { Icon: LucideIcon; key: keyof typeof i18n.contact.details; sub: keyof typeof i18n.contact.details | 'emailValue' | 'phoneValue' | 'linkedinValue'; href?: string }
+interface ContactLink { Icon: PixelIconComponent; key: keyof typeof i18n.contact.details; sub: keyof typeof i18n.contact.details | 'emailValue' | 'phoneValue' | 'linkedinValue'; href?: string }
 
 const contactLinks: ContactLink[] = [
   { Icon: Mail,   key: 'email',        sub: 'emailValue',    href: 'mailto:ittikorn.sopawan@gmail.com' },

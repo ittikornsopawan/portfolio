@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { Heart, Lightbulb, Compass, Leaf, Users, Brain } from 'lucide-react'
+import { Heart, Lightbulb, Compass, Leaf, Users, Brain } from './PixelIcon'
 import RevealWrapper from './RevealWrapper'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'

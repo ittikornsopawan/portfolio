@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { TrendingUp, Crown, Map, ChevronDown } from 'lucide-react'
+import { TrendingUp, Crown, Map, ChevronDown } from './PixelIcon'
 import RevealWrapper from './RevealWrapper'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'

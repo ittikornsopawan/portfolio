@@ -1,8 +1,8 @@
 'use client'
 
-import { Target, Users, BarChart2, Rocket, Layers, Settings2, Wrench, Compass, Code2, Server, Sparkles } from 'lucide-react'
+import { Target, Users, BarChart2, Rocket, Layers, Settings2, Wrench, Compass, Code2, Server, Sparkles } from './PixelIcon'
 import RevealWrapper from './RevealWrapper'
-import type { LucideIcon } from 'lucide-react'
+import type { PixelIconComponent } from './PixelIcon'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
 
@@ -15,13 +15,13 @@ interface Tech {
   logoSrc?: string // local brand asset
   logoDark?: string // alternate devicon path for dark mode
   darkClass?: string // tweak for logos whose own colors vanish on a dark tile
-  Icon?: LucideIcon
+  Icon?: PixelIconComponent
   core?: boolean
 }
 
 interface Group {
   key: keyof typeof i18n.skills.groups
-  Icon: LucideIcon
+  Icon: PixelIconComponent
   subgroups: { label: string; items: Tech[]; note?: { en: string; th: string } }[]
 }
 
@@ -179,7 +179,7 @@ function Chip({ item, index }: { item: Tech; index: number }) {
   )
 }
 
-function GroupHeader({ Icon, title, desc }: { Icon: LucideIcon; title: string; desc: string }) {
+function GroupHeader({ Icon, title, desc }: { Icon: PixelIconComponent; title: string; desc: string }) {
   return (
     <div className="mb-5 flex items-center gap-3">
       <div className="icon-box flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600 to-blue-500 text-white shadow-[0_6px_16px_rgba(124,58,237,0.32)]">
@@ -194,7 +194,7 @@ function GroupHeader({ Icon, title, desc }: { Icon: LucideIcon; title: string; d
 }
 
 interface SoftSkill {
-  Icon: LucideIcon
+  Icon: PixelIconComponent
   label: { en: string; th: string }
 }
 
