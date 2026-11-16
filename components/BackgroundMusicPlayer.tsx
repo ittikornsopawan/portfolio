@@ -250,7 +250,18 @@ export default function BackgroundMusicPlayer() {
           title={buttonLabel}
           className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-violet-300/70 bg-gradient-to-br from-violet-600 to-fuchsia-500 text-white shadow-[0_5px_18px_rgba(124,58,237,0.4)] transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 dark:border-violet-300/35"
         >
-          {isPlaying ? <Pause size={17} fill="currentColor" aria-hidden="true" /> : <Play size={17} fill="currentColor" aria-hidden="true" />}
+          <span aria-hidden="true" className="relative h-[18px] w-[18px]">
+            <Play
+              size={17}
+              fill="currentColor"
+              className={`absolute inset-0 motion-safe:transition-[opacity,transform] motion-safe:duration-200 motion-safe:ease-out motion-reduce:transition-none ${isPlaying ? 'scale-75 rotate-[-35deg] opacity-0' : 'scale-100 rotate-0 opacity-100'}`}
+            />
+            <Pause
+              size={17}
+              fill="currentColor"
+              className={`absolute inset-0 motion-safe:transition-[opacity,transform] motion-safe:duration-200 motion-safe:ease-out motion-reduce:transition-none ${isPlaying ? 'scale-100 rotate-0 opacity-100' : 'scale-75 rotate-[35deg] opacity-0'}`}
+            />
+          </span>
           {isPlaying && <span aria-hidden="true" className="absolute right-0.5 top-0.5 h-2 w-2 rounded-full bg-emerald-300 ring-2 ring-violet-700 motion-safe:animate-pulse" />}
         </button>
       </div>
