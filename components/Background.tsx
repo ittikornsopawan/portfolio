@@ -12,11 +12,14 @@ export default function Background() {
     if (!background) return
 
     const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
-    if (motionPreference.matches) return
-
     const layers = Array.from(background.querySelectorAll<HTMLElement>('[data-parallax-speed]'))
     let frame = 0
     const update = () => {
+      if (motionPreference.matches) {
+        layers.forEach(layer => layer.style.removeProperty('--parallax-y'))
+        return
+      }
+
       const scrollRange = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
       const progress = Math.min(1, Math.max(0, window.scrollY / scrollRange))
       const distance = Math.min(window.innerHeight * 0.72, window.innerHeight * progress)
@@ -34,10 +37,12 @@ export default function Background() {
     update()
     window.addEventListener('scroll', scheduleUpdate, { passive: true })
     window.addEventListener('resize', scheduleUpdate)
+    motionPreference.addEventListener('change', scheduleUpdate)
     return () => {
       cancelAnimationFrame(frame)
       window.removeEventListener('scroll', scheduleUpdate)
       window.removeEventListener('resize', scheduleUpdate)
+      motionPreference.removeEventListener('change', scheduleUpdate)
     }
   }, [])
 
@@ -57,7 +62,7 @@ export default function Background() {
       <div
         data-parallax-speed="0.95"
         style={{ ...parallaxLayerStyle, backgroundImage: 'linear-gradient(rgba(139,92,246,1) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,1) 1px, transparent 1px)', backgroundSize: '60px 60px' }}
-        className="absolute inset-0 opacity-[0.025] dark:opacity-[0.04] will-change-transform"
+        className="absolute -inset-y-[72%] left-0 right-0 opacity-[0.025] dark:opacity-[0.04] will-change-transform"
       />
     </div>
   )
