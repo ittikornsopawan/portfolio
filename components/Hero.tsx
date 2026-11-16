@@ -28,9 +28,7 @@ export default function Hero() {
   const resumePreviewDialog = useRef<HTMLDialogElement>(null)
   const [age, setAge] = useState<number | null>(null)
   const [roleIndex, setRoleIndex] = useState(0)
-  const [rolePicked, setRolePicked] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
-  const [cyclePaused, setCyclePaused] = useState(false)
 
   const openModal = () => {
     const dialog = openToWorkDialog.current
@@ -56,24 +54,8 @@ export default function Hero() {
     return () => window.removeEventListener(OPEN_TO_WORK_EVENT, handleOpenToWorkRequest)
   }, [])
 
-  // Auto-cycle the role tabs until the visitor picks one; hold still while they're reading (WCAG 2.2.2)
-  useEffect(() => {
-    if (rolePicked || !modalOpen || cyclePaused) return
-    const timer = setInterval(() => setRoleIndex(i => (i + 1) % T.openToWork.roles.length), 4500)
-    return () => clearInterval(timer)
-  }, [rolePicked, modalOpen, cyclePaused])
-
   useEffect(() => {
     setAge(calculateAge())
-    // Greet each visit once with the modal, but not on reloads or links that point at a section (e.g. #contact)
-    const hash = window.location.hash
-    if (hash && hash !== '#about') return
-    try {
-      if (sessionStorage.getItem('otw-greeted')) return
-      sessionStorage.setItem('otw-greeted', '1')
-    } catch {} // storage blocked (private mode): just show it
-    const timer = setTimeout(openModal, 700)
-    return () => clearTimeout(timer)
   }, [])
 
   const stats = [
@@ -439,12 +421,6 @@ export default function Hero() {
             {/* Right: what I'm looking for, per role */}
             <section
               className="flex-1 p-6 sm:p-8 lg:overflow-y-auto"
-              onMouseEnter={() => setCyclePaused(true)}
-              onMouseLeave={() => setCyclePaused(false)}
-              onFocus={() => setCyclePaused(true)}
-              onBlur={event => {
-                if (!event.currentTarget.contains(event.relatedTarget)) setCyclePaused(false)
-              }}
             >
             {/* Culture and environment */}
             <h3 className="mb-2.5 text-[0.7rem] font-bold uppercase tracking-[2px] text-theme3">{T.openToWork.cultureTitle[lang]}</h3>
@@ -481,10 +457,7 @@ export default function Hero() {
                     id={`otw-tab-${i}`}
                     aria-selected={selected}
                     aria-controls="otw-tabpanel"
-                    onClick={() => {
-                      setRoleIndex(i)
-                      setRolePicked(true)
-                    }}
+                    onClick={() => setRoleIndex(i)}
                     className={`relative w-full min-w-0 overflow-hidden rounded-xl px-1.5 py-2.5 text-center text-[0.66rem] font-bold leading-tight transition-all sm:px-2 sm:text-xs ${
                       selected
                         ? 'bg-gradient-to-br from-violet-600 to-blue-500 text-white shadow-[0_4px_16px_rgba(124,58,237,0.35)]'
@@ -492,9 +465,6 @@ export default function Hero() {
                     }`}
                   >
                     {role.name}
-                    {selected && !rolePicked && (
-                      <span key={roleIndex} aria-hidden="true" className="otw-progress absolute bottom-0 left-0 h-0.5 bg-white/80" />
-                    )}
                   </button>
                 )
               })}

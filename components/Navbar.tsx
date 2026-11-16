@@ -48,11 +48,11 @@ export default function Navbar() {
     { href: '#about',          label: T.about[lang]        },
     { href: '#experience',     label: T.experience[lang]   },
     { href: '#projects',       label: T.projects[lang]     },
+    { href: '#github',         label: T.github[lang]       },
     { href: '#skills',         label: T.skills[lang]       },
+    { href: '#testimonials',   label: T.testimonials[lang] },
     { href: '#certifications', label: T.education[lang]    , secondary: true },
     { href: '#careerpath',     label: T.careerPath[lang]   , secondary: true },
-    { href: '#testimonials',   label: T.testimonials[lang] },
-    { href: '#github',         label: T.github[lang]       },
     { href: '#personality',    label: T.personality[lang]  , secondary: true },
     { href: '#hobbies',        label: T.hobbies[lang]      , secondary: true },
     { href: '#contact',        label: T.contact[lang]      },
@@ -108,7 +108,8 @@ export default function Navbar() {
             <div className="flex items-center bg-[var(--surface2)] border border-[var(--border)] rounded-xl p-0.5 text-xs font-bold">
               <button
                 onClick={() => setLang('en')}
-                className={`h-8 px-2.5 rounded-lg transition-all duration-150 ${
+                aria-pressed={lang === 'en'}
+                className={`min-h-11 min-w-10 px-2.5 rounded-lg transition-all duration-150 ${
                   lang === 'en'
                     ? 'bg-gradient-to-r from-violet-600 to-blue-500 text-white shadow-sm'
                     : 'text-theme3 hover:text-theme'
@@ -118,7 +119,8 @@ export default function Navbar() {
               </button>
               <button
                 onClick={() => setLang('th')}
-                className={`h-8 px-2.5 rounded-lg transition-all duration-150 ${
+                aria-pressed={lang === 'th'}
+                className={`min-h-11 min-w-10 px-2.5 rounded-lg transition-all duration-150 ${
                   lang === 'th'
                     ? 'bg-gradient-to-r from-violet-600 to-blue-500 text-white shadow-sm'
                     : 'text-theme3 hover:text-theme'
@@ -133,7 +135,7 @@ export default function Navbar() {
           <button
             onClick={() => setTheme(isDark ? 'light' : 'dark')}
             aria-label={T.toggleTheme[lang]}
-            className="w-9 h-9 rounded-xl bg-[var(--surface2)] border border-[var(--border)] flex items-center justify-center text-theme2 hover:text-theme hover:border-violet-500/30 hover:bg-violet-500/[0.08] transition-all duration-200"
+            className="w-11 h-11 rounded-xl bg-[var(--surface2)] border border-[var(--border)] flex items-center justify-center text-theme2 hover:text-theme hover:border-violet-500/30 hover:bg-violet-500/[0.08] transition-all duration-200"
           >
             {mounted ? (isDark ? <Sun size={16} /> : <Moon size={16} />) : <span className="w-4 h-4" />}
           </button>
@@ -145,7 +147,7 @@ export default function Navbar() {
             aria-label={menuOpen ? T.closeMenu[lang] : T.openMenu[lang]}
             aria-expanded={menuOpen}
             aria-controls="site-menu"
-            className="2xl:hidden w-9 h-9 rounded-xl bg-[var(--surface2)] border border-[var(--border)] flex items-center justify-center text-theme2 hover:text-theme hover:border-violet-500/30 hover:bg-violet-500/[0.08] transition-all duration-200"
+            className="2xl:hidden w-11 h-11 rounded-xl bg-[var(--surface2)] border border-[var(--border)] flex items-center justify-center text-theme2 hover:text-theme hover:border-violet-500/30 hover:bg-violet-500/[0.08] transition-all duration-200"
           >
             {menuOpen ? <X size={17} /> : <Menu size={17} />}
           </button>

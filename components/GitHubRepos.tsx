@@ -9,13 +9,13 @@ import { i18n } from '@/lib/i18n'
 const GITHUB_USERNAME = 'ittikornsopawan'
 
 interface SpecSampleGroup {
-  title: string
-  links: { label: string; href: string }[]
+  title: { en: string; th: string }
+  links: { label: { en: string; th: string }; href: string }[]
 }
 
 interface GitHubRepo {
   name: string
-  description: string
+  description: { en: string; th: string }
   language: string
   tags: string[]
   stars: number
@@ -27,7 +27,10 @@ interface GitHubRepo {
 const repos: GitHubRepo[] = [
   {
     name: 'data-engineer-billing-project',
-    description: 'A mockup project that generates cloud provider billing data to demonstrate a data pipeline, writing compressed CSV files to MinIO before ETL-loading them into PostgreSQL.',
+    description: {
+      en: 'A mockup project that generates cloud provider billing data to demonstrate a data pipeline, writing compressed CSV files to MinIO before ETL-loading them into PostgreSQL.',
+      th: 'โปรเจกต์จำลองสำหรับสร้างข้อมูลค่าใช้จ่าย Cloud เพื่อสาธิต Data Pipeline โดยเขียนไฟล์ CSV แบบบีบอัดลง MinIO ก่อนทำ ETL เข้า PostgreSQL',
+    },
     language: 'Python',
     tags: ['Python', 'ETL', 'PostgreSQL', 'MinIO', 'Docker'],
     stars: 1,
@@ -36,7 +39,10 @@ const repos: GitHubRepo[] = [
   },
   {
     name: 'specification',
-    description: 'A collection of system-design concepts for real-world platforms, including e-commerce, e-wallets, and enterprise SaaS business requirements.',
+    description: {
+      en: 'A collection of system-design concepts for real-world platforms, including e-commerce, e-wallets, and enterprise SaaS business requirements.',
+      th: 'รวมแนวคิดการออกแบบระบบสำหรับแพลตฟอร์มจริง เช่น E-commerce, E-wallet และข้อกำหนดทางธุรกิจของ Enterprise SaaS',
+    },
     language: 'Markdown',
     tags: ['System Design', 'Requirements', 'Architecture', 'FinTech', 'SaaS'],
     stars: 0,
@@ -45,7 +51,10 @@ const repos: GitHubRepo[] = [
   },
   {
     name: 'pixel-hr',
-    description: 'A multi-tenant HRMS platform foundation with tenant isolation, encrypted PII, TOTP sign-in, and an operator CLI. Hiring features are not implemented yet.',
+    description: {
+      en: 'A multi-tenant HRMS platform foundation with tenant isolation, encrypted PII, TOTP sign-in, and an operator CLI. Hiring features are not implemented yet.',
+      th: 'โครงสร้างพื้นฐาน HRMS แบบ Multi-tenant ที่แยกข้อมูลแต่ละองค์กร เข้ารหัส PII รองรับ TOTP และมี CLI สำหรับผู้ดูแล โดยฟีเจอร์สรรหาบุคลากรยังไม่ได้พัฒนา',
+    },
     language: 'PLpgSQL',
     tags: ['HRMS', 'Multi-Tenant', 'PII Encryption', 'TOTP', 'PostgreSQL'],
     stars: 0,
@@ -54,7 +63,10 @@ const repos: GitHubRepo[] = [
   },
   {
     name: 'system-analysis-and-design',
-    description: 'A spec-driven showcase turning business needs into requirements, API specs, data models, diagrams, migrations, and tests, currently focused on e-commerce.',
+    description: {
+      en: 'A spec-driven showcase turning business needs into requirements, API specs, data models, diagrams, migrations, and tests, currently focused on e-commerce.',
+      th: 'ตัวอย่างการทำงานแบบ Spec-driven ที่แปลงโจทย์ธุรกิจเป็น Requirement, API Spec, Data Model, Diagram, Migration และ Test โดยเน้นระบบ E-commerce',
+    },
     language: 'Python',
     tags: ['System Analysis', 'Requirements', 'API Design', 'Data Modeling', 'E-Commerce'],
     stars: 0,
@@ -62,17 +74,17 @@ const repos: GitHubRepo[] = [
     href: `https://github.com/${GITHUB_USERNAME}/system-analysis-and-design`,
     samples: [
       {
-        title: 'Schema design',
+        title: { en: 'Schema design', th: 'ออกแบบ Schema' },
         links: [
-          { label: 'Product schema spec', href: 'https://github.com/ittikornsopawan/system-analysis-and-design/blob/main/e-commerce/doc/schema/product/m_product.md' },
-          { label: 'SQL query', href: 'https://github.com/ittikornsopawan/system-analysis-and-design/blob/main/e-commerce/db/migrations/up/03-product.schema.up.sql' },
+          { label: { en: 'Product schema spec', th: 'เอกสาร Product Schema' }, href: 'https://github.com/ittikornsopawan/system-analysis-and-design/blob/main/e-commerce/doc/schema/product/m_product.md' },
+          { label: { en: 'SQL query', th: 'คำสั่ง SQL' }, href: 'https://github.com/ittikornsopawan/system-analysis-and-design/blob/main/e-commerce/db/migrations/up/03-product.schema.up.sql' },
         ],
       },
       {
-        title: 'API spec',
+        title: { en: 'API spec', th: 'เอกสาร API' },
         links: [
-          { label: 'Upsert product', href: 'https://github.com/ittikornsopawan/system-analysis-and-design/blob/main/e-commerce/doc/api/product/01-upsert-product/spec.md' },
-          { label: 'Sequence diagram', href: 'https://github.com/ittikornsopawan/system-analysis-and-design/blob/main/e-commerce/doc/api/product/01-upsert-product/sequence.wsd' },
+          { label: { en: 'Upsert product', th: 'API Upsert Product' }, href: 'https://github.com/ittikornsopawan/system-analysis-and-design/blob/main/e-commerce/doc/api/product/01-upsert-product/spec.md' },
+          { label: { en: 'Sequence diagram', th: 'Sequence Diagram' }, href: 'https://github.com/ittikornsopawan/system-analysis-and-design/blob/main/e-commerce/doc/api/product/01-upsert-product/sequence.wsd' },
         ],
       },
     ],
@@ -141,7 +153,7 @@ export default function GitHubRepos() {
                     <a href={repo.href} target="_blank" rel="noopener noreferrer" className="github-repo-link block truncate font-semibold">
                       {repo.name}
                     </a>
-                    <span className="github-public-label mt-1 inline-flex rounded-full border px-2 py-0.5 text-[0.68rem] leading-none">
+                    <span className="github-public-label mt-1 inline-flex rounded-full border px-2 py-0.5 text-[0.72rem] leading-none">
                       {T.public[lang]}
                     </span>
                   </div>
@@ -149,17 +161,17 @@ export default function GitHubRepos() {
               </div>
 
               {/* Description */}
-              <p className="text-[0.82rem] leading-relaxed text-theme2 flex-1">
-                {repo.description}
+              <p className="text-[0.9rem] leading-relaxed text-theme2 flex-1">
+                      {repo.description[lang]}
               </p>
 
               {repo.samples && (
                 <div className="rounded-lg border border-violet-500/20 bg-violet-500/[0.045] p-3">
-                  <p className="mb-2 text-[0.67rem] font-bold uppercase tracking-[1.2px] text-violet-700 dark:text-violet-300">Selected spec samples</p>
+                  <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[1.2px] text-violet-700 dark:text-violet-300">{T.samples[lang]}</p>
                   <div className="flex flex-col gap-3">
                     {repo.samples.map(sample => (
-                      <div key={sample.title}>
-                        <p className="mb-1.5 text-[0.72rem] font-semibold text-theme">{sample.title}</p>
+                      <div key={sample.title.en}>
+                      <p className="mb-1.5 text-[0.78rem] font-semibold text-theme">{sample.title[lang]}</p>
                         <div className="flex flex-col items-start gap-1.5">
                           {sample.links.map(link => (
                             <a
@@ -167,11 +179,11 @@ export default function GitHubRepos() {
                               href={link.href}
                               target="_blank"
                               rel="noopener noreferrer"
-                              aria-label={`${sample.title}: ${link.label}`}
-                              className="inline-flex min-h-11 items-center gap-1 rounded-md border border-violet-500/20 bg-[var(--surface)] px-2.5 py-2 text-[0.7rem] font-medium text-violet-700 transition-colors hover:border-violet-500/45 hover:bg-violet-500/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:text-violet-300"
+                              aria-label={`${sample.title[lang]}: ${link.label[lang]}`}
+                              className="inline-flex min-h-11 items-center gap-1 rounded-md border border-violet-500/20 bg-[var(--surface)] px-2.5 py-2 text-[0.75rem] font-medium text-violet-700 transition-colors hover:border-violet-500/45 hover:bg-violet-500/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:text-violet-300"
                             >
                               <FileText size={11} aria-hidden="true" />
-                              {link.label}
+                              {link.label[lang]}
                               <ArrowUpRight size={10} aria-hidden="true" />
                             </a>
                           ))}
@@ -185,7 +197,7 @@ export default function GitHubRepos() {
               {/* Tags */}
               <div className="flex flex-wrap gap-1.5">
                 {repo.tags.map(t => (
-                  <span key={t} className="github-topic rounded-full border px-2.5 py-1 text-[0.72rem] font-medium">
+                  <span key={t} className="github-topic rounded-full border px-2.5 py-1 text-[0.75rem] font-medium">
                     {t}
                   </span>
                 ))}

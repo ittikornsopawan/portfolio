@@ -256,7 +256,7 @@ export default function Skills() {
                       {sub.label}
                     </h4>
                     {sub.note && (
-                      <p className="mb-2.5 flex w-fit max-w-full items-center gap-2 rounded-lg border border-violet-500/25 bg-violet-500/[0.07] px-2.5 py-1.5 text-[0.68rem] font-semibold leading-snug text-violet-800 dark:border-violet-300/25 dark:bg-violet-400/[0.09] dark:text-violet-200">
+                      <p className="mb-2.5 flex w-fit max-w-full items-center gap-2 rounded-lg border border-violet-500/25 bg-violet-500/[0.07] px-2.5 py-1.5 text-[0.75rem] font-semibold leading-snug text-violet-800 dark:border-violet-300/25 dark:bg-violet-400/[0.09] dark:text-violet-200">
                         <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-br from-violet-600 to-blue-500 shadow-[0_0_8px_rgba(124,58,237,0.65)]" aria-hidden="true" />
                         {sub.note[lang]}
                       </p>

@@ -31,15 +31,15 @@ export default function Home() {
         <hr className="section-divider" />
         <Projects />
         <hr className="section-divider" />
+        <GitHubRepos />
+        <hr className="section-divider" />
         <Skills />
+        <hr className="section-divider" />
+        <Testimonials />
         <hr className="section-divider" />
         <Certifications />
         <hr className="section-divider" />
         <CareerPath />
-        <hr className="section-divider" />
-        <Testimonials />
-        <hr className="section-divider" />
-        <GitHubRepos />
         <hr className="section-divider" />
         <Personality />
         <hr className="section-divider" />

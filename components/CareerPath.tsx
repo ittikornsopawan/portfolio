@@ -9,34 +9,34 @@ import { i18n } from '@/lib/i18n'
 const phases = [
   {
     Icon: TrendingUp,
-    range: '0 – 5 Years',
-    label: 'Architecture Owner & Head-Ready',
+    range: { en: '0 – 5 Years', th: '0–5 ปี' },
+    label: { en: 'Architecture Owner & Head-Ready', th: 'เจ้าของทิศทาง Architecture และเตรียมพร้อมสู่บทบาทหัวหน้า' },
     gradient: 'from-violet-600 to-blue-500',
     glow: '0 8px 22px rgba(124,58,237,0.35)',
     goals: [
-      'Expand responsibility to owning multiple systems or full business domains with end-to-end accountability.',
-      'Define architecture direction, design principles, and architectural decision guidelines across teams.',
-      'Establish and operate architecture governance, review processes, and technical standards at domain level.',
-      'Transition from solution-centric design to platform architecture and reusable enterprise capabilities.',
-      'Lead the definition of technology roadmaps and cross-team technical alignment with senior stakeholders.',
-      'Develop people leadership — mentoring, coaching, and growing future architects and technical leads.',
-      'Strengthen executive communication, architectural decision-making, and stakeholder influence.',
+      { en: 'Expand responsibility to owning multiple systems or full business domains with end-to-end accountability.', th: 'รับผิดชอบหลายระบบหรือทั้ง Domain ธุรกิจ พร้อมดูแลผลลัพธ์ตั้งแต่ต้นจนจบ' },
+      { en: 'Define architecture direction, design principles, and architectural decision guidelines across teams.', th: 'กำหนดทิศทาง Architecture, หลักการออกแบบ และแนวทางตัดสินใจร่วมกันระหว่างทีม' },
+      { en: 'Establish and operate architecture governance, review processes, and technical standards at domain level.', th: 'วางระบบกำกับดูแล Architecture กระบวนการ Review และมาตรฐานเทคนิคในระดับ Domain' },
+      { en: 'Transition from solution-centric design to platform architecture and reusable enterprise capabilities.', th: 'ขยับจากการออกแบบราย Solution ไปสู่ Platform Architecture และความสามารถที่นำกลับมาใช้ซ้ำได้' },
+      { en: 'Lead the definition of technology roadmaps and cross-team technical alignment with senior stakeholders.', th: 'นำการจัดทำ Technology Roadmap และประสานทิศทางเทคนิคข้ามทีมกับผู้บริหาร' },
+      { en: 'Develop people leadership — mentoring, coaching, and growing future architects and technical leads.', th: 'พัฒนาทักษะการนำคน ผ่านการให้คำปรึกษาและเติบโตไปพร้อมกับ Architect และ Technical Lead รุ่นต่อไป' },
+      { en: 'Strengthen executive communication, architectural decision-making, and stakeholder influence.', th: 'พัฒนาการสื่อสารกับผู้บริหาร การตัดสินใจด้าน Architecture และการสร้างความร่วมมือกับ Stakeholder' },
     ],
   },
   {
     Icon: Crown,
-    range: '6 – 10 Years',
-    label: 'Enterprise Technology Leadership & C-Level Readiness',
+    range: { en: '6 – 10 Years', th: '6–10 ปี' },
+    label: { en: 'Enterprise Technology Leadership & C-Level Readiness', th: 'ผู้นำเทคโนโลยีระดับองค์กรและเตรียมพร้อมสู่ผู้บริหาร C-Level' },
     gradient: 'from-blue-500 to-cyan-400',
     glow: '0 8px 22px rgba(59,130,246,0.35)',
     goals: [
-      'Own enterprise-wide technology direction and architecture strategy aligned with organizational goals.',
-      'Drive technology decisions balancing business strategy, technical risk, scalability, and long-term impact.',
-      'Lead enterprise architecture governance and architectural alignment across organizations.',
-      'Advance platform strategy and architectural capabilities to support long-term organizational growth.',
-      'Leverage data-driven and AI-enabled insights as part of executive-level decision-making.',
-      'Demonstrate board-level presentation skills and strategic stakeholder influence.',
-      'Prepare for CTO, Chief Architect, or architecture-driven C-level positions.',
+      { en: 'Own enterprise-wide technology direction and architecture strategy aligned with organizational goals.', th: 'กำหนดทิศทางเทคโนโลยีและกลยุทธ์ Architecture ระดับองค์กรให้สอดคล้องกับเป้าหมายธุรกิจ' },
+      { en: 'Drive technology decisions balancing business strategy, technical risk, scalability, and long-term impact.', th: 'ขับเคลื่อนการตัดสินใจด้านเทคโนโลยีโดยคำนึงถึงกลยุทธ์ธุรกิจ ความเสี่ยง การรองรับการเติบโต และผลระยะยาว' },
+      { en: 'Lead enterprise architecture governance and architectural alignment across organizations.', th: 'นำการกำกับดูแล Enterprise Architecture และประสานแนวทางออกแบบระหว่างหน่วยงาน' },
+      { en: 'Advance platform strategy and architectural capabilities to support long-term organizational growth.', th: 'พัฒนากลยุทธ์ Platform และความสามารถด้าน Architecture เพื่อรองรับการเติบโตระยะยาว' },
+      { en: 'Leverage data-driven and AI-enabled insights as part of executive-level decision-making.', th: 'ใช้ข้อมูลและ AI เป็นส่วนหนึ่งของการตัดสินใจในระดับผู้บริหาร' },
+      { en: 'Demonstrate board-level presentation skills and strategic stakeholder influence.', th: 'สื่อสารต่อคณะกรรมการได้ชัดเจนและสร้างอิทธิพลต่อการตัดสินใจเชิงกลยุทธ์' },
+      { en: 'Prepare for CTO, Chief Architect, or architecture-driven C-level positions.', th: 'เตรียมความพร้อมสู่บทบาท CTO, Chief Architect หรือผู้บริหาร C-Level สาย Architecture' },
     ],
   },
 ]
@@ -64,7 +64,7 @@ export default function CareerPath() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {phases.map((phase, i) => (
-          <RevealWrapper key={phase.range} delay={i * 120}>
+          <RevealWrapper key={phase.range.en} delay={i * 120}>
             <div className="glass-card p-5 sm:p-8 h-full">
               {/* Header */}
               <div className="flex items-center gap-4 mb-6">
@@ -75,8 +75,8 @@ export default function CareerPath() {
                   <phase.Icon size={22} className="text-white" strokeWidth={2} />
                 </div>
                 <div>
-                  <div className="text-xs font-bold uppercase tracking-widest text-theme3 mb-1">{phase.range}</div>
-                  <div className="font-display font-bold text-[0.98rem] text-theme leading-tight">{phase.label}</div>
+                  <div className="text-xs font-bold uppercase tracking-widest text-theme3 mb-1">{phase.range[lang]}</div>
+                  <div className="font-display font-bold text-[0.98rem] text-theme leading-tight">{phase.label[lang]}</div>
                 </div>
               </div>
 
@@ -88,7 +88,7 @@ export default function CareerPath() {
                 {(expanded[i] ? phase.goals : phase.goals.slice(0, VISIBLE_GOALS)).map((goal, gi) => (
                   <li key={gi} className="flex gap-3 items-start text-[0.875rem] text-theme2 leading-relaxed">
                     <span className={`mt-2 w-1.5 h-1.5 rounded-full bg-gradient-to-br ${phase.gradient} shrink-0`} />
-                    {goal}
+                    {goal[lang]}
                   </li>
                 ))}
               </ul>

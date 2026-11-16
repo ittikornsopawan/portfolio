@@ -6,14 +6,14 @@ import type { LucideIcon } from 'lucide-react'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
 
-interface ContactLink { Icon: LucideIcon; label: string; sub?: string; href?: string }
+interface ContactLink { Icon: LucideIcon; key: keyof typeof i18n.contact.details; sub: keyof typeof i18n.contact.details | 'emailValue' | 'phoneValue' | 'linkedinValue'; href?: string }
 
 const contactLinks: ContactLink[] = [
-  { Icon: Mail,   label: 'Email',        sub: 'ittikorn.sopawan@gmail.com',      href: 'mailto:ittikorn.sopawan@gmail.com'        },
-  { Icon: Phone,  label: 'Phone',        sub: '(+66) 09 9116 1274',               href: 'tel:+66991161274'                         },
-  { Icon: Link2,  label: 'LinkedIn',     sub: 'linkedin.com/in/ittikorn-sopawan', href: 'https://linkedin.com/in/ittikorn-sopawan' },
-  { Icon: MapPin, label: 'Location',     sub: 'Thailand'                                                                           },
-  { Icon: Clock,  label: 'Availability', sub: '30 Days Notice'                                                                     },
+  { Icon: Mail,   key: 'email',        sub: 'emailValue',    href: 'mailto:ittikorn.sopawan@gmail.com' },
+  { Icon: Phone,  key: 'phone',        sub: 'phoneValue',    href: 'tel:+66991161274' },
+  { Icon: Link2,  key: 'linkedin',     sub: 'linkedinValue', href: 'https://linkedin.com/in/ittikorn-sopawan' },
+  { Icon: MapPin, key: 'location',     sub: 'thailand' },
+  { Icon: Clock,  key: 'availability', sub: 'noticePeriod' },
 ]
 
 export default function Contact() {
@@ -54,11 +54,15 @@ export default function Contact() {
               <div className="glass-card relative flex flex-col gap-2 p-6 shadow-[0_20px_60px_rgba(124,58,237,0.25)]">
                 {contactLinks.map((link, i) => {
                   const primary = i === 0
-                  const availability = link.label === 'Availability'
+                  const availability = link.key === 'availability'
+                  const sub = link.sub === 'emailValue' ? 'ittikorn.sopawan@gmail.com'
+                    : link.sub === 'phoneValue' ? '+66 99 116 1274'
+                    : link.sub === 'linkedinValue' ? 'linkedin.com/in/ittikorn-sopawan'
+                    : T.details[link.sub][lang]
                   const Row = link.href ? 'a' : 'div'
                   return (
                     <Row
-                      key={link.label}
+                      key={link.key}
                       {...(link.href ? { href: link.href, ...(link.href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {}) } : {})}
                       className={`group flex items-center gap-4 rounded-xl p-4 transition-all duration-200 ${
                         primary
@@ -92,10 +96,10 @@ export default function Contact() {
                       </div>
                       <div className="min-w-0 flex-1">
                         <div className={`text-xs font-semibold uppercase tracking-wider ${primary ? 'text-white/75' : availability ? 'text-white/75' : 'text-theme3'}`}>
-                          {link.label}
+                          {T.details[link.key][lang]}
                         </div>
                         <div className={`mt-0.5 truncate font-semibold ${primary ? 'text-[0.95rem] text-white' : availability ? 'text-[0.95rem] text-white' : 'text-sm text-theme2 transition-colors group-hover:text-theme'}`}>
-                          {link.sub}
+                          {sub}
                         </div>
                       </div>
                       {link.href && (

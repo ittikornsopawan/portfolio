@@ -18,7 +18,6 @@ export default function BackgroundMusicPlayer() {
   const audioCtxRef = useRef<AudioContext | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [autoplayBlocked, setAutoplayBlocked] = useState(false)
-  const [promptDismissed, setPromptDismissed] = useState(false)
   const { lang } = useLang()
   const T = i18n.musicPlayer
   const heroT = i18n.hero
@@ -174,32 +173,6 @@ export default function BackgroundMusicPlayer() {
           </span>
         </div>
         <div ref={playerRef} className="vinyl-player relative h-12 w-12 shrink-0 sm:h-[72px] sm:w-[72px]">
-          {autoplayBlocked && !isPlaying && !promptDismissed && (
-          <div
-            role="dialog"
-            aria-label={T.promptTitle[lang]}
-            className="absolute bottom-[calc(100%+0.75rem)] right-0 z-20 w-[min(16rem,calc(100vw-2rem))] animate-[music-prompt-in_0.35s_ease-out] rounded-2xl border border-violet-200/70 bg-white/90 p-4 text-left shadow-[0_12px_32px_rgba(76,29,149,0.18)] backdrop-blur-md dark:border-violet-400/20 dark:bg-slate-900/90 dark:shadow-[0_12px_32px_rgba(0,0,0,0.55)] sm:bottom-0 sm:right-[88px] sm:w-64 sm:max-w-[calc(100vw-7.75rem)]"
-          >
-            <p className="text-sm font-semibold text-slate-900 dark:text-white">♪ {T.promptTitle[lang]}</p>
-            <p className="mt-1 text-xs leading-relaxed text-slate-600 dark:text-slate-300">{T.promptBody[lang]}</p>
-            <div className="mt-3 flex gap-2">
-              <button
-                type="button"
-                onClick={togglePlayback}
-                className="flex-1 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-3 py-1.5 text-xs font-semibold text-white shadow-md transition hover:brightness-110"
-              >
-                {T.promptAccept[lang]}
-              </button>
-              <button
-                type="button"
-                onClick={() => setPromptDismissed(true)}
-                className="rounded-full px-3 py-1.5 text-xs font-medium text-slate-500 transition hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-white/5"
-              >
-                {T.promptDismiss[lang]}
-              </button>
-            </div>
-          </div>
-          )}
           <span aria-hidden="true" className={`vinyl-glow ${isPlaying ? 'is-playing' : ''}`} />
           <span aria-hidden="true" className="vinyl-beat-ring" />
           <span aria-hidden="true" className={`vinyl-ripple ${isPlaying ? 'is-playing' : ''}`} />
@@ -226,7 +199,7 @@ export default function BackgroundMusicPlayer() {
       </div>
       <div
         ref={mobileControlsRef}
-        className="fixed bottom-[calc(env(safe-area-inset-bottom)+1rem)] right-3 z-[60] flex flex-col gap-2 sm:hidden"
+        className="fixed bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] right-2 z-[60] flex flex-row items-center gap-2 rounded-full border border-violet-200/80 bg-white/95 px-2 py-1 shadow-[0_8px_24px_rgba(76,29,149,0.26)] backdrop-blur-xl dark:border-violet-300/20 dark:bg-slate-950/95 dark:shadow-[0_8px_24px_rgba(0,0,0,0.55)] sm:hidden"
       >
         <button
           type="button"
@@ -234,7 +207,7 @@ export default function BackgroundMusicPlayer() {
           aria-haspopup="dialog"
           aria-label={`${heroT.openToWork.badge[lang]} — ${heroT.openToWork.viewDetails[lang]}`}
           title={`${heroT.openToWork.badge[lang]} — ${heroT.openToWork.viewDetails[lang]}`}
-          className="relative isolate inline-flex h-11 w-11 items-center justify-center overflow-visible rounded-full border border-violet-300/70 bg-white/95 text-violet-700 shadow-[0_5px_18px_rgba(76,29,149,0.28)] backdrop-blur-md transition hover:scale-105 hover:bg-violet-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:border-violet-300/35 dark:bg-slate-950/95 dark:text-violet-200 dark:hover:bg-slate-900 active:scale-95"
+          className="relative isolate inline-flex h-11 w-11 shrink-0 items-center justify-center overflow-visible rounded-full border border-violet-300/70 bg-white/95 text-violet-700 shadow-[0_5px_18px_rgba(76,29,149,0.28)] backdrop-blur-md transition hover:scale-105 hover:bg-violet-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:border-violet-300/35 dark:bg-slate-950/95 dark:text-violet-200 dark:hover:bg-slate-900 active:scale-95"
         >
           <span aria-hidden="true" className="pointer-events-none absolute -inset-1 rounded-full border border-emerald-400/80 motion-safe:animate-ping" />
           <Briefcase size={19} strokeWidth={2.3} aria-hidden="true" />
@@ -246,7 +219,7 @@ export default function BackgroundMusicPlayer() {
           href="tel:+66991161274"
           aria-label={`${heroT.openToWork.call[lang]}: +66 99 116 1274`}
           title={`${heroT.openToWork.call[lang]}: +66 99 116 1274`}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-emerald-300/70 bg-gradient-to-br from-emerald-600 to-teal-500 text-white shadow-[0_5px_18px_rgba(16,185,129,0.34)] transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 active:scale-95 dark:border-emerald-300/40"
+          className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-emerald-300/70 bg-gradient-to-br from-emerald-600 to-teal-500 text-white shadow-[0_5px_18px_rgba(16,185,129,0.34)] transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 active:scale-95 dark:border-emerald-300/40"
         >
           <PhoneCall size={18} strokeWidth={2.2} aria-hidden="true" />
         </a>
@@ -256,7 +229,7 @@ export default function BackgroundMusicPlayer() {
           aria-label={buttonLabel}
           aria-pressed={isPlaying}
           title={buttonLabel}
-          className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-violet-300/70 bg-gradient-to-br from-violet-600 to-fuchsia-500 text-white shadow-[0_5px_18px_rgba(124,58,237,0.4)] transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 active:scale-95 dark:border-violet-300/35"
+          className="relative inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-violet-300/70 bg-gradient-to-br from-violet-600 to-fuchsia-500 text-white shadow-[0_5px_18px_rgba(124,58,237,0.4)] transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 active:scale-95 dark:border-violet-300/35"
         >
           <span aria-hidden="true" className="relative h-[18px] w-[18px]">
             <Play

@@ -1,16 +1,26 @@
 'use client'
 
 import { Star, MessageSquare } from 'lucide-react'
+import { useState } from 'react'
 import RevealWrapper from './RevealWrapper'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
 
-const testimonials = [
+const testimonials: {
+  name: string
+  role: string
+  company: string
+  relation: keyof typeof i18n.testimonials.relations
+  text: string
+  initials: string
+  highlights: string[]
+  gradient: string
+}[] = [
   {
     name: 'Soopalerk Roddech',
     role: 'Head of Solution Design & Architect',
     company: 'True Internet Data Center',
-    relation: 'Direct Manager',
+    relation: 'manager',
     text: "Aof has demonstrated exceptional diligence and dedication. His expertise in system analysis — particularly in developing billing systems for multi-cloud environments — is remarkable. His innovative thinking and proficiency have resulted in the accurate and efficient development of systems that meet clients' needs comprehensively. Aof possesses excellent communication skills and the ability to collaborate effectively with team members, invaluable for complex project work.",
     initials: 'SR',
     // exact phrases from the quote to emphasize; wording stays untouched
@@ -21,7 +31,7 @@ const testimonials = [
     name: 'Kan Utaipaisalwong',
     role: 'Strategic Partner Alliance',
     company: 'True Internet Data Center',
-    relation: 'Stakeholder',
+    relation: 'stakeholder',
     text: "Khun Aof was instrumental in finding solutions for the project we worked on, even with its complex details. I also appreciated his ability to coordinate smoothly across departments. He took the lead to ensure the project was completed on time and explained technical knowledge clearly and politely. It was a pleasure working together.",
     initials: 'KU',
     // exact phrases from the quote to emphasize; wording stays untouched
@@ -32,7 +42,7 @@ const testimonials = [
     name: 'Thongtong Hanpongsachitt',
     role: 'Project Manager (Product Owner)',
     company: 'True Internet Data Center',
-    relation: 'Product Owner',
+    relation: 'productOwner',
     text: "I worked with him for years on web application development projects. His ability to break down complex issues into understandable solutions is exceptional. He is a trustworthy system analyst with an open mind, good teamwork skills, and fast learning.",
     initials: 'TH',
     // exact phrases from the quote to emphasize; wording stays untouched
@@ -43,7 +53,7 @@ const testimonials = [
     name: 'Wirach Semwong',
     role: 'Development Manager',
     company: 'Socket9',
-    relation: 'Engineering Lead',
+    relation: 'engineeringLead',
     text: "Despite joining the project at a later stage, he quickly developed a strong understanding of the system architecture and data structures. He consistently proposed thoughtful optimizations that improved system efficiency, and brings valuable experience, standards, and best practices. He communicates well with both technical teams and non-technical stakeholders, and is a fast learner always open to feedback and new technologies. He would be a valuable addition to any team.",
     initials: 'WS',
     // exact phrases from the quote to emphasize; wording stays untouched
@@ -54,7 +64,7 @@ const testimonials = [
     name: 'Duangkamol Uttayanwittaya',
     role: 'Head of Business Analyst',
     company: 'Socket9',
-    relation: 'BA Lead',
+    relation: 'baLead',
     text: "His ability to provide end-to-end consultation — covering enterprise solution architecture, technical design, and data modeling — is consistently impressive and always tailored to client needs. He doesn't just meet requirements — he enhances them. He works with speed, clarity, and a proactive mindset. His multitasking skills and collaborative spirit shine through in both project implementation and pre-sales engagements. A true asset to any team.",
     initials: 'DU',
     // exact phrases from the quote to emphasize; wording stays untouched
@@ -78,6 +88,7 @@ function Highlighted({ text, phrases }: { text: string; phrases: string[] }) {
 export default function Testimonials() {
   const { lang } = useLang()
   const T = i18n.testimonials
+  const [showAll, setShowAll] = useState(false)
 
   return (
     <section id="testimonials" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
@@ -102,8 +113,10 @@ export default function Testimonials() {
         <span className="text-sm font-semibold text-theme2 ml-2">{T.references[lang]}</span>
       </RevealWrapper>
 
+      <p className="mb-5 text-center text-xs text-theme3">{T.originalQuote[lang]}</p>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {testimonials.map((t, i) => (
+        {testimonials.slice(0, showAll ? testimonials.length : 3).map((t, i) => (
           <RevealWrapper key={t.name} delay={i * 75} className={i === 4 ? 'md:col-span-2' : ''}>
             <div className={`testimonial-card glass-card group relative flex h-full flex-col gap-5 overflow-hidden p-5 sm:p-7 ${i === 4 ? 'md:p-9' : ''}`}>
               {/* Accent bar in the author's colour */}
@@ -123,7 +136,7 @@ export default function Testimonials() {
                   ))}
                 </div>
                 <span className={`mr-14 rounded-full bg-gradient-to-r ${t.gradient} px-2.5 py-0.5 text-[0.7rem] font-bold uppercase tracking-wider text-white shadow-sm`}>
-                  {t.relation}
+                  {T.relations[t.relation][lang]}
                 </span>
               </div>
 
@@ -148,6 +161,16 @@ export default function Testimonials() {
             </div>
           </RevealWrapper>
         ))}
+      </div>
+      <div className="mt-6 text-center">
+        <button
+          type="button"
+          onClick={() => setShowAll(value => !value)}
+          aria-expanded={showAll}
+          className="min-h-11 rounded-full border border-violet-500/25 px-5 py-2 text-sm font-semibold text-violet-700 transition-colors hover:bg-violet-500/[0.08] dark:text-violet-300"
+        >
+          {showAll ? T.showLess[lang] : T.showAll[lang]}
+        </button>
       </div>
     </section>
   )

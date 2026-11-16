@@ -5,9 +5,9 @@ import RevealWrapper from './RevealWrapper'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
 
-const languages = [
-  { lang: 'Thai',    level: 'Native',       pct: 100 },
-  { lang: 'English', level: 'Intermediate', pct: 60  },
+const languages: { lang: 'thai' | 'english'; level: 'native' | 'intermediate'; pct: number }[] = [
+  { lang: 'thai', level: 'native', pct: 100 },
+  { lang: 'english', level: 'intermediate', pct: 60 },
 ]
 
 export default function Certifications() {
@@ -41,7 +41,7 @@ export default function Certifications() {
               <div>
                 <div className="text-xs font-bold uppercase tracking-widest text-theme3 mb-2">{T.edLabel[lang]}</div>
                 <div className="font-display font-bold text-[1.15rem] text-theme mb-1 leading-tight">
-                  Bachelor of Science in Computer Engineering
+                  {T.degree[lang]}
                 </div>
                 <div className="text-sm font-semibold gradient-text mb-1">
                   Rajamangala University of Technology Thanyaburi
@@ -88,9 +88,9 @@ export default function Certifications() {
               {languages.map(l => (
                 <div key={l.lang}>
                   <div className="flex justify-between items-center mb-2.5">
-                    <span className="font-display font-bold text-[0.95rem] text-theme">{l.lang}</span>
+                    <span className="font-display font-bold text-[0.95rem] text-theme">{T[l.lang][lang]}</span>
                     <span className="tag-chip tag-chip--neutral">
-                      {l.level}
+                      {T[l.level][lang]}
                     </span>
                   </div>
                   <div className="h-1.5 surface-3 rounded-full overflow-hidden">
