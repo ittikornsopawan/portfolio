@@ -21,7 +21,7 @@ export default function Home() {
     <>
       <Background />
       <Navbar />
-      <main id="main" tabIndex={-1} className="relative z-10 pt-16 outline-none">
+      <main id="main" tabIndex={-1} className="relative z-10 pt-16 pb-24 outline-none sm:pb-0">
         <Hero />
         <BackgroundMusicPlayer />
         <hr className="section-divider" />

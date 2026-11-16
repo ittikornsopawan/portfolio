@@ -492,10 +492,6 @@
   animation: aq-in 0.6s ease-out both;
 }
 
-.reveal.visible .about-quote .aq-late {
-  animation-delay: 1.4s;
-}
-
 .reveal.visible .about-quote .aq-seg {
   animation: aq-in 0.55s ease-out both;
   animation-delay: calc(0.15s + var(--i) * 0.09s);

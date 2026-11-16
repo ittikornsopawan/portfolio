@@ -18,9 +18,24 @@ export default function AboutQuote() {
           <div className="pointer-events-none absolute -bottom-28 right-10 h-72 w-72 rounded-full bg-fuchsia-500/20 blur-3xl" />
           <div className="pointer-events-none absolute left-1/2 top-1/3 h-48 w-48 rounded-full bg-blue-500/15 blur-3xl" />
 
-          <div className="relative grid gap-8 lg:grid-cols-[1.05fr_1fr] lg:gap-12">
+          <div className="relative grid gap-7 sm:gap-8 lg:grid-cols-[1.05fr_1fr] lg:gap-12">
             {/* The motto is the quote */}
             <div className="flex flex-col">
+              <figcaption className="aq-fade mb-6 flex min-w-0 items-center gap-3.5 sm:mb-7 sm:gap-4">
+                <div className="h-14 w-14 shrink-0 rounded-full bg-gradient-to-br from-violet-500 via-fuchsia-500 to-cyan-400 p-[2px] shadow-[0_4px_18px_rgba(124,58,237,0.3)] sm:h-16 sm:w-16">
+                  <Image
+                    src="/profile.jpeg"
+                    alt=""
+                    width={128}
+                    height={128}
+                    className="h-full w-full rounded-full border-2 border-[var(--surface)] object-cover object-top"
+                  />
+                </div>
+                <div className="min-w-0">
+                  <div className="font-display text-[0.92rem] font-bold leading-tight text-theme sm:text-base">{T.by[lang]}</div>
+                  <div className="mt-1 text-[0.72rem] leading-snug text-theme3 sm:text-[0.8rem]">{T.role[lang]}</div>
+                </div>
+              </figcaption>
               <span aria-hidden="true" className="aq-fade aq-glyph block h-10 font-display text-[4.5rem] font-extrabold leading-none">
                 &ldquo;
               </span>
@@ -28,20 +43,6 @@ export default function AboutQuote() {
                 {T.motto.quote[lang]}
               </blockquote>
               <span className="aq-bar mt-6 h-1.5 w-20 rounded-full" />
-
-              <figcaption className="aq-fade aq-late mt-6 flex items-center gap-3 lg:mt-auto lg:pt-8">
-                <Image
-                  src="/profile.jpeg"
-                  alt=""
-                  width={96}
-                  height={96}
-                  className="h-11 w-11 rounded-full object-cover object-top ring-2 ring-fuchsia-400/60 ring-offset-2 ring-offset-transparent"
-                />
-                <div>
-                  <div className="font-display text-[0.92rem] font-bold text-theme">{T.by[lang]}</div>
-                  <div className="text-[0.75rem] text-theme3">{T.role[lang]}</div>
-                </div>
-              </figcaption>
             </div>
 
             {/* CV summary as supporting text */}

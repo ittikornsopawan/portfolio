@@ -18,6 +18,7 @@ export default function BackgroundMusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [autoplayBlocked, setAutoplayBlocked] = useState(false)
   const [promptDismissed, setPromptDismissed] = useState(false)
+  const [dockHidden, setDockHidden] = useState(false)
   const { lang } = useLang()
   const T = i18n.musicPlayer
   const heroT = i18n.hero
@@ -134,6 +135,39 @@ export default function BackgroundMusicPlayer() {
 
   const buttonLabel = isPlaying ? T.pause[lang] : T.play[lang]
 
+  useEffect(() => {
+    const mobile = window.matchMedia('(max-width: 639px)')
+    let lastScrollY = window.scrollY
+
+    const onScroll = () => {
+      const currentScrollY = window.scrollY
+      const nearTop = currentScrollY < 40
+      const nearBottom = window.innerHeight + currentScrollY >= document.documentElement.scrollHeight - 24
+
+      if (!mobile.matches || nearTop || nearBottom) {
+        setDockHidden(false)
+      } else if (currentScrollY > lastScrollY + 6) {
+        setDockHidden(true)
+      } else if (currentScrollY < lastScrollY - 6) {
+        setDockHidden(false)
+      }
+
+      lastScrollY = currentScrollY
+    }
+
+    const onViewportChange = () => {
+      setDockHidden(false)
+      lastScrollY = window.scrollY
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    mobile.addEventListener('change', onViewportChange)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      mobile.removeEventListener('change', onViewportChange)
+    }
+  }, [])
+
   return (
     <>
       <audio
@@ -149,19 +183,22 @@ export default function BackgroundMusicPlayer() {
         onPause={() => setIsPlaying(false)}
         onError={() => console.error('Background music failed to load from /background-music.mp3')}
       />
-      <div ref={clusterRef} className="relative z-[60] mx-auto mb-5 flex w-fit flex-row items-center gap-4 py-3 sm:fixed sm:bottom-6 sm:right-6 sm:mx-0 sm:mb-0 sm:flex-col sm:gap-8 sm:py-0">
-        <div className="flex flex-col items-center gap-1.5 sm:gap-2">
+      <div
+        ref={clusterRef}
+        className={`fixed bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] right-3 z-[60] flex h-[4.25rem] flex-row items-center gap-2 overflow-visible rounded-full border border-violet-200/80 bg-white/95 px-2 shadow-[0_10px_30px_rgba(76,29,149,0.32),0_2px_8px_rgba(15,23,42,0.18)] backdrop-blur-xl transition-[opacity,transform] duration-300 dark:border-violet-300/20 dark:bg-slate-950/95 dark:shadow-[0_10px_30px_rgba(0,0,0,0.62),0_0_18px_rgba(124,58,237,0.24)] motion-reduce:transition-none sm:bottom-6 sm:right-6 sm:h-auto sm:flex-col sm:gap-8 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-none ${dockHidden ? 'pointer-events-none translate-y-[calc(100%+1.5rem)] opacity-0 sm:pointer-events-auto sm:translate-y-0 sm:opacity-100' : ''}`}
+      >
+        <div className="relative flex h-16 w-[5.25rem] shrink-0 items-center justify-center sm:h-auto sm:w-auto sm:flex-col sm:gap-2">
           <button
             type="button"
             onClick={() => window.dispatchEvent(new Event(OPEN_TO_WORK_EVENT))}
             aria-haspopup="dialog"
             aria-label={heroT.openToWork.viewDetails[lang]}
             title={heroT.openToWork.viewDetails[lang]}
-            className="floating-otw-avatar group relative h-14 w-14 shrink-0 overflow-visible rounded-full bg-gradient-to-br from-violet-500 via-fuchsia-500 to-cyan-400 p-[3px] shadow-[0_0_0_4px_rgba(124,58,237,0.22),0_8px_28px_rgba(124,58,237,0.58)] transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-fuchsia-400 sm:h-[72px] sm:w-[72px]"
+            className="floating-otw-avatar group absolute left-1/2 top-0 h-12 w-12 -translate-x-1/2 shrink-0 overflow-visible rounded-full bg-gradient-to-br from-violet-500 via-fuchsia-500 to-cyan-400 p-[3px] shadow-[0_0_0_4px_rgba(124,58,237,0.22),0_8px_28px_rgba(124,58,237,0.58)] transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-fuchsia-400 sm:static sm:h-[72px] sm:w-[72px] sm:translate-x-0"
           >
             <Image src="/profile.jpeg" alt="" width={144} height={144} priority className="relative z-10 h-full w-full rounded-full border-2 border-white object-cover object-top dark:border-slate-950" />
           </button>
-          <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-violet-300/70 bg-violet-700 px-2.5 py-1 text-[0.62rem] font-extrabold tracking-[0.01em] text-white shadow-[0_4px_18px_rgba(124,58,237,0.42)] ring-2 ring-white/80 dark:border-violet-300/50 dark:bg-violet-600 dark:ring-slate-950 sm:px-3 sm:py-1.5 sm:text-[0.68rem]">
+          <span className="absolute bottom-0 left-1/2 inline-flex -translate-x-1/2 items-center gap-1 whitespace-nowrap rounded-full border border-violet-300/80 bg-violet-700 px-2 py-0.5 text-[0.62rem] font-extrabold leading-none tracking-[0.01em] text-white shadow-[0_3px_10px_rgba(124,58,237,0.45)] ring-2 ring-white dark:border-violet-300/50 dark:bg-violet-600 dark:ring-slate-950 sm:static sm:translate-x-0 sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-[0.68rem]">
             <span aria-hidden="true" className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full motion-safe:animate-ping rounded-full bg-emerald-300 opacity-70" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-300" />
@@ -169,7 +206,7 @@ export default function BackgroundMusicPlayer() {
             {heroT.openToWork.badge[lang]}
           </span>
         </div>
-        <div ref={playerRef} className="vinyl-player relative h-14 w-14 shrink-0 sm:h-[72px] sm:w-[72px]">
+        <div ref={playerRef} className="vinyl-player relative h-12 w-12 shrink-0 sm:h-[72px] sm:w-[72px]">
           {autoplayBlocked && !isPlaying && !promptDismissed && (
           <div
             role="dialog"
