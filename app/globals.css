@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+.portfolio-wallpaper {
+  opacity: 0.2;
+  filter: blur(1.5px) saturate(0.78);
+  transform: scale(1.02);
+}
+
+.dark .portfolio-wallpaper {
+  opacity: 0.3;
+}
+
 /* Consistent skill, project, and profile tags in both color themes. */
 .tag-chip {
   display: inline-flex;

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import Image from 'next/image'
 
 const parallaxLayerStyle = { transform: 'translate3d(0,var(--parallax-y,0),0)' }
 
@@ -48,6 +49,17 @@ export default function Background() {
 
   return (
     <div ref={backgroundRef} aria-hidden="true" className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0">
+        <Image
+          src="/wallpaper-github.webp"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="portfolio-wallpaper object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-[var(--bg)]/45 dark:bg-[var(--bg)]/35" />
+      </div>
       {/* Separate layers move at different rates as the page scrolls. */}
       <div data-parallax-speed="0.18" style={parallaxLayerStyle} className="absolute inset-0 will-change-transform">
         <div className="absolute rounded-full blur-[90px] opacity-25 dark:opacity-30 bg-violet-600 w-[650px] h-[650px] -top-56 -left-28 animate-drift-1" />
