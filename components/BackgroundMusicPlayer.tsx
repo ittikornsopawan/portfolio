@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Music2, Pause, Play, X } from 'lucide-react'
+import { Music2, Pause, Play, UserRound } from 'lucide-react'
 import Image from 'next/image'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
@@ -13,14 +13,12 @@ export default function BackgroundMusicPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null)
   const playerRef = useRef<HTMLDivElement>(null)
   const clusterRef = useRef<HTMLDivElement>(null)
-  const dockToggleRef = useRef<HTMLButtonElement>(null)
+  const mobileControlsRef = useRef<HTMLDivElement>(null)
   const analyserRef = useRef<AnalyserNode | null>(null)
   const audioCtxRef = useRef<AudioContext | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [autoplayBlocked, setAutoplayBlocked] = useState(false)
   const [promptDismissed, setPromptDismissed] = useState(false)
-  const [dockHidden, setDockHidden] = useState(true)
-  const [scrollCueVisible, setScrollCueVisible] = useState(true)
   const { lang } = useLang()
   const T = i18n.musicPlayer
   const heroT = i18n.hero
@@ -59,7 +57,7 @@ export default function BackgroundMusicPlayer() {
     // Browsers block autoplay with sound until the first interaction; start on that interaction instead.
     const events = ['click', 'keydown', 'touchend'] as const
     const onFirstGesture = (event: Event) => {
-      if (clusterRef.current?.contains(event.target as Node)) return // the controls handle their own clicks
+      if (clusterRef.current?.contains(event.target as Node) || mobileControlsRef.current?.contains(event.target as Node)) return // the controls handle their own clicks
       events.forEach(name => window.removeEventListener(name, onFirstGesture))
       startVisualizer()
       if (audio.paused) void audio.play().catch(() => {})
@@ -137,59 +135,6 @@ export default function BackgroundMusicPlayer() {
 
   const buttonLabel = isPlaying ? T.pause[lang] : T.play[lang]
 
-  const openDock = () => {
-    setDockHidden(false)
-    window.requestAnimationFrame(() => clusterRef.current?.querySelector<HTMLButtonElement>('button:not([disabled])')?.focus())
-  }
-
-  const closeDock = () => {
-    setDockHidden(true)
-    window.requestAnimationFrame(() => dockToggleRef.current?.focus())
-  }
-
-  useEffect(() => {
-    const mobile = window.matchMedia('(max-width: 639px)')
-    let lastScrollY = window.scrollY
-
-    const isScrollHintVisible = (scrollY: number) => {
-      const remaining = document.documentElement.scrollHeight - (scrollY + window.innerHeight)
-      return (scrollY < 400 && remaining > 240) || (scrollY > 400 && remaining < 120)
-    }
-
-    setScrollCueVisible(isScrollHintVisible(lastScrollY) || document.documentElement.dataset.scrollHintAction === 'to-top')
-    setDockHidden(mobile.matches)
-
-    const onScroll = () => {
-      const currentScrollY = window.scrollY
-      const scrollHintVisible = isScrollHintVisible(currentScrollY)
-      const scrollingToTop = document.documentElement.dataset.scrollHintAction === 'to-top'
-      setScrollCueVisible(scrollHintVisible || scrollingToTop)
-
-      if (!mobile.matches) {
-        setDockHidden(false)
-      } else if (Math.abs(currentScrollY - lastScrollY) > 2 || scrollHintVisible || scrollingToTop) {
-        // Keep the full controls out of the reading area. Mobile users open them deliberately
-        // from the slim edge tab, so an upward scroll or an idle pause never makes them pop in.
-        setDockHidden(true)
-      }
-
-      lastScrollY = currentScrollY
-    }
-
-    const onViewportChange = () => {
-      lastScrollY = window.scrollY
-      setScrollCueVisible(isScrollHintVisible(lastScrollY) || document.documentElement.dataset.scrollHintAction === 'to-top')
-      setDockHidden(mobile.matches)
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true })
-    mobile.addEventListener('change', onViewportChange)
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      mobile.removeEventListener('change', onViewportChange)
-    }
-  }, [])
-
   return (
     <>
       <audio
@@ -207,9 +152,7 @@ export default function BackgroundMusicPlayer() {
       />
       <div
         ref={clusterRef}
-        aria-hidden={dockHidden}
-        inert={dockHidden}
-        className={`fixed bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] right-3 z-[60] flex h-[4.25rem] flex-row items-center gap-2 overflow-visible rounded-full border border-violet-200/80 bg-white/95 px-2 shadow-[0_10px_30px_rgba(76,29,149,0.32),0_2px_8px_rgba(15,23,42,0.18)] backdrop-blur-xl transition-[opacity,transform] duration-300 dark:border-violet-300/20 dark:bg-slate-950/95 dark:shadow-[0_10px_30px_rgba(0,0,0,0.62),0_0_18px_rgba(124,58,237,0.24)] motion-reduce:transition-none sm:bottom-6 sm:right-6 sm:h-auto sm:flex-col sm:gap-8 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-none ${dockHidden ? 'pointer-events-none translate-y-[calc(100%+1.5rem)] opacity-0 sm:pointer-events-auto sm:translate-y-0 sm:opacity-100' : ''}`}
+        className="fixed bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] right-3 z-[60] hidden h-[4.25rem] flex-row items-center gap-2 overflow-visible rounded-full border border-violet-200/80 bg-white/95 px-2 shadow-[0_10px_30px_rgba(76,29,149,0.32),0_2px_8px_rgba(15,23,42,0.18)] backdrop-blur-xl dark:border-violet-300/20 dark:bg-slate-950/95 dark:shadow-[0_10px_30px_rgba(0,0,0,0.62),0_0_18px_rgba(124,58,237,0.24)] sm:bottom-6 sm:right-6 sm:flex sm:h-auto sm:flex-col sm:gap-8 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-none"
       >
         <div className="relative flex h-16 w-[5.25rem] shrink-0 items-center justify-center sm:h-auto sm:w-auto sm:flex-col sm:gap-2">
           <button
@@ -280,31 +223,33 @@ export default function BackgroundMusicPlayer() {
             {isPlaying ? <Pause size={15} fill="currentColor" aria-hidden="true" /> : <Play size={15} fill="currentColor" aria-hidden="true" />}
           </button>
         </div>
+      </div>
+      <div
+        ref={mobileControlsRef}
+        className="fixed bottom-[calc(env(safe-area-inset-bottom)+1rem)] right-3 z-[60] flex flex-col gap-2 sm:hidden"
+      >
         <button
           type="button"
-          onClick={closeDock}
-          aria-label="Close media controls"
-          className="absolute -right-1 -top-2 inline-flex h-7 w-7 items-center justify-center rounded-full border border-violet-200 bg-white text-slate-600 shadow-md transition hover:bg-violet-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:border-violet-300/30 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 sm:hidden"
+          onClick={() => window.dispatchEvent(new Event(OPEN_TO_WORK_EVENT))}
+          aria-haspopup="dialog"
+          aria-label={heroT.openToWork.viewDetails[lang]}
+          title={heroT.openToWork.viewDetails[lang]}
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-violet-300/70 bg-white/95 text-violet-700 shadow-[0_5px_18px_rgba(76,29,149,0.28)] backdrop-blur-md transition hover:scale-105 hover:bg-violet-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:border-violet-300/35 dark:bg-slate-950/95 dark:text-violet-200 dark:hover:bg-slate-900"
         >
-          <X size={14} aria-hidden="true" />
+          <UserRound size={19} strokeWidth={2.3} aria-hidden="true" />
+        </button>
+        <button
+          type="button"
+          onClick={togglePlayback}
+          aria-label={buttonLabel}
+          aria-pressed={isPlaying}
+          title={buttonLabel}
+          className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-violet-300/70 bg-gradient-to-br from-violet-600 to-fuchsia-500 text-white shadow-[0_5px_18px_rgba(124,58,237,0.4)] transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 dark:border-violet-300/35"
+        >
+          <Music2 size={18} strokeWidth={2.3} aria-hidden="true" />
+          {isPlaying && <span aria-hidden="true" className="absolute right-0.5 top-0.5 h-2 w-2 rounded-full bg-emerald-300 ring-2 ring-violet-700 motion-safe:animate-pulse" />}
         </button>
       </div>
-      <button
-        ref={dockToggleRef}
-        type="button"
-        onClick={openDock}
-        aria-label={`${heroT.openToWork.viewDetails[lang]}. ${buttonLabel}`}
-        aria-expanded={!dockHidden}
-        tabIndex={dockHidden ? 0 : -1}
-        className={`fixed bottom-[calc(env(safe-area-inset-bottom)+1rem)] right-0 z-[60] inline-flex h-11 w-10 items-center justify-start rounded-l-full border border-r-0 border-violet-300/80 bg-gradient-to-br from-violet-600 to-fuchsia-500 pl-1 shadow-[0_6px_20px_rgba(124,58,237,0.48)] transition-[opacity,transform] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 dark:border-violet-300/40 sm:hidden ${scrollCueVisible || !dockHidden ? 'pointer-events-none translate-x-full opacity-0' : 'translate-x-0 opacity-100'}`}
-      >
-        <span className="relative block h-8 w-8 overflow-hidden rounded-full border-2 border-white/90">
-          <Image src="/profile.jpeg" alt="" width={64} height={64} className="h-full w-full object-cover object-top" />
-          <span className="absolute -bottom-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full border border-white bg-slate-950 text-violet-100">
-            <Music2 size={9} aria-hidden="true" />
-          </span>
-        </span>
-      </button>
     </>
   )
 }
