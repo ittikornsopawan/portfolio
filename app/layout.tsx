@@ -3,7 +3,6 @@ import { Inter, Space_Grotesk, IBM_Plex_Sans_Thai } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
 import AnimatedDocumentTitle from '@/components/AnimatedDocumentTitle'
-import BackgroundMusicPlayer from '@/components/BackgroundMusicPlayer'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -50,7 +49,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AnimatedDocumentTitle />
         <Providers>
           {children}
-          <BackgroundMusicPlayer />
         </Providers>
       </body>
     </html>

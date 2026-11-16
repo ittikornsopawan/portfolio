@@ -1,6 +1,7 @@
 import Background from '@/components/Background'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
+import BackgroundMusicPlayer from '@/components/BackgroundMusicPlayer'
 import AboutQuote from '@/components/AboutQuote'
 import Experience from '@/components/Experience'
 import Projects from '@/components/Projects'
@@ -22,6 +23,7 @@ export default function Home() {
       <Navbar />
       <main id="main" tabIndex={-1} className="relative z-10 pt-16 outline-none">
         <Hero />
+        <BackgroundMusicPlayer />
         <hr className="section-divider" />
         <AboutQuote />
         <hr className="section-divider" />

@@ -149,19 +149,19 @@ export default function BackgroundMusicPlayer() {
         onPause={() => setIsPlaying(false)}
         onError={() => console.error('Background music failed to load from /background-music.mp3')}
       />
-      <div ref={clusterRef} className="fixed bottom-6 right-6 z-[60] flex flex-col items-center gap-8">
-        <div className="flex flex-col items-center gap-2">
+      <div ref={clusterRef} className="relative z-[60] mx-auto mb-5 flex w-fit flex-row items-center gap-4 py-3 sm:fixed sm:bottom-6 sm:right-6 sm:mx-0 sm:mb-0 sm:flex-col sm:gap-8 sm:py-0">
+        <div className="flex flex-col items-center gap-1.5 sm:gap-2">
           <button
             type="button"
             onClick={() => window.dispatchEvent(new Event(OPEN_TO_WORK_EVENT))}
             aria-haspopup="dialog"
             aria-label={heroT.openToWork.viewDetails[lang]}
             title={heroT.openToWork.viewDetails[lang]}
-            className="floating-otw-avatar group relative h-[72px] w-[72px] shrink-0 overflow-visible rounded-full bg-gradient-to-br from-violet-500 via-fuchsia-500 to-cyan-400 p-[3px] shadow-[0_0_0_4px_rgba(124,58,237,0.22),0_8px_28px_rgba(124,58,237,0.58)] transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-fuchsia-400"
+            className="floating-otw-avatar group relative h-14 w-14 shrink-0 overflow-visible rounded-full bg-gradient-to-br from-violet-500 via-fuchsia-500 to-cyan-400 p-[3px] shadow-[0_0_0_4px_rgba(124,58,237,0.22),0_8px_28px_rgba(124,58,237,0.58)] transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-fuchsia-400 sm:h-[72px] sm:w-[72px]"
           >
             <Image src="/profile.jpeg" alt="" width={144} height={144} priority className="relative z-10 h-full w-full rounded-full border-2 border-white object-cover object-top dark:border-slate-950" />
           </button>
-          <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-violet-300/70 bg-violet-700 px-3 py-1.5 text-[0.68rem] font-extrabold tracking-[0.01em] text-white shadow-[0_4px_18px_rgba(124,58,237,0.42)] ring-2 ring-white/80 dark:border-violet-300/50 dark:bg-violet-600 dark:ring-slate-950">
+          <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-violet-300/70 bg-violet-700 px-2.5 py-1 text-[0.62rem] font-extrabold tracking-[0.01em] text-white shadow-[0_4px_18px_rgba(124,58,237,0.42)] ring-2 ring-white/80 dark:border-violet-300/50 dark:bg-violet-600 dark:ring-slate-950 sm:px-3 sm:py-1.5 sm:text-[0.68rem]">
             <span aria-hidden="true" className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full motion-safe:animate-ping rounded-full bg-emerald-300 opacity-70" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-300" />
@@ -169,12 +169,12 @@ export default function BackgroundMusicPlayer() {
             {heroT.openToWork.badge[lang]}
           </span>
         </div>
-        <div ref={playerRef} className="vinyl-player relative h-[72px] w-[72px] shrink-0">
+        <div ref={playerRef} className="vinyl-player relative h-14 w-14 shrink-0 sm:h-[72px] sm:w-[72px]">
           {autoplayBlocked && !isPlaying && !promptDismissed && (
           <div
             role="dialog"
             aria-label={T.promptTitle[lang]}
-            className="absolute bottom-0 right-[88px] w-64 max-w-[calc(100vw-7.75rem)] animate-[music-prompt-in_0.35s_ease-out] rounded-2xl border border-violet-200/70 bg-white/90 p-4 text-left shadow-[0_12px_32px_rgba(76,29,149,0.18)] backdrop-blur-md dark:border-violet-400/20 dark:bg-slate-900/90 dark:shadow-[0_12px_32px_rgba(0,0,0,0.55)]"
+            className="absolute bottom-[calc(100%+0.75rem)] right-0 z-20 w-[min(16rem,calc(100vw-2rem))] animate-[music-prompt-in_0.35s_ease-out] rounded-2xl border border-violet-200/70 bg-white/90 p-4 text-left shadow-[0_12px_32px_rgba(76,29,149,0.18)] backdrop-blur-md dark:border-violet-400/20 dark:bg-slate-900/90 dark:shadow-[0_12px_32px_rgba(0,0,0,0.55)] sm:bottom-0 sm:right-[88px] sm:w-64 sm:max-w-[calc(100vw-7.75rem)]"
           >
             <p className="text-sm font-semibold text-slate-900 dark:text-white">♪ {T.promptTitle[lang]}</p>
             <p className="mt-1 text-xs leading-relaxed text-slate-600 dark:text-slate-300">{T.promptBody[lang]}</p>
