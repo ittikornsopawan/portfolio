@@ -457,6 +457,17 @@ export default function Hero() {
               ))}
             </div>
 
+            {/* Fit check */}
+            <h3 className="mb-2.5 text-[0.7rem] font-bold uppercase tracking-[2px] text-theme3">{T.openToWork.fitTitle[lang]}</h3>
+            <ul className="otw-rise mb-7 space-y-2" style={{ animationDelay: '320ms' }}>
+              {T.openToWork.fit[lang].map(item => (
+                <li key={item} className="flex items-start gap-2.5 text-sm leading-snug text-theme">
+                  <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-violet-500 dark:text-violet-400" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+
             {/* Role tabs */}
             <h3 className="mb-2.5 text-[0.7rem] font-bold uppercase tracking-[2px] text-theme3">{T.openToWork.rolesTitle[lang]}</h3>
             <div role="tablist" aria-label={T.openToWork.rolesTitle[lang]} className="otw-rise mb-3 flex gap-1.5 overflow-x-auto rounded-2xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-3 border border-[var(--border2)] bg-[var(--surface2)] p-1.5" style={{ animationDelay: '320ms' }}>
@@ -564,17 +575,6 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Fit check */}
-            <h3 className="mb-2.5 text-[0.7rem] font-bold uppercase tracking-[2px] text-theme3">{T.openToWork.fitTitle[lang]}</h3>
-            <ul className="mb-6 space-y-2">
-              {T.openToWork.fit[lang].map((item, i) => (
-                <li key={item} style={{ animationDelay: `${500 + i * 60}ms` }} className="otw-rise flex items-start gap-2.5 text-sm leading-snug text-theme">
-                  <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-violet-500 dark:text-violet-400" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-
             </section>
           </div>
         </div>
@@ -608,11 +608,26 @@ export default function Hero() {
                 <X size={17} />
               </button>
             </header>
-            <iframe
-              src="/resume.pdf#view=FitH"
-              title={T.resumePreview.title[lang]}
-              className="min-h-0 flex-1 bg-white"
-            />
+            <div
+              role="region"
+              aria-label={T.resumePreview.title[lang]}
+              className="min-h-0 flex-1 overflow-y-auto bg-slate-200/80 px-3 py-5 sm:px-6 sm:py-7 dark:bg-slate-950/80"
+            >
+              <div className="mx-auto flex w-full max-w-[900px] flex-col gap-5">
+                {Array.from({ length: 4 }, (_, index) => index + 1).map(page => (
+                  <Image
+                    key={page}
+                    src={`/resume-preview/page-${page}.webp`}
+                    alt={lang === 'th' ? `หน้า ${page} ของเรซูเม่` : `Resume page ${page}`}
+                    width={1600}
+                    height={2263}
+                    sizes="(max-width: 768px) calc(100vw - 48px), 900px"
+                    loading={page === 1 ? 'eager' : 'lazy'}
+                    className="h-auto w-full rounded-sm bg-white shadow-[0_8px_28px_rgba(15,23,42,0.18)] ring-1 ring-black/10"
+                  />
+                ))}
+              </div>
+            </div>
             <footer className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-[var(--border2)] px-4 py-3 sm:px-6">
               <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-theme3 underline-offset-4 transition-colors hover:text-violet-500 hover:underline">
                 {T.resumePreview.openInNewTab[lang]}
