@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Briefcase, Pause, Play } from 'lucide-react'
+import { Briefcase, Pause, Play, PhoneCall } from 'lucide-react'
 import Image from 'next/image'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
@@ -234,7 +234,7 @@ export default function BackgroundMusicPlayer() {
           aria-haspopup="dialog"
           aria-label={`${heroT.openToWork.badge[lang]} — ${heroT.openToWork.viewDetails[lang]}`}
           title={`${heroT.openToWork.badge[lang]} — ${heroT.openToWork.viewDetails[lang]}`}
-          className="relative isolate inline-flex h-10 w-10 items-center justify-center overflow-visible rounded-full border border-violet-300/70 bg-white/95 text-violet-700 shadow-[0_5px_18px_rgba(76,29,149,0.28)] backdrop-blur-md transition hover:scale-105 hover:bg-violet-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:border-violet-300/35 dark:bg-slate-950/95 dark:text-violet-200 dark:hover:bg-slate-900"
+          className="relative isolate inline-flex h-11 w-11 items-center justify-center overflow-visible rounded-full border border-violet-300/70 bg-white/95 text-violet-700 shadow-[0_5px_18px_rgba(76,29,149,0.28)] backdrop-blur-md transition hover:scale-105 hover:bg-violet-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:border-violet-300/35 dark:bg-slate-950/95 dark:text-violet-200 dark:hover:bg-slate-900 active:scale-95"
         >
           <span aria-hidden="true" className="pointer-events-none absolute -inset-1 rounded-full border border-emerald-400/80 motion-safe:animate-ping" />
           <Briefcase size={19} strokeWidth={2.3} aria-hidden="true" />
@@ -242,13 +242,21 @@ export default function BackgroundMusicPlayer() {
             <span className="absolute inset-0 rounded-full bg-emerald-300 motion-safe:animate-ping" />
           </span>
         </button>
+        <a
+          href="tel:+66991161274"
+          aria-label={`${heroT.openToWork.call[lang]}: +66 99 116 1274`}
+          title={`${heroT.openToWork.call[lang]}: +66 99 116 1274`}
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-emerald-300/70 bg-gradient-to-br from-emerald-600 to-teal-500 text-white shadow-[0_5px_18px_rgba(16,185,129,0.34)] transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 active:scale-95 dark:border-emerald-300/40"
+        >
+          <PhoneCall size={18} strokeWidth={2.2} aria-hidden="true" />
+        </a>
         <button
           type="button"
           onClick={togglePlayback}
           aria-label={buttonLabel}
           aria-pressed={isPlaying}
           title={buttonLabel}
-          className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-violet-300/70 bg-gradient-to-br from-violet-600 to-fuchsia-500 text-white shadow-[0_5px_18px_rgba(124,58,237,0.4)] transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 dark:border-violet-300/35"
+          className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-violet-300/70 bg-gradient-to-br from-violet-600 to-fuchsia-500 text-white shadow-[0_5px_18px_rgba(124,58,237,0.4)] transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 active:scale-95 dark:border-violet-300/35"
         >
           <span aria-hidden="true" className="relative h-[18px] w-[18px]">
             <Play

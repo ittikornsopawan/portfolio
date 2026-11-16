@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { ArrowRight, ArrowUpRight, Sparkles, Download, FileText, Layers, Users, Briefcase, X, CheckCircle2, MapPin, Phone } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Sparkles, Download, FileText, Layers, Users, Briefcase, X, CheckCircle2, MapPin } from 'lucide-react'
 import Image from 'next/image'
 import RevealWrapper from './RevealWrapper'
 import Fireworks from './Fireworks'
@@ -414,15 +414,6 @@ export default function Hero() {
                 <div className="mt-auto">
             {/* CTAs */}
             <div className="flex flex-col gap-2 sm:flex-row lg:flex-col">
-              <a
-                href="tel:+66991161274"
-                aria-label={`${T.openToWork.call[lang]}: +66 99 116 1274`}
-                className="otw-shine relative inline-flex min-h-12 items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 px-5 py-3 text-sm font-semibold text-white shadow-[0_4px_20px_rgba(16,185,129,0.28)] transition-all active:scale-[0.98] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(16,185,129,0.4)] sm:hidden"
-              >
-                <Phone size={15} aria-hidden="true" />
-                {T.openToWork.call[lang]}
-                <span className="font-medium text-white/80">+66 99 116 1274</span>
-              </a>
               <a
                 href="#contact"
                 onClick={() => openToWorkDialog.current?.close()}
