@@ -470,7 +470,7 @@ export default function Hero() {
 
             {/* Role tabs */}
             <h3 className="mb-2.5 text-[0.7rem] font-bold uppercase tracking-[2px] text-theme3">{T.openToWork.rolesTitle[lang]}</h3>
-            <div role="tablist" aria-label={T.openToWork.rolesTitle[lang]} className="otw-rise mb-3 flex gap-1.5 overflow-x-auto rounded-2xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-3 border border-[var(--border2)] bg-[var(--surface2)] p-1.5" style={{ animationDelay: '320ms' }}>
+            <div role="tablist" aria-label={T.openToWork.rolesTitle[lang]} className="otw-rise mb-3 grid grid-cols-3 gap-1.5 rounded-2xl border border-[var(--border2)] bg-[var(--surface2)] p-1.5" style={{ animationDelay: '320ms' }}>
               {T.openToWork.roles.map((role, i) => {
                 const selected = i === roleIndex
                 return (
@@ -485,7 +485,7 @@ export default function Hero() {
                       setRoleIndex(i)
                       setRolePicked(true)
                     }}
-                    className={`relative shrink-0 overflow-hidden whitespace-nowrap rounded-xl px-3 py-2.5 sm:shrink sm:whitespace-normal sm:px-2 text-[0.72rem] font-bold leading-tight transition-all sm:text-xs ${
+                    className={`relative w-full min-w-0 overflow-hidden rounded-xl px-1.5 py-2.5 text-center text-[0.66rem] font-bold leading-tight transition-all sm:px-2 sm:text-xs ${
                       selected
                         ? 'bg-gradient-to-br from-violet-600 to-blue-500 text-white shadow-[0_4px_16px_rgba(124,58,237,0.35)]'
                         : 'text-theme2 hover:bg-violet-500/10 hover:text-theme'
