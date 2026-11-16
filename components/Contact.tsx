@@ -10,7 +10,7 @@ interface ContactLink { Icon: LucideIcon; label: string; sub?: string; href?: st
 
 const contactLinks: ContactLink[] = [
   { Icon: Mail,   label: 'Email',        sub: 'ittikorn.sopawan@gmail.com',      href: 'mailto:ittikorn.sopawan@gmail.com'        },
-  { Icon: Phone,  label: 'Phone',        sub: '(+66) 09 9116 1274',               href: 'tel:+66099116274'                         },
+  { Icon: Phone,  label: 'Phone',        sub: '(+66) 09 9116 1274',               href: 'tel:+66991161274'                         },
   { Icon: Link2,  label: 'LinkedIn',     sub: 'linkedin.com/in/ittikorn-sopawan', href: 'https://linkedin.com/in/ittikorn-sopawan' },
   { Icon: MapPin, label: 'Location',     sub: 'Thailand'                                                                           },
   { Icon: Clock,  label: 'Availability', sub: '30 Days Notice'                                                                     },

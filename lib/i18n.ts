@@ -288,6 +288,7 @@ export const i18n = {
         th: "แพ็กเกจพิจารณาตามตำแหน่งและขอบเขตงาน",
       },
       contact: { en: "Discuss role & package", th: "สอบถามตำแหน่งและแพ็กเกจ" },
+      call: { en: "Call me", th: "โทรหาผม" },
       close: { en: "Close dialog", th: "ปิดหน้าต่าง" },
     },
     name: { en: "Ittikorn (Aof) Sopawan", th: "อิทธิกร (อ๊อฟ) โสภาวรรณ" },
