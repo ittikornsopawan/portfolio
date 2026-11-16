@@ -99,7 +99,7 @@ export default function Projects() {
   const T = i18n.projects
 
   return (
-    <section id="projects" className="max-w-6xl mx-auto px-6 py-24">
+    <section id="projects" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <RevealWrapper className="text-center mb-16">
         <div className="eyebrow-pill mb-4 mx-auto w-fit">
           <FolderKanban size={12} />

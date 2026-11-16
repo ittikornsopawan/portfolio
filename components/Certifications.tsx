@@ -15,7 +15,7 @@ export default function Certifications() {
   const T = i18n.certifications
 
   return (
-    <section id="certifications" className="max-w-6xl mx-auto px-6 py-24">
+    <section id="certifications" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <RevealWrapper className="text-center mb-16">
         <div className="eyebrow-pill mb-4 mx-auto w-fit">
           <BookOpen size={12} />
@@ -33,7 +33,7 @@ export default function Certifications() {
 
         {/* Education */}
         <RevealWrapper className="lg:col-span-2">
-          <div className="glass-card p-8 h-full">
+          <div className="glass-card p-5 sm:p-8 h-full">
             <div className="flex items-start gap-5">
               <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-600 to-blue-500 flex items-center justify-center shadow-[0_8px_20px_rgba(124,58,237,0.35)] shrink-0 icon-box">
                 <GraduationCap size={26} className="text-white" strokeWidth={1.8} />
@@ -54,7 +54,7 @@ export default function Certifications() {
 
         {/* Languages */}
         <RevealWrapper delay={100}>
-          <div className="glass-card p-7 h-full">
+          <div className="glass-card p-5 sm:p-7 h-full">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 to-blue-500 flex items-center justify-center shadow-[0_6px_14px_rgba(124,58,237,0.3)] icon-box">
                 <Globe size={16} className="text-white" strokeWidth={2} />

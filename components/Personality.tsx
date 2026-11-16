@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { Heart, Lightbulb, Compass, Leaf, Users, Brain, Quote } from 'lucide-react'
+import { Heart, Lightbulb, Compass, Leaf, Users, Brain } from 'lucide-react'
 import RevealWrapper from './RevealWrapper'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
@@ -19,7 +19,7 @@ export default function Personality() {
   ]
 
   return (
-    <section id="personality" className="max-w-6xl mx-auto px-6 py-24">
+    <section id="personality" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
 
       {/* Section header */}
       <RevealWrapper className="text-center mb-16">
@@ -51,7 +51,7 @@ export default function Personality() {
 
       {/* MBTI badge + description + traits */}
       <RevealWrapper delay={80}>
-        <div className="glass-card p-8">
+        <div className="glass-card p-5 sm:p-8">
           <div className="flex flex-col lg:flex-row gap-8 items-start">
 
             {/* MBTI badge */}
@@ -80,17 +80,19 @@ export default function Personality() {
                 {T.desc[lang]}
               </p>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-3">
                 {traits.map(t => (
                   <div
                     key={t.label}
-                    className="flex flex-col items-center text-center p-3.5 rounded-xl bg-[var(--surface2)] border border-[var(--border)] hover:border-violet-500/25 hover:bg-violet-500/[0.06] transition-all duration-200 group"
+                    className="flex items-center gap-3 text-left sm:flex-col sm:items-center sm:gap-0 sm:text-center p-3.5 rounded-xl bg-[var(--surface2)] border border-[var(--border)] hover:border-violet-500/25 hover:bg-violet-500/[0.06] transition-all duration-200 group"
                   >
-                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600/15 to-blue-500/15 border border-violet-500/20 flex items-center justify-center mb-2.5 icon-box group-hover:from-violet-600 group-hover:to-blue-500 transition-all duration-200">
+                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600/15 to-blue-500/15 border border-violet-500/20 flex items-center justify-center shrink-0 sm:mb-2.5 icon-box group-hover:from-violet-600 group-hover:to-blue-500 transition-all duration-200">
                       <t.Icon size={15} className="text-violet-500 dark:text-violet-400 group-hover:text-white transition-colors" strokeWidth={2} />
                     </div>
-                    <div className="text-[0.75rem] font-bold text-theme leading-tight">{t.label}</div>
-                    <div className="text-[0.65rem] text-theme3 mt-1 leading-snug hidden sm:block">{t.desc}</div>
+                    <div>
+                      <div className="text-[0.8rem] font-bold text-theme leading-tight">{t.label}</div>
+                      <div className="text-[0.72rem] text-theme3 mt-1 leading-snug">{t.desc}</div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -100,28 +102,6 @@ export default function Personality() {
         </div>
       </RevealWrapper>
 
-      <RevealWrapper delay={140} className="mt-6">
-        <div className="glass-card p-8 relative overflow-hidden">
-          <div className="absolute top-3 right-6 font-display text-[8rem] font-extrabold gradient-text opacity-10 leading-none select-none pointer-events-none">
-            &ldquo;
-          </div>
-
-          <div className="flex items-start gap-5">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-600 to-blue-500 flex items-center justify-center shadow-[0_6px_16px_rgba(124,58,237,0.3)] shrink-0 icon-box">
-              <Quote size={16} className="text-white" strokeWidth={2} />
-            </div>
-            <div>
-              <div className="text-xs font-bold uppercase tracking-widest text-theme3 mb-3">
-                {T.philosophy.label[lang]}
-              </div>
-              <blockquote className="font-display font-semibold text-[1.05rem] text-theme leading-relaxed max-w-2xl">
-                {T.philosophy.quote[lang]}
-              </blockquote>
-              <div className="mt-3 text-sm text-theme2">{T.philosophy.quoteBy[lang]}</div>
-            </div>
-          </div>
-        </div>
-      </RevealWrapper>
 
     </section>
   )

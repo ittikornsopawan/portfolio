@@ -1,6 +1,7 @@
 'use client'
 
-import { ShieldCheck, Cloud, ShoppingCart, FileCode2, Building2, Code2, Briefcase } from 'lucide-react'
+import { useState } from 'react'
+import { ChevronDown, ShieldCheck, Cloud, ShoppingCart, FileCode2, Building2, Code2, Briefcase } from 'lucide-react'
 import RevealWrapper from './RevealWrapper'
 import type { LucideIcon } from 'lucide-react'
 import { useLang } from '@/app/lang-context'
@@ -24,41 +25,45 @@ const experiences: Experience[] = [
     period: 'Jun 2024 – Present',
     current: true,
     bullets: [
-      { en: 'Collected and analyzed business requirements, translating them into workflows, use cases, and technical solutions.', th: 'รวบรวมและวิเคราะห์ความต้องการทางธุรกิจ แปลงเป็น Workflow, Use Cases และ Technical Solutions' },
-      { en: 'Designed system architecture, database schemas, and API specifications across multiple platforms.', th: 'ออกแบบ System Architecture, Database Schema และ API Specifications ครอบคลุมหลาย Platform' },
-      { en: 'Led and reviewed technical solutions to ensure alignment with business goals and system standards.', th: 'นำและตรวจสอบ Technical Solutions เพื่อให้สอดคล้องกับเป้าหมายธุรกิจและมาตรฐานระบบ' },
-      { en: 'Collaborated with clients, BA, and development teams to validate feasibility and optimize implementation.', th: 'ทำงานร่วมกับ Client, BA และทีม Developer เพื่อตรวจสอบความเป็นไปได้และปรับปรุงการ Implement' },
-      { en: 'Maintained system documentation and knowledge bases to support delivery and team onboarding.', th: 'ดูแลเอกสารระบบและ Knowledge Base เพื่อสนับสนุนการส่งมอบและการ Onboard ทีม' },
-      { en: 'Supported pre-sales by proposing solutions, defining key features, and delivering client presentations.', th: 'สนับสนุน Pre-Sales โดยการเสนอ Solutions กำหนด Key Features และนำเสนอต่อ Client' },
-      { en: 'Led system design for manufacturing and logistics projects, covering factory operations and distribution workflows.', th: 'นำการออกแบบระบบสำหรับโปรเจค Manufacturing และ Logistics ครอบคลุม Factory Operations และ Distribution Workflows' },
+      { en: "Collected and analyzed business requirements, translating them into workflows, use cases, and technical solutions.", th: "เก็บและวิเคราะห์ความต้องการทางธุรกิจ แล้วถ่ายทอดออกมาเป็น Workflow, Use Case และแนวทางเชิงเทคนิคที่ทีมนำไปใช้ได้จริง" },
+      { en: "Designed system architecture, database schemas, and API specifications across multiple platforms.", th: "ออกแบบ System Architecture, Database Schema และ API Specification สำหรับระบบที่ทำงานร่วมกันหลายแพลตฟอร์ม" },
+      { en: "Led and reviewed technical solutions to ensure alignment with business goals and system standards.", th: "ดูแลและรีวิว Technical Solution ให้ตอบโจทย์เป้าหมายทางธุรกิจและเป็นไปตามมาตรฐานของระบบ" },
+      { en: "Collaborated with clients, Business Analysts, and development teams to validate feasibility and optimize implementation.", th: "ทำงานใกล้ชิดกับลูกค้า ทีม BA และทีมพัฒนา เพื่อตรวจสอบความเป็นไปได้และหาแนวทาง Implement ที่เหมาะสมที่สุด" },
+      { en: "Maintained system documentation and knowledge bases to support delivery and team onboarding.", th: "จัดทำและดูแลเอกสารระบบรวมถึง Knowledge Base ช่วยให้การส่งมอบงานราบรื่น และสมาชิกใหม่เริ่มงานได้เร็วขึ้น" },
+      { en: "Supported pre-sales by proposing solutions, defining key features, and delivering client presentations.", th: "ร่วมงาน Pre-sales ตั้งแต่เสนอ Solution กำหนด Key Feature ไปจนถึงนำเสนอให้ลูกค้า" },
+      { en: "Led system design for manufacturing and logistics projects, covering factory operations and distribution workflows.", th: "นำการออกแบบระบบให้โปรเจกต์ด้าน Manufacturing และ Logistics ครอบคลุมตั้งแต่การทำงานในโรงงานจนถึงการกระจายสินค้า" },
+      { en: "Applied AI-assisted development tools, including Claude Code, Codex and Hermes Agent, to accelerate solution design, documentation, prototyping, and software development workflows.", th: "นำเครื่องมือ AI อย่าง Claude Code, Codex และ Hermes Agent มาช่วยให้การออกแบบ Solution การทำเอกสาร การทำ Prototype และการพัฒนาซอฟต์แวร์เร็วขึ้น" },
     ],
   },
   {
     Icon: Cloud,
-    role: 'Senior System Analyst',
+    role: 'Senior System Analyst & Product Owner',
     company: 'True Internet Data Center',
     period: 'Nov 2022 – May 2024',
     current: false,
     bullets: [
-      { en: 'Designed multi-cloud ELT pipelines across AWS, GCP, and Huawei to deliver unified billing insights.', th: 'ออกแบบ Multi-Cloud ELT Pipelines ครอบคลุม AWS, GCP และ Huawei เพื่อสร้าง Unified Billing Insights' },
-      { en: 'Improved billing data accuracy from near-zero to over 90% through workflow redesign and validation logic.', th: 'เพิ่มความแม่นยำของข้อมูล Billing จากเกือบศูนย์เป็นกว่า 90% ผ่านการออกแบบ Workflow และ Validation Logic ใหม่' },
-      { en: 'Developed scalable database schemas and API specifications for cross-platform integration.', th: 'พัฒนา Database Schema และ API Specifications ที่ขยายได้สำหรับการ Integration ข้าม Platform' },
-      { en: 'Led cross-functional teams to solve complex data modeling and integration challenges.', th: 'นำทีม Cross-Functional เพื่อแก้ปัญหา Data Modeling และ Integration ที่ซับซ้อน' },
-      { en: 'Collaborated with product, clients, and management to align architecture with business goals.', th: 'ทำงานร่วมกับ Product, Client และผู้บริหารเพื่อให้ Architecture สอดคล้องกับเป้าหมายธุรกิจ' },
+      { en: "Took on the Product Owner role, gathering requirements from internal users to understand customer-specific billing processes and define product requirements.", th: "รับบทบาท Product Owner พูดคุยกับผู้ใช้งานภายในเพื่อเข้าใจกระบวนการ Billing ของลูกค้าแต่ละราย และกำหนด Product Requirement" },
+      { en: "Designed multi-cloud ELT data pipelines across AWS, GCP, and Huawei to deliver unified billing insights.", th: "ออกแบบ Multi-cloud ELT Data Pipeline บน AWS, GCP และ Huawei เพื่อรวมข้อมูล Billing ให้เห็นภาพเดียวกันทั้งหมด" },
+      { en: "Translated business requirements into solution designs, defining ELT/ETL workflows and developing a mini application to validate business logic and data processing before implementation.", th: "แปลง Business Requirement เป็น Solution Design กำหนด ELT/ETL Workflow และพัฒนา Mini Application เพื่อทดสอบ Business Logic และการประมวลผลข้อมูลก่อนลงมือพัฒนาจริง" },
+      { en: "Improved billing data accuracy from near-zero to over 90% through workflow redesign and validation logic.", th: "ยกระดับความแม่นยำของข้อมูล Billing จากแทบเป็นศูนย์ให้สูงกว่า 90% ด้วยการออกแบบ Workflow และ Validation Logic ใหม่" },
+      { en: "Developed scalable database schemas and API specifications for cross-platform integration.", th: "ออกแบบ Database Schema และ API Specification ที่รองรับการเติบโต สำหรับการเชื่อมต่อข้ามแพลตฟอร์ม" },
+      { en: "Led cross-functional teams to solve complex data modeling and integration challenges.", th: "นำทีม Cross-functional ร่วมกันแก้โจทย์ Data Modeling และ Integration ที่ซับซ้อน" },
+      { en: "Collaborated with product teams, clients, and management to align technical architecture with business objectives.", th: "ทำงานร่วมกับทีม Product ลูกค้า และผู้บริหาร เพื่อให้ Technical Architecture สอดคล้องกับเป้าหมายทางธุรกิจ" },
     ],
   },
   {
     Icon: ShoppingCart,
-    role: 'System Analyst',
+    role: 'Solution Architect',
     company: 'Buzzebees',
     period: 'Nov 2021 – Oct 2022',
     current: false,
     bullets: [
-      { en: 'Optimized core workflows at Buzzebees, improving efficiency and cross-team collaboration.', th: 'ปรับปรุง Core Workflows เพิ่มประสิทธิภาพและการทำงานร่วมกันข้ามทีม' },
-      { en: 'Translated business requirements into clear technical specifications, reducing rework and delivery time.', th: 'แปลง Business Requirements เป็น Technical Specifications ที่ชัดเจน ลด Rework และเวลาการส่งมอบ' },
-      { en: 'Modernized legacy systems by upgrading .NET Framework to .NET Core 5.', th: 'ปรับปรุงระบบ Legacy โดยอัปเกรด .NET Framework เป็น .NET Core 5' },
-      { en: 'Designed standardized integration interfaces and APIs, reducing integration errors by 30%+.', th: 'ออกแบบ Integration Interfaces และ APIs มาตรฐาน ลด Integration Errors ได้มากกว่า 30%' },
-      { en: 'Researched and validated e-commerce APIs to ensure security, performance, and ecosystem fit.', th: 'ค้นคว้าและตรวจสอบ E-Commerce APIs เพื่อให้มั่นใจด้าน Security, Performance และความเข้ากันได้กับระบบ' },
+      { en: "Consulted with clients to understand transaction flows and recommend the most suitable integration approach for feeding transaction data into the loyalty platform for points calculation.", th: "ให้คำปรึกษาลูกค้าเพื่อทำความเข้าใจ Transaction Flow และแนะนำวิธี Integration ที่เหมาะสมที่สุดในการส่งข้อมูลเข้า Loyalty Platform เพื่อคำนวณคะแนน" },
+      { en: "Translated business requirements into technical specifications, reducing rework and improving delivery efficiency.", th: "แปลง Business Requirement เป็น Technical Specification ที่ชัดเจน ช่วยลดงานแก้ซ้ำและทำให้ส่งมอบงานได้เร็วขึ้น" },
+      { en: "Designed standardized integration interfaces and REST APIs, reducing integration errors by 30%+ and improving consistency across platforms.", th: "ออกแบบ Integration Interface และ REST API ให้เป็นมาตรฐานเดียวกัน ลด Integration Error ได้มากกว่า 30% และทำให้ทุกแพลตฟอร์มเชื่อมต่อกันได้สม่ำเสมอ" },
+      { en: "Researched and evaluated e-commerce APIs to ensure security, performance, and compatibility with the platform ecosystem.", th: "ศึกษาและประเมิน E-commerce API ทั้งด้าน Security, Performance และความเข้ากันได้กับระบบที่มีอยู่" },
+      { en: "Modernized legacy systems by migrating applications from .NET Framework to .NET 5.", th: "Modernize ระบบเดิมด้วยการย้ายแอปพลิเคชันจาก .NET Framework ไปสู่ .NET 5" },
+      { en: "Optimized core workflows, improving operational efficiency and cross-team collaboration.", th: "ปรับปรุง Core Workflow ให้ทำงานได้มีประสิทธิภาพขึ้น และช่วยให้ทีมต่าง ๆ ทำงานร่วมกันได้ราบรื่นขึ้น" },
     ],
   },
   {
@@ -69,48 +74,56 @@ const experiences: Experience[] = [
     current: false,
     type: 'Contractor',
     bullets: [
-      { en: 'Designed and delivered a contract renewal system with personalized promotion-based offers.', th: 'ออกแบบและส่งมอบระบบต่ออายุสัญญาที่มีโปรโมชันแบบเฉพาะบุคคล' },
-      { en: 'Translated business requirements into actionable tickets and API specs using DDD and microservices.', th: 'แปลง Business Requirements เป็น Ticket และ API Specs โดยใช้ DDD และ Microservices' },
-      { en: 'Defined API ownership and data mapping between frontend and service layers.', th: 'กำหนด API Ownership และ Data Mapping ระหว่าง Frontend และ Service Layers' },
-      { en: 'Led cross-functional teams through Scrum ceremonies (grooming, planning, sprint, review).', th: 'นำทีม Cross-Functional ผ่าน Scrum Ceremonies (Grooming, Planning, Sprint, Review)' },
-      { en: 'Improved delivery efficiency and communication between business, dev, and QA teams.', th: 'เพิ่มประสิทธิภาพการส่งมอบและการสื่อสารระหว่างทีม Business, Dev และ QA' },
+      { en: "Translated business requirements into actionable tickets and API specifications using Domain-Driven Design (DDD) and microservices architecture.", th: "แปลง Business Requirement เป็น Ticket และ API Specification ที่พร้อมนำไปพัฒนา โดยใช้แนวคิด DDD และ Microservices" },
+      { en: "Designed and delivered a contract renewal system with personalized, promotion-based offers.", th: "ออกแบบและส่งมอบระบบต่ออายุสัญญา ที่นำเสนอโปรโมชันให้เหมาะกับลูกค้าแต่ละราย" },
+      { en: "Defined API ownership and data mapping between frontend and service layers to ensure clear system boundaries.", th: "กำหนด API Ownership และ Data Mapping ระหว่าง Frontend กับ Service Layer เพื่อให้ขอบเขตของแต่ละระบบชัดเจน" },
+      { en: "Led cross-functional Scrum ceremonies including grooming, planning, sprint execution, and review.", th: "นำ Scrum Ceremony ร่วมกับทีม Cross-functional ทั้ง Grooming, Planning, Sprint และ Review" },
+      { en: "Improved delivery efficiency and cross-team communication between business, development, and QA teams.", th: "ช่วยให้การส่งมอบงานมีประสิทธิภาพขึ้น และทีม Business, Dev และ QA สื่อสารกันได้ดีขึ้น" },
     ],
   },
   {
     Icon: Building2,
     role: 'System Analyst',
-    company: 'Puksa Real Estate (ADI)',
+    company: 'Pruksa Real Estate',
     period: 'Aug 2019 – Dec 2020',
     current: false,
     type: 'Contractor',
     bullets: [
-      { en: 'Translated business requirements into technical specifications and solution designs with IT Manager.', th: 'แปลง Business Requirements เป็น Technical Specifications และ Solution Designs ร่วมกับ IT Manager' },
-      { en: 'Developed and optimized databases and full-stack solutions using ASP.NET MVC (Core) and SQL Server.', th: 'พัฒนาและปรับปรุง Database และ Full-Stack Solutions โดยใช้ ASP.NET MVC (Core) และ SQL Server' },
-      { en: 'Designed and implemented role-based approval workflows using K2 Black Pearl.', th: 'ออกแบบและ Implement Role-Based Approval Workflows โดยใช้ K2 Black Pearl' },
+      { en: "Gathered workflow requirements from internal users, including organizational structure, approval hierarchy, and approval logic (parallel vs sequential flows).", th: "เก็บ Requirement ด้าน Workflow จากผู้ใช้งานภายใน ทั้งโครงสร้างองค์กร ลำดับขั้นการอนุมัติ และ Logic การอนุมัติแบบ Parallel และ Sequential" },
+      { en: "Designed SQL Server database schemas to support workflow state management, approval routing, and process tracking.", th: "ออกแบบ Database Schema บน SQL Server เพื่อรองรับการจัดการสถานะของ Workflow การส่งต่อการอนุมัติ และการติดตามกระบวนการ" },
+      { en: "Designed stored procedures to support K2 BlackPearl integration, covering both query and command operations.", th: "ออกแบบ Stored Procedure สำหรับเชื่อมต่อกับ K2 BlackPearl ครอบคลุมทั้งฝั่ง Query และ Command" },
+      { en: "Developed and integrated workflow processes with K2 BlackPearl, ensuring correct execution of role-based approval flows.", th: "พัฒนาและเชื่อม Workflow เข้ากับ K2 BlackPearl ให้การอนุมัติตามบทบาททำงานได้ถูกต้อง" },
+      { en: "Built and optimized full-stack applications using ASP.NET MVC (Core) and SQL Server to support workflow-driven business processes.", th: "พัฒนาและปรับปรุง Full-stack Application ด้วย ASP.NET MVC (Core) และ SQL Server เพื่อรองรับกระบวนการทางธุรกิจที่ขับเคลื่อนด้วย Workflow" },
+      { en: "Created technical documentation covering workflow design, database schema, and system integration for development and support teams.", th: "จัดทำเอกสารทางเทคนิคครอบคลุม Workflow Design, Database Schema และ System Integration ให้ทีมพัฒนาและทีม Support" },
     ],
   },
   {
     Icon: Code2,
-    role: '.NET Developer',
+    role: '.NET Full-Stack Developer',
     company: 'PTT Digital Solution (Infinite)',
     period: 'Jul 2016 – Jul 2019',
     current: false,
     type: 'Contractor',
     bullets: [
-      { en: 'Led development of an online access control system using .NET MVC, improving performance and code efficiency.', th: 'นำการพัฒนาระบบ Access Control Online โดยใช้ .NET MVC เพิ่ม Performance และประสิทธิภาพของ Code' },
-      { en: 'Introduced stored procedures to streamline logic and enhance system performance.', th: 'นำ Stored Procedures มาใช้เพื่อจัดระเบียบ Logic และเพิ่ม System Performance' },
-      { en: 'Collaborated with developers to integrate new solutions and refactor legacy code.', th: 'ทำงานร่วมกับ Developer เพื่อ Integrate Solutions ใหม่และ Refactor Legacy Code' },
-      { en: 'Worked with BAs under a waterfall approach to gather and refine requirements.', th: 'ทำงานกับ BA ในรูปแบบ Waterfall เพื่อรวบรวมและปรับปรุง Requirements' },
+      { en: "Worked with SA/BA to clarify requirements, defining screen-level functionality and expected user behavior for an online access control system.", th: "ทำงานร่วมกับ SA/BA เพื่อทำ Requirement ให้ชัดเจน กำหนดการทำงานของแต่ละหน้าจอและพฤติกรรมที่ผู้ใช้คาดหวัง สำหรับระบบ Access Control แบบออนไลน์" },
+      { en: "Developed the web application using .NET MVC, implementing required features and improving code efficiency.", th: "พัฒนา Web Application ด้วย .NET MVC ตาม Feature ที่กำหนด พร้อมปรับโค้ดให้ทำงานได้มีประสิทธิภาพขึ้น" },
+      { en: "Introduced and optimized stored procedures to improve database performance and reduce application-side logic complexity.", th: "นำ Stored Procedure มาใช้และปรับให้เหมาะสม เพื่อเพิ่ม Performance ของฐานข้อมูลและลดความซับซ้อนของ Logic ฝั่งแอปพลิเคชัน" },
+      { en: "Supported UAT and defect fixing, working closely with QA and stakeholders to keep the system stable.", th: "สนับสนุนการทำ UAT และแก้ไข Defect ร่วมกับทีม QA และผู้เกี่ยวข้อง เพื่อให้ระบบทำงานได้อย่างเสถียร" },
+      { en: "Deployed application updates and supported production release activities.", th: "Deploy อัปเดตของแอปพลิเคชัน และดูแลการ Release ขึ้น Production" },
     ],
   },
 ]
 
+// Show the first few bullets so the timeline stays skimmable; the rest open on request.
+const VISIBLE_BULLETS = 4
+
 export default function Experience() {
   const { lang } = useLang()
   const T = i18n.experience
+  const [expanded, setExpanded] = useState<Record<number, boolean>>({})
 
   return (
-    <section id="experience" className="max-w-6xl mx-auto px-6 py-24">
+    <section id="experience" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
 
       <RevealWrapper className="text-center mb-16">
         <div className="eyebrow-pill mb-4 mx-auto w-fit">
@@ -172,13 +185,26 @@ export default function Experience() {
                   </div>
 
                   <ul className="space-y-2">
-                    {exp.bullets.map((b, bi) => (
+                    {(expanded[i] ? exp.bullets : exp.bullets.slice(0, VISIBLE_BULLETS)).map((b, bi) => (
                       <li key={bi} className="text-[0.875rem] text-theme2 flex gap-2.5 items-start leading-relaxed">
                         <span className="mt-2 w-1 h-1 rounded-full bg-violet-500/60 shrink-0" />
                         {b[lang]}
                       </li>
                     ))}
                   </ul>
+                  {exp.bullets.length > VISIBLE_BULLETS && (
+                    <button
+                      type="button"
+                      onClick={() => setExpanded(e => ({ ...e, [i]: !e[i] }))}
+                      aria-expanded={!!expanded[i]}
+                      className="mt-3 inline-flex items-center gap-1.5 rounded-lg px-2 py-1 -ml-2 text-[0.8rem] font-semibold text-violet-600 hover:bg-violet-500/[0.08] dark:text-violet-300"
+                    >
+                      {expanded[i]
+                        ? T.showLess[lang]
+                        : T.showMore[lang].replace('{n}', String(exp.bullets.length - VISIBLE_BULLETS))}
+                      <ChevronDown size={15} className={`transition-transform ${expanded[i] ? 'rotate-180' : ''}`} />
+                    </button>
+                  )}
                 </div>
               </div>
             </RevealWrapper>

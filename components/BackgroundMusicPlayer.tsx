@@ -5,6 +5,8 @@ import { Pause, Play } from 'lucide-react'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
 
+const VOLUME = 0.05
+
 export default function BackgroundMusicPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null)
   const playerRef = useRef<HTMLDivElement>(null)
@@ -29,8 +31,13 @@ export default function BackgroundMusicPlayer() {
       const analyser = ctx.createAnalyser()
       analyser.fftSize = 256
       analyser.smoothingTimeConstant = 0.6
-      ctx.createMediaElementSource(audio).connect(analyser)
+      // Safari ignores <audio>.volume once the element feeds Web Audio (and iOS ignores it always),
+      // so set the level with a gain node and leave the element at full volume.
+      const gain = ctx.createGain()
+      gain.gain.value = VOLUME
+      ctx.createMediaElementSource(audio).connect(gain).connect(analyser)
       analyser.connect(ctx.destination)
+      audio.volume = 1 // only once the gain node is in the path
       audioCtxRef.current = ctx
       analyserRef.current = analyser
     } catch (error) {
@@ -53,7 +60,7 @@ export default function BackgroundMusicPlayer() {
     events.forEach(name => window.addEventListener(name, onFirstGesture))
 
     let cancelled = false
-    audio.volume = 0.05
+    audio.volume = VOLUME // until the first gesture routes audio through the gain node
     void audio.play().catch(error => {
       if (cancelled) return
 

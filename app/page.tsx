@@ -1,6 +1,7 @@
 import Background from '@/components/Background'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
+import AboutQuote from '@/components/AboutQuote'
 import Experience from '@/components/Experience'
 import Projects from '@/components/Projects'
 import Skills from '@/components/Skills'
@@ -8,9 +9,11 @@ import Certifications from '@/components/Certifications'
 import CareerPath from '@/components/CareerPath'
 import Testimonials from '@/components/Testimonials'
 import Personality from '@/components/Personality'
+import Hobbies from '@/components/Hobbies'
 import GitHubRepos from '@/components/GitHubRepos'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
+import ScrollHint from '@/components/ScrollHint'
 
 export default function Home() {
   return (
@@ -19,7 +22,8 @@ export default function Home() {
       <Navbar />
       <main className="relative z-10 pt-16">
         <Hero />
-        <Personality />
+        <hr className="section-divider" />
+        <AboutQuote />
         <hr className="section-divider" />
         <Experience />
         <hr className="section-divider" />
@@ -35,9 +39,14 @@ export default function Home() {
         <hr className="section-divider" />
         <GitHubRepos />
         <hr className="section-divider" />
+        <Personality />
+        <hr className="section-divider" />
+        <Hobbies />
+        <hr className="section-divider" />
         <Contact />
         <Footer />
       </main>
+      <ScrollHint />
     </>
   )
 }

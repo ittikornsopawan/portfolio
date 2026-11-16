@@ -21,7 +21,7 @@ export default function Contact() {
   const T = i18n.contact
 
   return (
-    <section id="contact" className="relative overflow-hidden py-24 px-6">
+    <section id="contact" className="relative overflow-hidden py-8 sm:py-12 px-4 sm:px-6">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-violet-950/50 via-transparent to-blue-950/30 dark:from-violet-950/60 dark:to-blue-950/40 pointer-events-none" />
       <div className="absolute inset-0 pointer-events-none">

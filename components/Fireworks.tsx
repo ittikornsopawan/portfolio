@@ -19,7 +19,6 @@ type Flash = { x: number; y: number; r: number; life: number; color: string }
 const YAY = {
   shout: { en: 'Yay!', th: 'เย้!' },
   text: { en: "I'm open to work!", th: 'เปิดหางานแล้วจ้า!' },
-  speech: { en: 'Yay!', th: 'เย้!' },
 } as const
 
 /** Synthesized firework sounds; no audio files. Silent until the browser allows audio. */
@@ -27,8 +26,11 @@ function createSfx() {
   const AC = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
   const ctx = new AC()
   const master = ctx.createGain()
-  master.gain.value = 0.3
-  master.connect(ctx.destination)
+  master.gain.value = 0.7
+  const limiter = ctx.createDynamicsCompressor() // keeps the louder mix from clipping
+  limiter.threshold.value = -10
+  limiter.ratio.value = 8
+  master.connect(limiter).connect(ctx.destination)
 
   const noise = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate)
   const data = noise.getChannelData(0)
@@ -70,7 +72,7 @@ function createSfx() {
       lp.frequency.setValueAtTime(900, t)
       lp.frequency.exponentialRampToValueAtTime(60, t + 1.4)
       const g = ctx.createGain()
-      g.gain.setValueAtTime(1.4 * size, t)
+      g.gain.setValueAtTime(2.2 * size, t)
       g.gain.exponentialRampToValueAtTime(0.001, t + 1.6)
       src.connect(lp).connect(g).connect(out(pan))
       src.start(t, Math.random())
@@ -84,37 +86,12 @@ function createSfx() {
         hp.type = 'highpass'
         hp.frequency.value = 2500
         const cg = ctx.createGain()
-        cg.gain.setValueAtTime(0.35 * Math.random(), at)
+        cg.gain.setValueAtTime(0.55 * Math.random(), at)
         cg.gain.exponentialRampToValueAtTime(0.001, at + 0.03)
         c.connect(hp).connect(cg).connect(out(pan + (Math.random() - 0.5) * 0.4))
         c.start(at, Math.random())
         c.stop(at + 0.04)
       }
-    },
-    cheer() {
-      // crowd-like swell: band-passed noise with a wobbling envelope
-      const t = ctx.currentTime
-      const src = noiseSource()
-      src.loop = true
-      const bp = ctx.createBiquadFilter()
-      bp.type = 'bandpass'
-      bp.frequency.value = 1400
-      bp.Q.value = 0.6
-      const g = ctx.createGain()
-      g.gain.setValueAtTime(0.0001, t)
-      g.gain.exponentialRampToValueAtTime(0.5, t + 0.35)
-      g.gain.setValueAtTime(0.5, t + 1.3)
-      g.gain.exponentialRampToValueAtTime(0.0001, t + 2.6)
-      const lfo = ctx.createOscillator()
-      const lfoGain = ctx.createGain()
-      lfo.frequency.value = 7
-      lfoGain.gain.value = 0.15
-      lfo.connect(lfoGain).connect(g.gain)
-      src.connect(bp).connect(g).connect(out(0))
-      src.start(t)
-      lfo.start(t)
-      src.stop(t + 2.7)
-      lfo.stop(t + 2.7)
     },
   }
 }
@@ -122,8 +99,6 @@ function createSfx() {
 /** Full-screen fireworks show with a finale, launched from the screen edges so they frame a centered modal. */
 export default function Fireworks({ active, lang }: { active: boolean; lang: Lang }) {
   const ref = useRef<HTMLCanvasElement>(null)
-  const langRef = useRef(lang)
-  langRef.current = lang // switching language mid-show shouldn't restart it
 
   useEffect(() => {
     const canvas = ref.current
@@ -222,22 +197,8 @@ export default function Fireworks({ active, lang }: { active: boolean; lang: Lan
 
     // Opening volley, alternating sides with mixed shells
     for (let i = 0; i < 18; i++) schedule(120 + i * 210 + Math.random() * 120, i % 2 ? 'right' : 'left', kinds[i % kinds.length])
-    // Finale: both sides at once, then the cheer
+    // Finale: both sides at once
     for (let i = 0; i < 12; i++) schedule(FINALE_MS + i * 70, i % 2 ? 'right' : 'left', i % 3 === 0 ? 'willow' : i % 3 === 1 ? 'peony' : 'glitter')
-    at(YAY_MS, () => {
-      if (!canPlay()) return
-      sfx!.cheer()
-      try {
-        const u = new SpeechSynthesisUtterance(YAY.speech[langRef.current])
-        u.lang = langRef.current === 'th' ? 'th-TH' : 'en-US'
-        u.pitch = 1.8
-        u.rate = 1.05
-        u.volume = 0.8
-        window.speechSynthesis.speak(u)
-      } catch {
-        /* speech is a bonus; ignore if unavailable */
-      }
-    })
 
     let frame = 0
     const tick = () => {
@@ -305,7 +266,6 @@ export default function Fireworks({ active, lang }: { active: boolean; lang: Lan
       window.removeEventListener('resize', resize)
       window.removeEventListener('pointerdown', unlock)
       window.removeEventListener('keydown', unlock)
-      window.speechSynthesis?.cancel()
       void sfx?.ctx.close()
       ctx.clearRect(0, 0, canvas.width, canvas.height)
     }
@@ -313,9 +273,9 @@ export default function Fireworks({ active, lang }: { active: boolean; lang: Lan
 
   return (
     <>
-      <canvas ref={ref} aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 h-full w-full" />
+      <canvas ref={ref} aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full" />
       {active && (
-        <div aria-hidden="true" className="otw-yay pointer-events-none fixed left-1/2 top-[4%] z-20" style={{ animationDelay: `${YAY_MS}ms` }}>
+        <div aria-hidden="true" className="otw-yay pointer-events-none absolute left-1/2 top-[4%] z-20" style={{ animationDelay: `${YAY_MS}ms` }}>
           <div className="otw-yay-inner flex items-center gap-3 whitespace-nowrap rounded-full px-6 py-2.5 sm:px-8 sm:py-3">
             <span className="otw-yay-emoji text-2xl sm:text-3xl">🎉</span>
             <span className="font-display text-2xl font-black tracking-tight sm:text-4xl">

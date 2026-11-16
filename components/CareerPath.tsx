@@ -1,6 +1,7 @@
 'use client'
 
-import { TrendingUp, Crown, Map } from 'lucide-react'
+import { useState } from 'react'
+import { TrendingUp, Crown, Map, ChevronDown } from 'lucide-react'
 import RevealWrapper from './RevealWrapper'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
@@ -43,9 +44,11 @@ const phases = [
 export default function CareerPath() {
   const { lang } = useLang()
   const T = i18n.careerPath
+  const [expanded, setExpanded] = useState<Record<number, boolean>>({})
+  const VISIBLE_GOALS = 4 // same skim-first treatment as the experience timeline
 
   return (
-    <section id="careerpath" className="max-w-6xl mx-auto px-6 py-24">
+    <section id="careerpath" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <RevealWrapper className="text-center mb-16">
         <div className="eyebrow-pill mb-4 mx-auto w-fit">
           <Map size={12} />
@@ -62,7 +65,7 @@ export default function CareerPath() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {phases.map((phase, i) => (
           <RevealWrapper key={phase.range} delay={i * 120}>
-            <div className="glass-card p-8 h-full">
+            <div className="glass-card p-5 sm:p-8 h-full">
               {/* Header */}
               <div className="flex items-center gap-4 mb-6">
                 <div
@@ -82,13 +85,26 @@ export default function CareerPath() {
 
               {/* Goals */}
               <ul className="space-y-3">
-                {phase.goals.map((goal, gi) => (
+                {(expanded[i] ? phase.goals : phase.goals.slice(0, VISIBLE_GOALS)).map((goal, gi) => (
                   <li key={gi} className="flex gap-3 items-start text-[0.875rem] text-theme2 leading-relaxed">
                     <span className={`mt-2 w-1.5 h-1.5 rounded-full bg-gradient-to-br ${phase.gradient} shrink-0`} />
                     {goal}
                   </li>
                 ))}
               </ul>
+              {phase.goals.length > VISIBLE_GOALS && (
+                <button
+                  type="button"
+                  onClick={() => setExpanded(e => ({ ...e, [i]: !e[i] }))}
+                  aria-expanded={!!expanded[i]}
+                  className="mt-4 inline-flex items-center gap-1.5 rounded-lg px-2 py-1 -ml-2 text-[0.8rem] font-semibold text-violet-600 hover:bg-violet-500/[0.08] dark:text-violet-300"
+                >
+                  {expanded[i]
+                    ? i18n.experience.showLess[lang]
+                    : i18n.experience.showMore[lang].replace('{n}', String(phase.goals.length - VISIBLE_GOALS))}
+                  <ChevronDown size={15} className={`transition-transform ${expanded[i] ? 'rotate-180' : ''}`} />
+                </button>
+              )}
             </div>
           </RevealWrapper>
         ))}

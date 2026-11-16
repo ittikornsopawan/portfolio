@@ -10,10 +10,96 @@ export const i18n = {
     careerPath: { en: "Career Path", th: "เส้นทางอาชีพ" },
     testimonials: { en: "Testimonials", th: "คำรับรอง" },
     personality: { en: 'Personality', th: 'บุคลิกภาพ' },
+    hobbies: { en: 'Hobbies', th: 'งานอดิเรก' },
     github: { en: "GitHub", th: "GitHub" },
     contact: { en: "Contact", th: "ติดต่อ" },
     hireMe: { en: "Hire Me", th: "ต้องการจ้างฉัน" },
   },
+  aboutQuote: {
+    // [text, highlighted] pairs, from the CV's professional summary
+    quote: {
+      en: [
+        ["", false], ["10 years in tech", true], [" — ", false], ["7 as a System Analyst", true], [" and 3 as a developer — working with a ", false],
+        ["Technical Product Owner mindset", true],
+        [" to bridge business needs and technical execution. Experienced in defining product requirements, shaping solutions, improving processes, and ", false],
+        ["collaborating with cross-functional teams", true],
+        [" to deliver enterprise products. Strong technical expertise in system design, API, database, and ", false],
+        ["microservices architecture", true], [", with hands-on experience ", false],
+        ["applying AI and RAG to workflows", true], [".", false],
+      ],
+      th: [
+        ["ผมมี", false], ["ประสบการณ์สายเทคโนโลยี 10 ปี", true], [" แบ่งเป็น ", false], ["System Analyst 7 ปี", true], [" และ Developer 3 ปี ทำงานด้วย", false],
+        ["มุมมองแบบ Technical Product Owner", true],
+        [" เพื่อเชื่อมความต้องการทางธุรกิจเข้ากับการลงมือทำทางเทคนิค มีประสบการณ์ในการกำหนด Product Requirement ออกแบบ Solution ปรับปรุงกระบวนการ และ", false],
+        ["ทำงานร่วมกับทีม Cross-functional", true],
+        [" เพื่อส่งมอบ Enterprise Product มีความเชี่ยวชาญด้าน System Design, API, Database และ ", false],
+        ["Microservices Architecture", true], [" พร้อมประสบการณ์จริงในการ", false],
+        ["นำ AI และ RAG มาใช้กับ Workflow", true], ["ครับ", false],
+      ],
+    },
+    motto: {
+      label: { en: "My Motto", th: "คติประจำใจ" },
+      quote: {
+        en: "I believe work isn't just about doing my part — it's about making a difference that truly improves the organization.",
+        th: "ผมเชื่อว่างานที่ดีไม่ใช่แค่ทำหน้าที่ของตัวเอง แต่คือการสร้างความเปลี่ยนแปลงที่ทำให้องค์กรดีขึ้นอย่างแท้จริง",
+      },
+    },
+    by: { en: "Ittikorn (Aof) Sopawan", th: "อิทธิกร (อ๊อฟ) โสภาวรรณ" },
+    role: { en: "Technical Product Owner · System Analyst · Solution Architect", th: "Technical Product Owner · System Analyst · Solution Architect" },
+  },
+  hobbies: {
+    eyebrow: { en: "Beyond the Desk", th: "นอกเวลางาน" },
+    title: { en: "Hobbies & Interests", th: "งานอดิเรกและความสนใจ" },
+    subtitle: {
+      en: "A little about me outside of work — the things that keep me curious, happy, and recharged.",
+      th: "ขอแนะนำอีกมุมหนึ่งของผมนอกเวลางาน กับสิ่งเล็ก ๆ ที่ช่วยเติมพลังและความสุขในแต่ละวันครับ",
+    },
+    items: [
+      {
+        icon: "tv",
+        title: { en: "Anime & Manhwa", th: "อนิเมะและมังฮวา" },
+        desc: { en: "I enjoy unwinding with Japanese anime, and I'm always happy to talk about a good manhwa.", th: "ผมชอบผ่อนคลายด้วยการดูอนิเมะญี่ปุ่น และยินดีมากครับถ้าได้คุยเรื่องมังฮวาเรื่องโปรด" },
+        tagsLabel: { en: "Manhwa favorites", th: "มังฮวาเรื่องโปรด" },
+        tags: ["Mercenary Enrollment", "Solo Leveling", "Omniscient Reader"],
+      },
+      {
+        icon: "sport",
+        title: { en: "Football & Basketball", th: "ฟุตบอลและบาสเกตบอล" },
+        desc: { en: "I'm a proud Liverpool FC supporter, and I love getting out to play football and basketball.", th: "ผมเป็นแฟนลิเวอร์พูล และชอบออกไปเล่นฟุตบอลกับบาสเกตบอลเพื่อขยับร่างกายและพบปะเพื่อน ๆ ครับ" },
+        tagsLabel: { en: "Team", th: "ทีมที่เชียร์" },
+        tags: ["Liverpool FC"],
+      },
+      {
+        icon: "paw",
+        title: { en: "Dogs & Cats", th: "น้องหมาและน้องแมว" },
+        desc: { en: "I'm a dog lover at heart, and I have a soft spot for cats as well.", th: "ผมรักน้องหมาเป็นพิเศษ และก็เอ็นดูน้องแมวไม่แพ้กันครับ" },
+      },
+      {
+        icon: "food",
+        title: { en: "Food & Drink", th: "อาหารและเครื่องดื่ม" },
+        desc: { en: "I enjoy discovering good food. I don't drink beer or alcohol, but I'm always up for a nice meal together.", th: "ผมชอบตามหาร้านอร่อย ๆ แม้จะไม่ดื่มเบียร์หรือแอลกอฮอล์ แต่ยินดีร่วมโต๊ะทานข้าวด้วยกันเสมอครับ" },
+      },
+      {
+        icon: "heart",
+        title: { en: "Family", th: "ครอบครัว" },
+        desc: {
+          en: "My family means a great deal to me. I cherish the time we spend together and the moments we share.",
+          th: "ครอบครัวมีความหมายกับผมมากครับ ผมให้ความสำคัญกับเวลาที่ได้อยู่ด้วยกัน และช่วงเวลาดี ๆ ที่ได้แบ่งปันร่วมกัน",
+        },
+        highlight: true,
+      },
+      {
+        icon: "ai",
+        title: { en: "AI in Everyday Life", th: "AI ในชีวิตประจำวัน" },
+        desc: {
+          en: "I use AI every day to make life easier — planning, learning new things, organizing ideas, and automating small chores. It's also my partner for turning new product ideas into something real.",
+          th: "ผมใช้ AI เป็นผู้ช่วยในชีวิตประจำวัน ทั้งวางแผน เรียนรู้เรื่องใหม่ จัดระเบียบความคิด และช่วยลดงานจุกจิก รวมถึงเป็นคู่คิดที่ช่วยต่อยอดไอเดีย Product ใหม่ ๆ ให้เป็นจริงได้ครับ",
+        },
+        highlight: true,
+      },
+    ],
+  },
+  scrollHint: { en: "Scroll for more", th: "เลื่อนดูต่อ" },
   musicPlayer: {
     play: { en: "Play background music", th: "เล่นเพลงพื้นหลัง" },
     pause: { en: "Pause background music", th: "หยุดเพลงพื้นหลัง" },
@@ -32,8 +118,8 @@ export const i18n = {
       badge: { en: "Open to Work", th: "Open to Work" },
       title: { en: "Open to the right opportunity", th: "พร้อมรับโอกาสที่ใช่" },
       pitch: {
-        en: "A system analyst and solution architect who turns business goals into systems that ship — 10 years across enterprise, e-commerce, logistics and cloud.",
-        th: "System Analyst และ Solution Architect ที่เปลี่ยนเป้าหมายธุรกิจให้เป็นระบบที่ใช้งานได้จริง ประสบการณ์ 10 ปีใน Enterprise, E-Commerce, Logistics และ Cloud",
+        en: "A system analyst and solution architect who turns business goals into systems that ship — 10 years in tech (7 as a System Analyst, 3 as a developer) across enterprise, e-commerce, logistics and cloud.",
+        th: "System Analyst และ Solution Architect ที่เปลี่ยนเป้าหมายธุรกิจให้เป็นระบบที่ใช้งานได้จริง ประสบการณ์ 10 ปี (System Analyst 7 ปี และ Developer 3 ปี) ใน Enterprise, E-Commerce, Logistics และ Cloud",
       },
       rolesTitle: { en: "Roles I'm looking for", th: "ตำแหน่งที่มองหา" },
       lookingFor: { en: "Looking for", th: "กำลังมองหา" },
@@ -79,8 +165,8 @@ export const i18n = {
             th: "วาง Standard ของงาน SA ให้ทันยุค AI และเปลี่ยน Requirement ให้เป็น Spec ที่ทีมเชื่อมั่น",
           },
           why: {
-            en: "10 years turning messy requirements into specs, APIs and data models — with measurable results, not just documents.",
-            th: "10 ปีที่เปลี่ยน Requirement ที่ยุ่งเหยิงให้เป็น Spec, API และ Data Model ที่ชัดเจน พร้อมผลลัพธ์ที่วัดได้ ไม่ใช่แค่เอกสาร",
+            en: "7 years as a System Analyst turning messy requirements into specs, APIs and data models — with measurable results, not just documents.",
+            th: "7 ปีในบทบาท System Analyst ที่เปลี่ยน Requirement ที่ยุ่งเหยิงให้เป็น Spec, API และ Data Model ที่ชัดเจน พร้อมผลลัพธ์ที่วัดได้ ไม่ใช่แค่เอกสาร",
           },
           metrics: [
             { value: "90%+", label: { en: "Billing data accuracy (from near-zero)", th: "ความแม่นยำข้อมูล Billing (จากเกือบศูนย์)" } },
@@ -202,8 +288,8 @@ export const i18n = {
     },
     levelBadge: { en: "Supervisor", th: "ระดับ Supervisor" },
     desc: {
-      en: "I design enterprise-scale systems that bridge business strategy with technical execution — across cloud, e-commerce, and logistics. 10 years of proven delivery at supervisor level.",
-      th: "ผมออกแบบระบบระดับ Enterprise ที่เชื่อมโยง Business Strategy กับ Technical Execution ครอบคลุม Cloud, E-Commerce และ Logistics ด้วยประสบการณ์ 10 ปีในระดับ Supervisor",
+      en: "I design enterprise-scale systems that bridge business strategy with technical execution — across cloud, e-commerce, and logistics. 10 years in tech — 7 as a System Analyst, 3 as a developer — now leading at supervisor level.",
+      th: "ผมออกแบบระบบระดับ Enterprise ที่เชื่อมโยง Business Strategy กับ Technical Execution ครอบคลุม Cloud, E-Commerce และ Logistics ด้วยประสบการณ์ 10 ปี (System Analyst 7 ปี และ Developer 3 ปี) ปัจจุบันทำงานในระดับ Supervisor",
     },
     strengths: {
       s1label: { en: "End-to-End Architecture", th: "End-to-End Architecture" },
@@ -240,11 +326,13 @@ export const i18n = {
     eyebrow: { en: "Career Timeline", th: "ไทม์ไลน์อาชีพ" },
     title: { en: "Work Experience", th: "ประสบการณ์การทำงาน" },
     subtitle: {
-      en: "10 years across enterprise, e-commerce, logistics, and multi-cloud platforms.",
-      th: "ประสบการณ์รวม 10 ปีใน Enterprise ครอบคลุม E-Commerce, Logistics และ Multi-Cloud",
+      en: "10 years — 7 as a System Analyst and 3 as a developer — across enterprise, e-commerce, logistics, and multi-cloud platforms.",
+      th: "ประสบการณ์รวม 10 ปี (System Analyst 7 ปี และ Developer 3 ปี) ใน Enterprise ครอบคลุม E-Commerce, Logistics และ Multi-Cloud",
     },
     active: { en: "Active", th: "ปัจจุบัน" },
     contractor: { en: "Contractor", th: "Contractor" },
+    showMore: { en: "Show {n} more", th: "ดูเพิ่มอีก {n} ข้อ" },
+    showLess: { en: "Show less", th: "ย่อลง" },
   },
   projects: {
     eyebrow: { en: "Selected Work", th: "ผลงานที่คัดสรร" },
@@ -326,17 +414,6 @@ export const i18n = {
     desc: {
       en: 'INFPs are driven by deeply held values and a genuine desire to make a positive difference. As a Turbulent Mediator, I bring thoughtfulness, creativity, and strong empathy to every team and project — always seeking meaningful impact over surface results.',
       th: 'INFP ขับเคลื่อนด้วยค่านิยมที่ยึดมั่นและความปรารถนาที่จะสร้างความแตกต่างที่ดี ในฐานะ Turbulent Mediator ผมนำความคิดรอบคอบ ความคิดสร้างสรรค์ และ Empathy สูงมาสู่ทุกทีมและโปรเจค โดยมุ่งสู่ผลลัพธ์ที่มีความหมายเสมอ',
-    },
-    philosophy: {
-      label: { en: 'Personal Philosophy', th: 'ปรัชญาส่วนตัว' },
-      quote: {
-        en: "\"I believe work isn't just about doing my part — it's about making a difference that truly improves the organization.\"",
-        th: '"ผมเชื่อว่างานที่ดีไม่ใช่แค่ทำหน้าที่ของตัวเอง แต่คือการสร้างความเปลี่ยนแปลงที่ทำให้องค์กรดีขึ้นอย่างแท้จริง"',
-      },
-      quoteBy: {
-        en: '— Ittikorn (Aof) Sopawan',
-        th: '— อิทธิกร (อ๊อฟ) โสภาวรรณ',
-      },
     },
     traits: {
       empathetic:    { en: 'Empathetic',    th: 'เข้าอกเข้าใจ'   },

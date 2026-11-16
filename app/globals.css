@@ -179,6 +179,81 @@
   }
 }
 
+/* ─── About quote ─── */
+/* gradient hairline border + glyph in the site's violet → fuchsia → blue */
+.aq-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(124,58,237,0.75), rgba(217,70,239,0.45), rgba(59,130,246,0.7));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.aq-glyph {
+  background: linear-gradient(135deg, #8b5cf6, #d946ef 55%, #3b82f6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.aq-bar {
+  background: linear-gradient(90deg, #7c3aed, #d946ef, #3b82f6, #7c3aed);
+  background-size: 300% 100%;
+  animation: aq-flow 6s linear infinite;
+}
+
+/* hidden until RevealWrapper adds .visible, then staggered by --i */
+.about-quote .aq-seg,
+.about-quote .aq-fade {
+  opacity: 0;
+}
+
+.reveal.visible .about-quote .aq-fade {
+  animation: aq-in 0.6s ease-out both;
+}
+
+.reveal.visible .about-quote .aq-late {
+  animation-delay: 1.4s;
+}
+
+.reveal.visible .about-quote .aq-seg {
+  animation: aq-in 0.55s ease-out both;
+  animation-delay: calc(0.15s + var(--i) * 0.09s);
+}
+
+
+
+@keyframes aq-in {
+  from { opacity: 0; transform: translateY(8px); filter: blur(4px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+@keyframes aq-flow { to { background-position: 300% 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .aq-bar { animation: none; }
+  .about-quote .aq-seg, .about-quote .aq-fade { opacity: 1; }
+  .reveal.visible .about-quote .aq-seg,
+  .reveal.visible .about-quote .aq-fade { animation: none; }
+}
+
+/* ─── Scroll hint ─── */
+.scroll-hint-arrow {
+  animation: scroll-hint-bob 1.4s ease-in-out infinite;
+}
+
+@keyframes scroll-hint-bob {
+  50% { transform: translateY(3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-hint-arrow { animation: none; }
+}
+
 /* ─── Contact ─── */
 /* animated gradient halo behind the contact card */
 .contact-card::before {

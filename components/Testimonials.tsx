@@ -80,7 +80,7 @@ export default function Testimonials() {
   const T = i18n.testimonials
 
   return (
-    <section id="testimonials" className="max-w-6xl mx-auto px-6 py-24">
+    <section id="testimonials" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <RevealWrapper className="text-center mb-16">
         <div className="eyebrow-pill mb-4 mx-auto w-fit">
           <MessageSquare size={12} />
@@ -105,7 +105,7 @@ export default function Testimonials() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {testimonials.map((t, i) => (
           <RevealWrapper key={t.name} delay={i * 75} className={i === 4 ? 'md:col-span-2' : ''}>
-            <div className={`testimonial-card glass-card group relative flex h-full flex-col gap-5 overflow-hidden p-7 ${i === 4 ? 'md:p-9' : ''}`}>
+            <div className={`testimonial-card glass-card group relative flex h-full flex-col gap-5 overflow-hidden p-5 sm:p-7 ${i === 4 ? 'md:p-9' : ''}`}>
               {/* Accent bar in the author's colour */}
               <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${t.gradient}`} />
               <div className={`pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-gradient-to-br ${t.gradient} opacity-[0.08] blur-3xl transition-opacity duration-500 group-hover:opacity-20`} />
