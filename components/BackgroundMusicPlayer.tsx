@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Music2, Pause, Play, UserRound } from 'lucide-react'
+import { Briefcase, Pause, Play } from 'lucide-react'
 import Image from 'next/image'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
@@ -232,11 +232,15 @@ export default function BackgroundMusicPlayer() {
           type="button"
           onClick={() => window.dispatchEvent(new Event(OPEN_TO_WORK_EVENT))}
           aria-haspopup="dialog"
-          aria-label={heroT.openToWork.viewDetails[lang]}
-          title={heroT.openToWork.viewDetails[lang]}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-violet-300/70 bg-white/95 text-violet-700 shadow-[0_5px_18px_rgba(76,29,149,0.28)] backdrop-blur-md transition hover:scale-105 hover:bg-violet-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:border-violet-300/35 dark:bg-slate-950/95 dark:text-violet-200 dark:hover:bg-slate-900"
+          aria-label={`${heroT.openToWork.badge[lang]} — ${heroT.openToWork.viewDetails[lang]}`}
+          title={`${heroT.openToWork.badge[lang]} — ${heroT.openToWork.viewDetails[lang]}`}
+          className="relative isolate inline-flex h-10 w-10 items-center justify-center overflow-visible rounded-full border border-violet-300/70 bg-white/95 text-violet-700 shadow-[0_5px_18px_rgba(76,29,149,0.28)] backdrop-blur-md transition hover:scale-105 hover:bg-violet-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:border-violet-300/35 dark:bg-slate-950/95 dark:text-violet-200 dark:hover:bg-slate-900"
         >
-          <UserRound size={19} strokeWidth={2.3} aria-hidden="true" />
+          <span aria-hidden="true" className="pointer-events-none absolute -inset-1 rounded-full border border-emerald-400/80 motion-safe:animate-ping" />
+          <Briefcase size={19} strokeWidth={2.3} aria-hidden="true" />
+          <span aria-hidden="true" className="absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full border-2 border-white bg-emerald-400 shadow-sm dark:border-slate-950">
+            <span className="absolute inset-0 rounded-full bg-emerald-300 motion-safe:animate-ping" />
+          </span>
         </button>
         <button
           type="button"
@@ -246,7 +250,7 @@ export default function BackgroundMusicPlayer() {
           title={buttonLabel}
           className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-violet-300/70 bg-gradient-to-br from-violet-600 to-fuchsia-500 text-white shadow-[0_5px_18px_rgba(124,58,237,0.4)] transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 dark:border-violet-300/35"
         >
-          <Music2 size={18} strokeWidth={2.3} aria-hidden="true" />
+          {isPlaying ? <Pause size={17} fill="currentColor" aria-hidden="true" /> : <Play size={17} fill="currentColor" aria-hidden="true" />}
           {isPlaying && <span aria-hidden="true" className="absolute right-0.5 top-0.5 h-2 w-2 rounded-full bg-emerald-300 ring-2 ring-violet-700 motion-safe:animate-pulse" />}
         </button>
       </div>
