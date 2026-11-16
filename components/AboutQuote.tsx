@@ -48,7 +48,7 @@ export default function AboutQuote() {
             <p className="text-[0.95rem] leading-[1.9] text-theme2 lg:border-l lg:border-[var(--border2)] lg:pl-12 lg:text-[1rem] lg:self-center">
               {T.quote[lang].map(([text, highlighted], i) => (
                 <span key={`${lang}-${i}`} className="aq-seg" style={{ '--i': i } as React.CSSProperties}>
-                  {highlighted ? <strong className="font-semibold text-violet-600 dark:text-violet-300">{text}</strong> : text}
+                  {highlighted ? <mark className="testimonial-mark">{text}</mark> : text}
                 </span>
               ))}
             </p>

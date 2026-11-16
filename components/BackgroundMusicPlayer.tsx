@@ -2,14 +2,17 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Pause, Play } from 'lucide-react'
+import Image from 'next/image'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
+import { OPEN_TO_WORK_EVENT } from '@/lib/open-to-work'
 
 const VOLUME = 0.05
 
 export default function BackgroundMusicPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null)
   const playerRef = useRef<HTMLDivElement>(null)
+  const clusterRef = useRef<HTMLDivElement>(null)
   const analyserRef = useRef<AnalyserNode | null>(null)
   const audioCtxRef = useRef<AudioContext | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -17,6 +20,7 @@ export default function BackgroundMusicPlayer() {
   const [promptDismissed, setPromptDismissed] = useState(false)
   const { lang } = useLang()
   const T = i18n.musicPlayer
+  const heroT = i18n.hero
 
   // Must run inside a user gesture: a suspended AudioContext would silence the routed <audio>.
   const startVisualizer = () => {
@@ -52,7 +56,7 @@ export default function BackgroundMusicPlayer() {
     // Browsers block autoplay with sound until the first interaction; start on that interaction instead.
     const events = ['click', 'keydown', 'touchend'] as const
     const onFirstGesture = (event: Event) => {
-      if (playerRef.current?.contains(event.target as Node)) return // the play button handles itself
+      if (clusterRef.current?.contains(event.target as Node)) return // the controls handle their own clicks
       events.forEach(name => window.removeEventListener(name, onFirstGesture))
       startVisualizer()
       if (audio.paused) void audio.play().catch(() => {})
@@ -145,13 +149,32 @@ export default function BackgroundMusicPlayer() {
         onPause={() => setIsPlaying(false)}
         onError={() => console.error('Background music failed to load from /background-music.mp3')}
       />
-      <div ref={playerRef} className="vinyl-player fixed bottom-6 right-6 z-[60] h-[72px] w-[72px]">
-        {/* Inside playerRef so its clicks don't trigger the first-gesture autoplay */}
-        {autoplayBlocked && !isPlaying && !promptDismissed && (
+      <div ref={clusterRef} className="fixed bottom-6 right-6 z-[60] flex flex-col items-center gap-8">
+        <div className="flex flex-col items-center gap-2">
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new Event(OPEN_TO_WORK_EVENT))}
+            aria-haspopup="dialog"
+            aria-label={heroT.openToWork.viewDetails[lang]}
+            title={heroT.openToWork.viewDetails[lang]}
+            className="floating-otw-avatar group relative h-[72px] w-[72px] shrink-0 overflow-visible rounded-full bg-gradient-to-br from-violet-500 via-fuchsia-500 to-cyan-400 p-[3px] shadow-[0_0_0_4px_rgba(124,58,237,0.22),0_8px_28px_rgba(124,58,237,0.58)] transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-fuchsia-400"
+          >
+            <Image src="/profile.jpeg" alt="" width={144} height={144} priority className="relative z-10 h-full w-full rounded-full border-2 border-white object-cover object-top dark:border-slate-950" />
+          </button>
+          <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-violet-300/70 bg-violet-700 px-3 py-1.5 text-[0.68rem] font-extrabold tracking-[0.01em] text-white shadow-[0_4px_18px_rgba(124,58,237,0.42)] ring-2 ring-white/80 dark:border-violet-300/50 dark:bg-violet-600 dark:ring-slate-950">
+            <span aria-hidden="true" className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full motion-safe:animate-ping rounded-full bg-emerald-300 opacity-70" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-300" />
+            </span>
+            {heroT.openToWork.badge[lang]}
+          </span>
+        </div>
+        <div ref={playerRef} className="vinyl-player relative h-[72px] w-[72px] shrink-0">
+          {autoplayBlocked && !isPlaying && !promptDismissed && (
           <div
             role="dialog"
             aria-label={T.promptTitle[lang]}
-            className="absolute bottom-[88px] right-0 w-64 animate-[music-prompt-in_0.35s_ease-out] rounded-2xl border border-violet-200/70 bg-white/90 p-4 text-left shadow-[0_12px_32px_rgba(76,29,149,0.18)] backdrop-blur-md dark:border-violet-400/20 dark:bg-slate-900/90 dark:shadow-[0_12px_32px_rgba(0,0,0,0.55)]"
+            className="absolute bottom-0 right-[88px] w-64 max-w-[calc(100vw-7.75rem)] animate-[music-prompt-in_0.35s_ease-out] rounded-2xl border border-violet-200/70 bg-white/90 p-4 text-left shadow-[0_12px_32px_rgba(76,29,149,0.18)] backdrop-blur-md dark:border-violet-400/20 dark:bg-slate-900/90 dark:shadow-[0_12px_32px_rgba(0,0,0,0.55)]"
           >
             <p className="text-sm font-semibold text-slate-900 dark:text-white">♪ {T.promptTitle[lang]}</p>
             <p className="mt-1 text-xs leading-relaxed text-slate-600 dark:text-slate-300">{T.promptBody[lang]}</p>
@@ -172,40 +195,30 @@ export default function BackgroundMusicPlayer() {
               </button>
             </div>
           </div>
-        )}
-        <span
-          aria-hidden="true"
-          className={`vinyl-glow ${isPlaying ? 'is-playing' : ''}`}
-        />
-        <span aria-hidden="true" className="vinyl-beat-ring" />
-        <span
-          aria-hidden="true"
-          className={`vinyl-ripple ${isPlaying ? 'is-playing' : ''}`}
-        />
-        <span
-          aria-hidden="true"
-          className={`vinyl-ripple is-delayed ${isPlaying ? 'is-playing' : ''}`}
-        />
-        <div
-          aria-hidden="true"
-          className={`vinyl-disc absolute inset-0 rounded-full ${
-            isPlaying ? 'is-playing' : ''
-          } ${
-            isPlaying ? 'animate-[spin_3s_linear_infinite] motion-reduce:animate-none' : ''
-          }`}
-        >
-          <span aria-hidden="true" className={`vinyl-liquid ${isPlaying ? 'is-playing' : ''}`} />
+          )}
+          <span aria-hidden="true" className={`vinyl-glow ${isPlaying ? 'is-playing' : ''}`} />
+          <span aria-hidden="true" className="vinyl-beat-ring" />
+          <span aria-hidden="true" className={`vinyl-ripple ${isPlaying ? 'is-playing' : ''}`} />
+          <span aria-hidden="true" className={`vinyl-ripple is-delayed ${isPlaying ? 'is-playing' : ''}`} />
+          <div
+            aria-hidden="true"
+            className={`vinyl-disc absolute inset-0 rounded-full ${
+              isPlaying ? 'is-playing' : ''
+            } ${isPlaying ? 'animate-[spin_3s_linear_infinite] motion-reduce:animate-none' : ''}`}
+          >
+            <span aria-hidden="true" className={`vinyl-liquid ${isPlaying ? 'is-playing' : ''}`} />
+          </div>
+          <button
+            type="button"
+            onClick={togglePlayback}
+            aria-label={buttonLabel}
+            aria-pressed={isPlaying}
+            title={!isPlaying && autoplayBlocked ? T.autoplayBlocked[lang] : buttonLabel}
+            className="absolute inset-0 m-auto inline-flex h-9 w-9 items-center justify-center rounded-full border-2 border-white/90 bg-gradient-to-br from-white to-violet-100 text-violet-700 shadow-[0_3px_8px_rgba(15,23,42,0.3),inset_0_1px_2px_rgba(255,255,255,0.9)] transition-transform hover:scale-105 dark:border-violet-200/30 dark:from-slate-900 dark:to-violet-950 dark:text-violet-200 dark:shadow-[0_3px_10px_rgba(0,0,0,0.65),inset_0_1px_2px_rgba(255,255,255,0.12)]"
+          >
+            {isPlaying ? <Pause size={15} fill="currentColor" aria-hidden="true" /> : <Play size={15} fill="currentColor" aria-hidden="true" />}
+          </button>
         </div>
-        <button
-          type="button"
-          onClick={togglePlayback}
-          aria-label={buttonLabel}
-          aria-pressed={isPlaying}
-          title={!isPlaying && autoplayBlocked ? T.autoplayBlocked[lang] : buttonLabel}
-          className="absolute inset-0 m-auto inline-flex h-9 w-9 items-center justify-center rounded-full border-2 border-white/90 bg-gradient-to-br from-white to-violet-100 text-violet-700 shadow-[0_3px_8px_rgba(15,23,42,0.3),inset_0_1px_2px_rgba(255,255,255,0.9)] transition-transform hover:scale-105 dark:border-violet-200/30 dark:from-slate-900 dark:to-violet-950 dark:text-violet-200 dark:shadow-[0_3px_10px_rgba(0,0,0,0.65),inset_0_1px_2px_rgba(255,255,255,0.12)]"
-        >
-          {isPlaying ? <Pause size={15} fill="currentColor" aria-hidden="true" /> : <Play size={15} fill="currentColor" aria-hidden="true" />}
-        </button>
       </div>
     </>
   )

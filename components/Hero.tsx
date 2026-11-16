@@ -1,18 +1,19 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { ArrowRight, ArrowUpRight, Mail, Sparkles, Download, Layers, Users, Briefcase, X, CheckCircle2, MapPin } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Sparkles, Download, FileText, Layers, Users, Briefcase, X, CheckCircle2, MapPin } from 'lucide-react'
 import Image from 'next/image'
 import RevealWrapper from './RevealWrapper'
 import Fireworks from './Fireworks'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
+import { OPEN_TO_WORK_EVENT } from '@/lib/open-to-work'
 
 const T = i18n.hero
 
 // Decorative positions for banner sparkles and the confetti burst around the avatar
 const SPARKLES = [[8, 20], [22, 70], [38, 12], [55, 78], [68, 25], [82, 62], [92, 18], [46, 45]]
-const CONFETTI = ['#22c55e', '#facc15', '#f472b6', '#38bdf8', '#a78bfa', '#fb923c']
+const CONFETTI = ['#7c3aed', '#facc15', '#f472b6', '#38bdf8', '#a78bfa', '#fb923c']
   .flatMap((color, i) => [0, 1].map(k => ({ color, angle: (i * 2 + k) * 30 })))
 
 function calculateAge() {
@@ -24,6 +25,7 @@ function calculateAge() {
 export default function Hero() {
   const { lang } = useLang()
   const openToWorkDialog = useRef<HTMLDialogElement>(null)
+  const resumePreviewDialog = useRef<HTMLDialogElement>(null)
   const [age, setAge] = useState<number | null>(null)
   const [roleIndex, setRoleIndex] = useState(0)
   const [rolePicked, setRolePicked] = useState(false)
@@ -36,6 +38,23 @@ export default function Hero() {
     dialog.showModal()
     setModalOpen(true)
   }
+
+  const openResumePreview = () => {
+    const dialog = resumePreviewDialog.current
+    if (!dialog || dialog.open) return
+    dialog.showModal()
+  }
+
+  useEffect(() => {
+    const handleOpenToWorkRequest = () => {
+      const dialog = openToWorkDialog.current
+      if (!dialog || dialog.open) return
+      dialog.showModal()
+      setModalOpen(true)
+    }
+    window.addEventListener(OPEN_TO_WORK_EVENT, handleOpenToWorkRequest)
+    return () => window.removeEventListener(OPEN_TO_WORK_EVENT, handleOpenToWorkRequest)
+  }, [])
 
   // Auto-cycle the role tabs until the visitor picks one; hold still while they're reading (WCAG 2.2.2)
   useEffect(() => {
@@ -81,33 +100,20 @@ export default function Hero() {
           <div className="glass-card p-5 sm:p-8 lg:p-10 h-full">
 
             <div className="flex flex-wrap items-center gap-2.5 mb-7">
-              <button
-                type="button"
-                onClick={openModal}
-                aria-haspopup="dialog"
-                className="otw-attract group inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-gradient-to-r from-violet-500/15 to-blue-500/15 px-4 py-1.5 text-xs font-semibold text-violet-700 transition-all hover:border-violet-500/50 hover:shadow-[0_0_20px_rgba(124,58,237,0.2)] dark:text-violet-300"
-              >
-                <Sparkles size={13} strokeWidth={2.2} />
-                {T.openToWork.badge[lang]}
-                <ArrowUpRight size={12} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </button>
               {/* Availability badge */}
-              <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/25 text-green-700 dark:text-green-400 rounded-full px-4 py-1.5 text-xs font-semibold">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
-                </span>
+              <div className="tag-chip tag-chip--highlight">
+                <span className="tag-chip-dot" aria-hidden="true" />
                 {T.badge[lang]}
               </div>
             </div>
 
             <div className="flex items-start gap-3 sm:gap-5 mb-6">
-              <div className="relative h-16 w-14 shrink-0 sm:h-24 sm:w-20 lg:h-32 lg:w-28 xl:h-44 xl:w-40">
+              <div className="relative h-14 w-12 shrink-0 sm:h-20 sm:w-16 lg:h-24 lg:w-20 xl:h-28 xl:w-24">
                 <Image
                   src="/logo.png"
                   alt=""
                   fill
-                  sizes="(min-width: 1280px) 160px, (min-width: 1024px) 112px, (min-width: 640px) 80px, 56px"
+                  sizes="(min-width: 1280px) 96px, (min-width: 1024px) 80px, (min-width: 640px) 64px, 48px"
                   loading="eager"
                   className="object-contain"
                 />
@@ -127,11 +133,6 @@ export default function Hero() {
                     {T.h1b[lang]}
                   </span>
                 </h1>
-
-                {/* Role badge */}
-                <span className="text-xs font-semibold bg-violet-500/10 border border-violet-500/20 text-violet-600 dark:text-violet-400 px-3 py-1 rounded-full">
-                  {T.levelBadge[lang]}
-                </span>
               </div>
             </div>
 
@@ -157,24 +158,36 @@ export default function Hero() {
 
             {/* CTAs */}
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-              <a
-                href="/resume.pdf"
-                download="Ittikorn_Sopawan_Resume.pdf"
-                className="otw-shine group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-2xl bg-gradient-to-r from-violet-600 via-fuchsia-500 to-blue-500 bg-[length:200%_100%] px-6 py-3.5 text-[0.95rem] font-bold text-white shadow-[0_8px_28px_rgba(124,58,237,0.45)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-right hover:shadow-[0_12px_36px_rgba(124,58,237,0.6)]"
+              <button
+                type="button"
+                onClick={openModal}
+                aria-haspopup="dialog"
+                aria-label={T.openToWork.viewDetails[lang]}
+                className="otw-shine otw-attract group relative inline-flex h-12 w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-violet-700 via-fuchsia-600 to-blue-600 px-4 text-left text-white shadow-[0_8px_24px_rgba(124,58,237,0.36)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(124,58,237,0.48)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 sm:h-14 sm:w-[168px]"
               >
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/20 transition-transform group-hover:translate-y-0.5">
-                  <Download size={15} strokeWidth={2.5} />
+                <span className="text-center text-[0.95rem] font-extrabold">{T.openToWork.viewDetails[lang]}</span>
+                <ArrowUpRight size={17} className="ml-1 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </button>
+              <button
+                type="button"
+                onClick={openResumePreview}
+                aria-haspopup="dialog"
+                aria-label={T.resumePreview.title[lang]}
+                className="group inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-xl border border-violet-500/30 bg-violet-500/[0.06] px-4 text-[0.85rem] font-semibold text-violet-800 backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-violet-500/55 hover:bg-violet-500/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 sm:h-14 sm:w-[168px] dark:text-violet-200"
+              >
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-violet-500/10 transition-transform group-hover:translate-y-0.5">
+                  <Download size={14} strokeWidth={2.5} />
                 </span>
                 {T.cta.download[lang]}
-              </a>
-              <div className="grid grid-cols-2 gap-3 sm:flex">
-                <a href="#projects" className="group inline-flex items-center justify-center gap-2 rounded-2xl border border-violet-500/25 bg-violet-500/[0.06] px-5 py-3.5 text-[0.9rem] font-semibold text-violet-700 backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-violet-500/50 hover:bg-violet-500/[0.12] hover:shadow-[0_6px_20px_rgba(124,58,237,0.2)] dark:text-violet-200">
+              </button>
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 px-1 text-[0.82rem] font-medium text-theme3 sm:ml-1">
+                <a href="#projects" className="group inline-flex min-h-11 items-center gap-1.5 rounded-lg transition-colors hover:text-violet-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:hover:text-violet-300">
                   {T.cta.projects[lang]}
-                  <ArrowRight size={15} strokeWidth={2.5} className="transition-transform group-hover:translate-x-1" />
+                  <ArrowRight size={14} strokeWidth={2.5} className="transition-transform group-hover:translate-x-1" />
                 </a>
-                <a href="#contact" className="group inline-flex items-center justify-center gap-2 rounded-2xl border border-violet-500/25 bg-violet-500/[0.06] px-5 py-3.5 text-[0.9rem] font-semibold text-violet-700 backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-violet-500/50 hover:bg-violet-500/[0.12] hover:shadow-[0_6px_20px_rgba(124,58,237,0.2)] dark:text-violet-200">
-                  <Mail size={15} strokeWidth={2} />
+                <a href="#contact" className="group inline-flex min-h-11 items-center gap-1.5 rounded-lg transition-colors hover:text-violet-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:hover:text-violet-300">
                   {T.cta.contact[lang]}
+                  <ArrowRight size={14} strokeWidth={2.5} className="transition-transform group-hover:translate-x-1" />
                 </a>
               </div>
             </div>
@@ -194,7 +207,7 @@ export default function Hero() {
               aria-label={T.openToWork.badge[lang]}
               className="group relative mx-auto mb-3 block h-28 w-28 rounded-full"
             >
-              <span className="otw-ring absolute -inset-1.5 rounded-full shadow-[0_0_32px_rgba(34,197,94,0.45)]" />
+              <span className="otw-ring absolute -inset-1.5 rounded-full shadow-[0_0_32px_rgba(124,58,237,0.45)]" />
               <Image
                 src="/profile.jpeg"
                 alt={lang === 'en' ? 'Portrait of Ittikorn Sopawan' : 'ภาพถ่ายของอิทธิกร โสภาวรรณ'}
@@ -203,20 +216,19 @@ export default function Hero() {
                 priority
                 className="relative h-full w-full rounded-full border-[3px] border-white object-cover object-top shadow-xl transition-transform duration-300 group-hover:scale-[1.03] dark:border-slate-900"
               />
-              <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-green-700 px-3 py-0.5 text-[0.7rem] font-extrabold uppercase tracking-wider text-white shadow-[0_4px_12px_rgba(34,197,94,0.5)]">
+              <span className="absolute -bottom-2 left-1/2 inline-flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full bg-violet-700 px-3 py-0.5 text-[0.7rem] font-extrabold uppercase tracking-wider text-white shadow-[0_4px_12px_rgba(124,58,237,0.5)]">
+                <span className="tag-chip-dot tag-chip-dot--light" aria-hidden="true" />
                 #OpenToWork
               </span>
             </button>
 
-            {/* Name */}
+            {/* Current position (name and role already lead the left card) */}
             <div className="text-center">
-              <div className="font-display font-bold text-[1.05rem] text-theme mb-1">
-                {lang === 'en' ? 'Ittikorn Sopawan' : 'อิทธิกร โสภาวรรณ'}
-              </div>
-              <div className="text-sm text-theme2">{T.role[lang]}</div>
-              <div className="inline-flex items-center gap-1.5 mt-2 text-xs font-semibold text-violet-700 dark:text-violet-400 bg-violet-500/10 border border-violet-500/20 px-3 py-1 rounded-full">
+              <div className="tag-chip tag-chip--highlight">
+                <span className="tag-chip-dot" aria-hidden="true" />
                 <Sparkles size={10} strokeWidth={2.5} />
-                {T.supervisor[lang]}
+                {T.supervisor[lang].split(' @ ')[0]}{' '}
+                <span className="supervisor-company">@ Socket9</span>
               </div>
             </div>
 
@@ -239,14 +251,15 @@ export default function Hero() {
                 {T.specialties[lang]}
               </div>
               <div className="flex flex-wrap gap-1.5">
-                {['DDD', 'EDA', 'Microservices', '.NET Core', 'Cloud Architecture', 'API Design', 'Database Design'].map(tag => (
-                  <span
-                    key={tag}
-                    className="text-[0.72rem] font-medium px-2.5 py-1 rounded-full bg-gradient-to-r from-violet-500/[0.12] to-blue-500/[0.12] border border-violet-500/20 text-violet-600 dark:text-violet-300"
-                  >
-                    {tag}
-                  </span>
-                ))}
+                {['DDD', 'EDA', 'Microservices', '.NET', 'Cloud Architecture', 'API Design', 'Database Design'].map((tag, index) => {
+                  const highlighted = [0, 2, 4].includes(index)
+                  return (
+                    <span key={tag} className={`tag-chip ${highlighted ? 'tag-chip--highlight' : 'tag-chip--neutral'}`} style={highlighted ? { animationDelay: `${index * 55}ms` } : undefined}>
+                      {highlighted && <span className="tag-chip-dot" aria-hidden="true" />}
+                      {tag}
+                    </span>
+                  )
+                })}
               </div>
             </div>
           </div>
@@ -277,7 +290,7 @@ export default function Hero() {
         <Fireworks active={modalOpen} lang={lang} />
         {/* Full-screen layer: clicking the empty space around the card closes it */}
         <div
-          className="relative z-10 flex h-full w-full items-center justify-center p-3 sm:p-6 lg:p-10"
+          className="relative z-10 flex h-full w-full items-stretch justify-start p-0"
           onClick={event => {
             if (event.target === event.currentTarget) openToWorkDialog.current?.close()
           }}
@@ -290,7 +303,7 @@ export default function Hero() {
           >
             <X size={18} />
           </button>
-          <div className="otw-card glass-card relative flex max-h-full w-full max-w-6xl flex-col overflow-y-auto p-0 shadow-[0_24px_100px_rgba(0,0,0,0.5)] lg:flex-row lg:overflow-hidden">
+          <div className="otw-card glass-card relative flex h-full max-h-full w-full max-w-6xl flex-col overflow-y-auto rounded-none p-0 shadow-[0_24px_100px_rgba(0,0,0,0.5)] lg:flex-row lg:overflow-hidden">
             {/* Left: who I am + logistics */}
             <aside className="flex flex-col lg:w-[40%] lg:shrink-0 lg:overflow-y-auto lg:border-r lg:border-[var(--border2)]">
           {/* Hero banner */}
@@ -309,7 +322,7 @@ export default function Hero() {
               type="button"
               onClick={() => openToWorkDialog.current?.close()}
               aria-label={T.openToWork.close[lang]}
-              className="absolute right-4 top-4 z-10 hidden h-9 w-9 items-center justify-center rounded-xl bg-white/15 text-white backdrop-blur transition-colors hover:bg-white/25 lg:inline-flex"
+              className="absolute right-4 top-4 z-10 hidden h-9 w-9 items-center justify-center rounded-xl bg-white/15 text-white backdrop-blur transition-colors hover:bg-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-violet-700 lg:inline-flex"
             >
               <X size={18} />
             </button>
@@ -325,16 +338,14 @@ export default function Hero() {
                   />
                 ))}
                 <Image src="/profile.jpeg" alt="" width={192} height={192} className="relative h-full w-full rounded-full border-[3px] border-white object-cover object-top shadow-xl" />
-                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-green-700 px-2.5 py-0.5 text-[0.65rem] font-extrabold uppercase tracking-wider text-white shadow-md">
+                <span className="absolute -bottom-1 left-1/2 inline-flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full bg-violet-700 px-2.5 py-0.5 text-[0.65rem] font-extrabold uppercase tracking-wider text-white shadow-[0_4px_12px_rgba(124,58,237,0.45)]">
+                  <span className="tag-chip-dot tag-chip-dot--light" aria-hidden="true" />
                   #OpenToWork
                 </span>
               </div>
               <div className="min-w-0">
                 <div className="otw-celebrate mb-2 inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-bold backdrop-blur">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-300 opacity-90" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
-                  </span>
+                  <span className="tag-chip-dot tag-chip-dot--light" aria-hidden="true" />
                   {T.openToWork.celebrate[lang]}
                 </div>
                 <h2 id="open-to-work-title" className="otw-rise font-display text-[1.7rem] font-extrabold leading-[1.1] tracking-tight drop-shadow-sm sm:text-[2.1rem]" style={{ animationDelay: '140ms' }}>
@@ -381,7 +392,7 @@ export default function Hero() {
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
               {[
                 { title: T.openToWork.employmentTitle[lang], items: T.openToWork.employment, tone: 'border-blue-500/20 bg-blue-500/5', icon: 'text-blue-500' },
-                { title: T.openToWork.conditionsTitle[lang], items: T.openToWork.conditions, tone: 'border-green-500/20 bg-green-500/5', icon: 'text-green-500' },
+                { title: T.openToWork.conditionsTitle[lang], items: T.openToWork.conditions, tone: 'border-violet-500/20 bg-violet-500/5', icon: 'text-violet-500' },
               ].map(group => (
                 <div key={group.title}>
                   <h3 className="mb-2.5 text-[0.7rem] font-bold uppercase tracking-[2px] text-theme3">{group.title}</h3>
@@ -408,18 +419,18 @@ export default function Hero() {
                 onClick={() => openToWorkDialog.current?.close()}
                 className="otw-shine relative inline-flex flex-1 items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-violet-600 to-blue-500 px-5 py-3 text-sm font-semibold text-white shadow-[0_4px_20px_rgba(124,58,237,0.3)] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(124,58,237,0.45)]"
               >
-                <Mail size={16} />
                 {T.openToWork.contact[lang]}
-                <ArrowUpRight size={15} />
+                <ArrowRight size={15} />
               </a>
-              <a
-                href="/resume.pdf"
-                download="Ittikorn_Sopawan_Resume.pdf"
+              <button
+                type="button"
+                onClick={openResumePreview}
+                aria-haspopup="dialog"
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface2)] px-5 py-3 text-sm font-semibold text-theme transition-colors hover:border-violet-500/40"
               >
                 <Download size={16} />
                 {T.cta.download[lang]}
-              </a>
+              </button>
             </div>
                 </div>
               </div>
@@ -435,6 +446,17 @@ export default function Hero() {
                 if (!event.currentTarget.contains(event.relatedTarget)) setCyclePaused(false)
               }}
             >
+            {/* Culture and environment */}
+            <h3 className="mb-2.5 text-[0.7rem] font-bold uppercase tracking-[2px] text-theme3">{T.openToWork.cultureTitle[lang]}</h3>
+            <div className="otw-rise mb-7 grid gap-2 sm:grid-cols-2" style={{ animationDelay: '300ms' }}>
+              {T.openToWork.culture.map(item => (
+                <div key={item.en} className="flex items-start gap-2.5 rounded-xl border border-violet-500/20 bg-gradient-to-br from-violet-500/[0.07] to-blue-500/[0.05] p-3">
+                  <CheckCircle2 size={15} className="mt-0.5 shrink-0 text-violet-500 dark:text-violet-400" />
+                  <p className="text-[0.76rem] leading-relaxed text-theme">{item[lang]}</p>
+                </div>
+              ))}
+            </div>
+
             {/* Role tabs */}
             <h3 className="mb-2.5 text-[0.7rem] font-bold uppercase tracking-[2px] text-theme3">{T.openToWork.rolesTitle[lang]}</h3>
             <div role="tablist" aria-label={T.openToWork.rolesTitle[lang]} className="otw-rise mb-3 flex gap-1.5 overflow-x-auto rounded-2xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-3 border border-[var(--border2)] bg-[var(--surface2)] p-1.5" style={{ animationDelay: '320ms' }}>
@@ -523,7 +545,7 @@ export default function Hero() {
                 <h4 className="mb-2 text-[0.68rem] font-bold uppercase tracking-[1.5px] text-violet-600 dark:text-violet-400">{T.openToWork.tabLabels.toolkit[lang]}</h4>
                 <div className="flex flex-wrap gap-1.5">
                   {T.openToWork.roles[roleIndex].toolkit.map(tool => (
-                    <span key={tool} className="rounded-full border border-violet-500/20 bg-gradient-to-r from-violet-500/[0.12] to-blue-500/[0.12] px-2.5 py-1 text-[0.7rem] font-medium text-violet-700 dark:text-violet-300">{tool}</span>
+                    <span key={tool} className="tag-chip tag-chip--neutral">{tool}</span>
                   ))}
                 </div>
               </div>
@@ -547,13 +569,63 @@ export default function Hero() {
             <ul className="mb-6 space-y-2">
               {T.openToWork.fit[lang].map((item, i) => (
                 <li key={item} style={{ animationDelay: `${500 + i * 60}ms` }} className="otw-rise flex items-start gap-2.5 text-sm leading-snug text-theme">
-                  <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-green-500" />
+                  <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-violet-500 dark:text-violet-400" />
                   {item}
                 </li>
               ))}
             </ul>
 
             </section>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog
+        ref={resumePreviewDialog}
+        aria-labelledby="resume-preview-title"
+        onCancel={event => {
+          event.preventDefault()
+          event.currentTarget.close()
+        }}
+        onClick={event => {
+          if (event.target === event.currentTarget) event.currentTarget.close()
+        }}
+        className="resume-preview-dialog fixed inset-0 m-0 h-[100dvh] max-h-none w-screen max-w-none border-0 bg-transparent p-3 text-left shadow-none sm:p-6"
+      >
+        <div className="flex h-full w-full items-center justify-center">
+          <div className="flex h-full w-full max-w-6xl flex-col overflow-hidden rounded-2xl border border-[var(--border2)] bg-[var(--surface)] shadow-[0_24px_100px_rgba(0,0,0,0.55)]">
+            <header className="flex shrink-0 items-center justify-between gap-4 border-b border-[var(--border2)] px-4 py-3 sm:px-6">
+              <h2 id="resume-preview-title" className="flex items-center gap-2 font-display text-base font-bold text-theme sm:text-lg">
+                <FileText size={18} className="text-violet-500" />
+                {T.resumePreview.title[lang]}
+              </h2>
+              <button
+                type="button"
+                onClick={() => resumePreviewDialog.current?.close()}
+                aria-label={T.openToWork.close[lang]}
+                className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[var(--border2)] bg-[var(--surface2)] text-theme2 transition-colors hover:border-violet-500/40 hover:text-violet-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
+              >
+                <X size={17} />
+              </button>
+            </header>
+            <iframe
+              src="/resume.pdf#view=FitH"
+              title={T.resumePreview.title[lang]}
+              className="min-h-0 flex-1 bg-white"
+            />
+            <footer className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-[var(--border2)] px-4 py-3 sm:px-6">
+              <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-theme3 underline-offset-4 transition-colors hover:text-violet-500 hover:underline">
+                {T.resumePreview.openInNewTab[lang]}
+              </a>
+              <a
+                href="/resume.pdf"
+                download="Ittikorn_Sopawan_Resume.pdf"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-blue-500 px-4 py-2.5 text-sm font-bold text-white shadow-[0_4px_16px_rgba(124,58,237,0.32)] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(124,58,237,0.45)]"
+              >
+                <Download size={15} />
+                {T.cta.download[lang]}
+              </a>
+            </footer>
           </div>
         </div>
       </dialog>

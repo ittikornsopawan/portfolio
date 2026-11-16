@@ -17,7 +17,7 @@ export const i18n = {
     hobbies: { en: 'Hobbies', th: 'งานอดิเรก' },
     github: { en: "GitHub", th: "GitHub" },
     contact: { en: "Contact", th: "ติดต่อ" },
-    hireMe: { en: "Hire Me", th: "ต้องการจ้างฉัน" },
+    hireMe: { en: "Contact", th: "ติดต่อ" },
   },
   aboutQuote: {
     // [text, highlighted] pairs, from the CV's professional summary
@@ -93,17 +93,18 @@ export const i18n = {
         highlight: true,
       },
       {
-        icon: "ai",
-        title: { en: "AI in Everyday Life", th: "AI ในชีวิตประจำวัน" },
+        icon: "game",
+        title: { en: "Gamer Life", th: "ชีวิตเกมเมอร์" },
         desc: {
-          en: "I use AI every day to make life easier — planning, learning new things, organizing ideas, and automating small chores. It's also my partner for turning new product ideas into something real.",
-          th: "ผมใช้ AI เป็นผู้ช่วยในชีวิตประจำวัน ทั้งวางแผน เรียนรู้เรื่องใหม่ จัดระเบียบความคิด และช่วยลดงานจุกจิก รวมถึงเป็นคู่คิดที่ช่วยต่อยอดไอเดีย Product ใหม่ ๆ ให้เป็นจริงได้ครับ",
+          en: "I love playing games — it's my favorite way to unwind, and I enjoy the strategy and teamwork that a good game brings.",
+          th: "ผมชอบเล่นเกมมาก เป็นวิธีพักผ่อนที่ชอบที่สุด และสนุกกับการวางแผนและการเล่นเป็นทีมที่เกมดี ๆ มอบให้ครับ",
         },
         highlight: true,
       },
     ],
   },
   scrollHint: { en: "Scroll for more", th: "เลื่อนดูต่อ" },
+  scrollToTop: { en: "Back to top", th: "กลับขึ้นด้านบน" },
   musicPlayer: {
     play: { en: "Play background music", th: "เล่นเพลงพื้นหลัง" },
     pause: { en: "Pause background music", th: "หยุดเพลงพื้นหลัง" },
@@ -115,17 +116,29 @@ export const i18n = {
   },
   hero: {
     badge: {
-      en: "Available · 30-Day Notice",
-      th: "พร้อมทำงาน · แจ้งล่วงหน้า 30 วัน",
+      en: "Actively Seeking Now",
+      th: "กำลังหางานอย่างจริงจัง",
     },
     openToWork: {
       badge: { en: "Open to Work", th: "Open to Work" },
+      viewDetails: { en: "View Roles", th: "ดูตำแหน่งงาน" },
       title: { en: "Open to the right opportunity", th: "พร้อมรับโอกาสที่ใช่" },
       pitch: {
         en: "A system analyst and solution architect who turns business goals into systems that ship — 10 years in tech (7 as a System Analyst, 3 as a developer) across enterprise, e-commerce, logistics and cloud.",
         th: "System Analyst และ Solution Architect ที่เปลี่ยนเป้าหมายธุรกิจให้เป็นระบบที่ใช้งานได้จริง ประสบการณ์ 10 ปี (System Analyst 7 ปี และ Developer 3 ปี) ใน Enterprise, E-Commerce, Logistics และ Cloud",
       },
       rolesTitle: { en: "Roles I'm looking for", th: "ตำแหน่งที่มองหา" },
+      cultureTitle: { en: "We're a great match if you…", th: "เราเหมาะกันถ้าคุณ…" },
+      culture: [
+        {
+          en: "Value people who stay focused and deliver under pressure.",
+          th: "ให้คุณค่ากับคนที่ทำงานภายใต้แรงกดดันได้ โดยยังโฟกัสกับการส่งมอบงาน",
+        },
+        {
+          en: "Encourage ideas beyond anyone's formal role when they can improve the work.",
+          th: "เปิดพื้นที่ให้ทุกคนเสนอไอเดียเกินขอบเขตหน้าที่ หากช่วยพัฒนางาน",
+        },
+      ],
       lookingFor: { en: "Looking for", th: "กำลังมองหา" },
       celebrate: { en: "🎉 Officially open to work · 30-day notice", th: "🎉 เปิดหางานแล้วจ้า · แจ้งล่วงหน้า 30 วัน" },
       roles: [
@@ -216,7 +229,7 @@ export const i18n = {
             { company: "Socket9", text: { en: "Lead system design for manufacturing and logistics — factory operations to distribution — and present solutions in pre-sales.", th: "นำการออกแบบระบบ Manufacturing และ Logistics ตั้งแต่ Factory Operation ถึง Distribution และนำเสนอ Solution ในงาน Pre-sales" } },
             { company: "True Corporation (X10)", text: { en: "Defined API ownership and data mapping across services using DDD and microservices.", th: "กำหนด API Ownership และ Data Mapping ระหว่าง Service ด้วย DDD และ Microservices" } },
           ],
-          toolkit: ["DDD", "Event-Driven", "Microservices", "Cloud Architecture", ".NET Core", "C4 Model"],
+          toolkit: ["DDD", "Event-Driven", "Microservices", "Cloud Architecture", ".NET", "C4 Model"],
           plan: [
             { en: "Week 1–4: map the current architecture, risks and tech debt", th: "สัปดาห์ 1–4: ทำ Map ของ Architecture ปัจจุบัน ความเสี่ยง และ Tech Debt" },
             { en: "Month 2: propose a target architecture and a phased roadmap", th: "เดือนที่ 2: เสนอ Target Architecture และ Roadmap แบบเป็น Phase" },
@@ -244,7 +257,7 @@ export const i18n = {
         { title: "Hybrid", desc: { en: "e.g. 2 days office / 3 days online", th: "เช่น เข้า Office 2 วัน / Online 3 วัน" } },
         { title: "Remote", desc: { en: "Open to fully remote", th: "ทำงาน Remote ได้" } },
       ],
-      fitTitle: { en: "We're a great match if you…", th: "เราเหมาะกันถ้าคุณ…" },
+      fitTitle: { en: "Where I can add value", th: "บริบทที่ผมช่วยสร้างคุณค่าได้" },
       fit: {
         en: [
           "Are building or modernizing an enterprise platform",
@@ -286,11 +299,6 @@ export const i18n = {
       en: "Technical Product Owner, System Analyst, Solution Architect",
       th: "Technical Product Owner, System Analyst, Solution Architect",
     },
-    role: {
-      en: "System Analyst & Solution Architect",
-      th: "System Analyst & Solution Architect",
-    },
-    levelBadge: { en: "Supervisor", th: "ระดับ Supervisor" },
     desc: {
       en: "I design enterprise-scale systems that bridge business strategy with technical execution — across cloud, e-commerce, and logistics. 10 years in tech — 7 as a System Analyst, 3 as a developer — now leading at supervisor level.",
       th: "ผมออกแบบระบบระดับ Enterprise ที่เชื่อมโยง Business Strategy กับ Technical Execution ครอบคลุม Cloud, E-Commerce และ Logistics ด้วยประสบการณ์ 10 ปี (System Analyst 7 ปี และ Developer 3 ปี) ปัจจุบันทำงานในระดับ Supervisor",
@@ -325,16 +333,18 @@ export const i18n = {
       projects: { en: "View My Work", th: "ดูผลงาน" },
       contact: { en: "Let's Talk", th: "คุยกัน" },
     },
+    resumePreview: {
+      title: { en: "Resume preview", th: "ตัวอย่างเรซูเม่" },
+      openInNewTab: { en: "Open PDF in a new tab", th: "เปิด PDF ในแท็บใหม่" },
+    },
   },
   experience: {
     eyebrow: { en: "Career Timeline", th: "ไทม์ไลน์อาชีพ" },
     title: { en: "Work Experience", th: "ประสบการณ์การทำงาน" },
-    subtitle: {
-      en: "10 years — 7 as a System Analyst and 3 as a developer — across enterprise, e-commerce, logistics, and multi-cloud platforms.",
-      th: "ประสบการณ์รวม 10 ปี (System Analyst 7 ปี และ Developer 3 ปี) ใน Enterprise ครอบคลุม E-Commerce, Logistics และ Multi-Cloud",
-    },
     active: { en: "Active", th: "ปัจจุบัน" },
+    keyHighlight: { en: "Key contribution", th: "ผลงานเด่น" },
     contractor: { en: "Contractor", th: "Contractor" },
+    fullTime: { en: "Full-time", th: "พนักงานประจำ" },
     showMore: { en: "Show {n} more", th: "ดูเพิ่มอีก {n} ข้อ" },
     showLess: { en: "Show less", th: "ย่อลง" },
   },
@@ -353,8 +363,26 @@ export const i18n = {
       en: "A broad stack spanning enterprise architecture, cloud, backend, and AI tooling.",
       th: "ครอบคลุม Enterprise Architecture, Cloud, Backend และเครื่องมือ AI",
     },
-    softEyebrow: { en: "Soft Skills", th: "Soft Skills" },
-    softTitle: { en: "Core Competencies", th: "ความสามารถหลัก" },
+    groups: {
+      skills: {
+        title: { en: "Skills", th: "Skills" },
+        desc: { en: "How I design and shape systems", th: "แนวคิดและวิธีที่ผมใช้ออกแบบระบบ" },
+      },
+      stacks: {
+        title: { en: "Stacks", th: "Stacks" },
+        desc: { en: "Languages, frameworks and databases I build with", th: "ภาษา Framework และ Database ที่ผมใช้พัฒนา" },
+      },
+      technologies: {
+        title: { en: "Technologies", th: "Technologies" },
+        desc: { en: "Cloud, DevOps and the tools around delivery", th: "Cloud, DevOps และเครื่องมือที่ใช้ส่งมอบงาน" },
+      },
+      ai: {
+        title: { en: "AI", th: "AI" },
+        desc: { en: "AI tools and practices in my daily workflow", th: "เครื่องมือและแนวทาง AI ที่ผมใช้ในงานทุกวัน" },
+      },
+    },
+    core: { en: "Core", th: "ถนัดที่สุด" },
+    softTitle: { en: "Soft Skills", th: "Soft Skills" },
   },
   certifications: {
     eyebrow: { en: "Credentials", th: "คุณวุฒิ" },
@@ -366,6 +394,13 @@ export const i18n = {
     },
     edLabel: { en: "Education", th: "การศึกษา" },
     langLabel: { en: "Languages", th: "ภาษา" },
+    nextLabel: { en: "Certification", th: "Certification" },
+    nextTitle: { en: "AI Certification", th: "AI Certification" },
+    nextStatus: { en: "Next up", th: "เป้าหมายถัดไป" },
+    nextDesc: {
+      en: "Planned next, to back the AI work I already do every day.",
+      th: "วางแผนสอบเป็นลำดับถัดไป เพื่อรับรองงาน AI ที่ผมใช้อยู่ทุกวัน",
+    },
   },
   careerPath: {
     eyebrow: { en: "Vision", th: "วิสัยทัศน์" },
@@ -394,8 +429,7 @@ export const i18n = {
       en: "Selected repositories and personal projects available on GitHub.",
       th: "Repository ที่คัดสรรและโปรเจคส่วนตัวบน GitHub",
     },
-    viewRepo: { en: "View repo →", th: "ดู repo →" },
-    liveDemo: { en: "Live Demo", th: "ดูเดโม" },
+    public: { en: "Public", th: "สาธารณะ" },
   },
   contact: {
     eyebrow: { en: "Get in Touch", th: "ติดต่อ" },
@@ -434,10 +468,6 @@ export const i18n = {
     },
   },
   footer: {
-    built: {
-      en: "Built with Next.js & Tailwind CSS",
-      th: "พัฒนาด้วย Next.js & Tailwind CSS",
-    },
     name: { en: "Ittikorn (Aof) Sopawan", th: "อิทธิกร (อ๊อฟ) โสภาวรรณ" },
   },
 };

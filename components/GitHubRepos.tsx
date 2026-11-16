@@ -1,6 +1,6 @@
 'use client'
 
-import { GitBranch, Star, GitFork, ExternalLink, Code2 } from 'lucide-react'
+import { GitBranch, BookOpen, FileText, Star, GitFork, ExternalLink, ArrowUpRight } from 'lucide-react'
 import RevealWrapper from './RevealWrapper'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
@@ -8,7 +8,23 @@ import { i18n } from '@/lib/i18n'
 // ── Update GITHUB_USERNAME and repo entries below ──
 const GITHUB_USERNAME = 'ittikornsopawan'
 
-const repos = [
+interface SpecSampleGroup {
+  title: string
+  links: { label: string; href: string }[]
+}
+
+interface GitHubRepo {
+  name: string
+  description: string
+  language: string
+  tags: string[]
+  stars: number
+  forks: number
+  href: string
+  samples?: SpecSampleGroup[]
+}
+
+const repos: GitHubRepo[] = [
   {
     name: 'data-engineer-billing-project',
     description: 'A mockup project that generates cloud provider billing data to demonstrate a data pipeline, writing compressed CSV files to MinIO before ETL-loading them into PostgreSQL.',
@@ -17,7 +33,6 @@ const repos = [
     stars: 1,
     forks: 0,
     href: `https://github.com/${GITHUB_USERNAME}/data-engineer-billing-project`,
-    demo: '',
   },
   {
     name: 'specification',
@@ -27,7 +42,6 @@ const repos = [
     stars: 0,
     forks: 0,
     href: `https://github.com/${GITHUB_USERNAME}/specification`,
-    demo: '',
   },
   {
     name: 'pixel-hr',
@@ -37,7 +51,6 @@ const repos = [
     stars: 0,
     forks: 0,
     href: `https://github.com/${GITHUB_USERNAME}/pixel-hr`,
-    demo: '',
   },
   {
     name: 'system-analysis-and-design',
@@ -47,7 +60,22 @@ const repos = [
     stars: 0,
     forks: 0,
     href: `https://github.com/${GITHUB_USERNAME}/system-analysis-and-design`,
-    demo: '',
+    samples: [
+      {
+        title: 'Schema design',
+        links: [
+          { label: 'Product schema spec', href: 'https://github.com/ittikornsopawan/system-analysis-and-design/blob/main/e-commerce/doc/schema/product/m_product.md' },
+          { label: 'SQL query', href: 'https://github.com/ittikornsopawan/system-analysis-and-design/blob/main/e-commerce/db/migrations/up/03-product.schema.up.sql' },
+        ],
+      },
+      {
+        title: 'API spec',
+        links: [
+          { label: 'Upsert product', href: 'https://github.com/ittikornsopawan/system-analysis-and-design/blob/main/e-commerce/doc/api/product/01-upsert-product/spec.md' },
+          { label: 'Sequence diagram', href: 'https://github.com/ittikornsopawan/system-analysis-and-design/blob/main/e-commerce/doc/api/product/01-upsert-product/sequence.wsd' },
+        ],
+      },
+    ],
   },
 ]
 
@@ -63,6 +91,10 @@ const LANG_COLORS: Record<string, string> = {
 export default function GitHubRepos() {
   const { lang } = useLang()
   const T = i18n.github
+  const featuredRepo = repos.find(repo => repo.name === 'system-analysis-and-design')
+  const orderedRepos = featuredRepo
+    ? [featuredRepo, ...repos.filter(repo => repo !== featuredRepo)]
+    : repos
 
   return (
     <section id="github" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
@@ -81,7 +113,7 @@ export default function GitHubRepos() {
           href={`https://github.com/${GITHUB_USERNAME}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold text-violet-600 dark:text-violet-400 hover:underline"
+          className="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold text-violet-700 hover:underline dark:text-violet-300"
         >
           <GitBranch size={13} />
           github.com/{GITHUB_USERNAME}
@@ -89,91 +121,98 @@ export default function GitHubRepos() {
         </a>
       </RevealWrapper>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {repos.map((repo, i) => (
-          <RevealWrapper key={repo.name} delay={i * 70}>
-            <div className="glass-card p-6 h-full flex flex-col gap-4">
+      <div className="grid grid-cols-1 gap-5 md:auto-rows-fr md:grid-cols-2 md:items-stretch">
+        {orderedRepos.map((repo, i) => {
+          const isFeatured = repo === featuredRepo
+          return (
+          <RevealWrapper
+            key={repo.name}
+            delay={i * 70}
+            className={`h-full ${isFeatured ? 'md:col-start-1 md:row-span-3' : 'md:col-start-2'}`}
+          >
+            <div className="github-repo-card glass-card flex h-full flex-col gap-3.5 p-4 sm:p-5">
               {/* Header */}
               <div className="flex items-start justify-between gap-2">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600/15 to-blue-500/15 border border-violet-500/20 flex items-center justify-center shrink-0 icon-box">
-                    <Code2 size={15} className="text-violet-500 dark:text-violet-400" strokeWidth={2} />
+                <div className="flex min-w-0 items-start gap-2.5">
+                  <div className="github-repo-mark flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border">
+                    <BookOpen size={17} strokeWidth={1.8} />
                   </div>
-                  <span className="font-display font-bold text-[0.9rem] text-theme">
-                    {repo.name}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 shrink-0">
-                  {repo.demo && (
-                    <a
-                      href={repo.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[0.72rem] font-semibold text-violet-600 dark:text-violet-400 bg-violet-500/10 border border-violet-500/20 px-2.5 py-1 rounded-full hover:bg-violet-500/20 transition-colors"
-                    >
-                      {T.liveDemo[lang]}
+                  <div className="min-w-0">
+                    <a href={repo.href} target="_blank" rel="noopener noreferrer" className="github-repo-link block truncate font-semibold">
+                      {repo.name}
                     </a>
-                  )}
-                  <a
-                    href={repo.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${repo.name} on GitHub`}
-                    className="w-9 h-9 flex items-center justify-center rounded-lg bg-[var(--surface2)] border border-[var(--border2)] text-theme3 hover:text-violet-500 hover:border-violet-500/30 transition-all duration-150"
-                  >
-                    <ExternalLink size={14} aria-hidden="true" />
-                  </a>
+                    <span className="github-public-label mt-1 inline-flex rounded-full border px-2 py-0.5 text-[0.68rem] leading-none">
+                      {T.public[lang]}
+                    </span>
+                  </div>
                 </div>
               </div>
 
               {/* Description */}
-              <p className="text-[0.855rem] text-theme2 leading-relaxed flex-1">
+              <p className="text-[0.82rem] leading-relaxed text-theme2 flex-1">
                 {repo.description}
               </p>
+
+              {repo.samples && (
+                <div className="rounded-lg border border-violet-500/20 bg-violet-500/[0.045] p-3">
+                  <p className="mb-2 text-[0.67rem] font-bold uppercase tracking-[1.2px] text-violet-700 dark:text-violet-300">Selected spec samples</p>
+                  <div className="flex flex-col gap-3">
+                    {repo.samples.map(sample => (
+                      <div key={sample.title}>
+                        <p className="mb-1.5 text-[0.72rem] font-semibold text-theme">{sample.title}</p>
+                        <div className="flex flex-col items-start gap-1.5">
+                          {sample.links.map(link => (
+                            <a
+                              key={link.href}
+                              href={link.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={`${sample.title}: ${link.label}`}
+                              className="inline-flex min-h-11 items-center gap-1 rounded-md border border-violet-500/20 bg-[var(--surface)] px-2.5 py-2 text-[0.7rem] font-medium text-violet-700 transition-colors hover:border-violet-500/45 hover:bg-violet-500/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 dark:text-violet-300"
+                            >
+                              <FileText size={11} aria-hidden="true" />
+                              {link.label}
+                              <ArrowUpRight size={10} aria-hidden="true" />
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Tags */}
               <div className="flex flex-wrap gap-1.5">
                 {repo.tags.map(t => (
-                  <span
-                    key={t}
-                    className="text-[0.72rem] font-medium px-2.5 py-0.5 rounded-full bg-gradient-to-r from-violet-500/10 to-blue-500/10 border border-violet-500/15 text-violet-600 dark:text-violet-300"
-                  >
+                  <span key={t} className="github-topic rounded-full border px-2.5 py-1 text-[0.72rem] font-medium">
                     {t}
                   </span>
                 ))}
               </div>
 
               {/* Footer */}
-              <div className="flex items-center justify-between pt-3 border-t border-[var(--border2)]">
-                <div className="flex items-center gap-3 text-theme3 text-xs">
-                  <span className="flex items-center gap-1.5">
-                    <span
-                      className="w-2.5 h-2.5 rounded-full"
-                      style={{ backgroundColor: LANG_COLORS[repo.language] ?? '#8b5cf6' }}
-                    />
-                    {repo.language}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Star size={11} />
-                    {repo.stars}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <GitFork size={11} />
-                    {repo.forks}
-                  </span>
-                </div>
-                <a
-                  href={repo.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="-my-2 py-2 text-[0.72rem] font-medium text-theme3 hover:text-violet-500 dark:hover:text-violet-400 transition-colors"
-                >
-                  {T.viewRepo[lang]}
-                </a>
+              <div className="flex items-center gap-4 border-t border-[#d0d7de] pt-3 text-xs text-theme3 dark:border-[#30363d]">
+                <span className="inline-flex items-center gap-1.5">
+                  <span
+                    className="w-2.5 h-2.5 rounded-full"
+                    style={{ backgroundColor: LANG_COLORS[repo.language] ?? '#8b5cf6' }}
+                  />
+                  {repo.language}
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <Star size={13} />
+                  {repo.stars}
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <GitFork size={13} />
+                  {repo.forks}
+                </span>
               </div>
             </div>
           </RevealWrapper>
-        ))}
+          )
+        })}
       </div>
     </section>
   )

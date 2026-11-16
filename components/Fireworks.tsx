@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 import type { Lang } from '@/lib/i18n'
 
-const COLORS = ['#a78bfa', '#f472b6', '#facc15', '#4ade80', '#38bdf8', '#fb923c', '#f87171']
+const COLORS = ['#a78bfa', '#f472b6', '#facc15', '#c026d3', '#38bdf8', '#fb923c', '#f87171']
 const GRAVITY = 0.05
 const FINALE_MS = 4200
 const YAY_MS = 450

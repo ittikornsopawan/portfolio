@@ -20,9 +20,6 @@ export default function Footer() {
         <p className="text-xs text-theme3">
           &copy; {new Date().getFullYear()} {T.name[lang]}
         </p>
-        <div className="text-xs text-theme3">
-          {T.built[lang]}
-        </div>
       </div>
     </footer>
   )

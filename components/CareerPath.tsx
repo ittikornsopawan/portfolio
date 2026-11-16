@@ -49,17 +49,17 @@ export default function CareerPath() {
 
   return (
     <section id="careerpath" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-      <RevealWrapper className="text-center mb-10 sm:mb-14">
-        <div className="eyebrow-pill mb-4 mx-auto w-fit">
-          <Map size={12} />
-          {T.eyebrow[lang]}
+      {/* Supporting section: compact left-aligned header so the main sections keep the big centered ones */}
+      <RevealWrapper className="mb-6 flex items-center gap-4 sm:mb-8">
+        <div className="icon-box flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600 to-blue-500 text-white shadow-[0_6px_16px_rgba(124,58,237,0.32)]">
+          <Map size={22} strokeWidth={2} aria-hidden="true" />
         </div>
-        <h2 className="font-display font-extrabold tracking-tight text-theme text-[clamp(1.9rem,3vw,2.8rem)] mb-4">
-          {T.title[lang]}
-        </h2>
-        <p className="text-theme2 text-base max-w-md mx-auto">
-          {T.subtitle[lang]}
-        </p>
+        <div>
+          <h2 className="font-display text-[clamp(1.4rem,2.2vw,1.8rem)] font-extrabold leading-tight tracking-tight text-theme">
+            {T.title[lang]}
+          </h2>
+          <p className="text-[0.92rem] text-theme2">{T.subtitle[lang]}</p>
+        </div>
       </RevealWrapper>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

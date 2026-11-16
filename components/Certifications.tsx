@@ -1,6 +1,6 @@
 'use client'
 
-import { GraduationCap, Globe, BookOpen } from 'lucide-react'
+import { GraduationCap, Globe, BookOpen, Sparkles } from 'lucide-react'
 import RevealWrapper from './RevealWrapper'
 import { useLang } from '@/app/lang-context'
 import { i18n } from '@/lib/i18n'
@@ -16,27 +16,27 @@ export default function Certifications() {
 
   return (
     <section id="certifications" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-      <RevealWrapper className="text-center mb-10 sm:mb-14">
-        <div className="eyebrow-pill mb-4 mx-auto w-fit">
-          <BookOpen size={12} />
-          {T.eyebrow[lang]}
+      {/* Supporting section: compact left-aligned header so the main sections keep the big centered ones */}
+      <RevealWrapper className="mb-6 flex items-center gap-4 sm:mb-8">
+        <div className="icon-box flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600 to-blue-500 text-white shadow-[0_6px_16px_rgba(124,58,237,0.32)]">
+          <BookOpen size={22} strokeWidth={2} aria-hidden="true" />
         </div>
-        <h2 className="font-display font-extrabold tracking-tight text-theme text-[clamp(1.9rem,3vw,2.8rem)] mb-4">
-          {T.title[lang]}
-        </h2>
-        <p className="text-theme2 text-base max-w-md mx-auto">
-          {T.subtitle[lang]}
-        </p>
+        <div>
+          <h2 className="font-display text-[clamp(1.4rem,2.2vw,1.8rem)] font-extrabold leading-tight tracking-tight text-theme">
+            {T.title[lang]}
+          </h2>
+          <p className="text-[0.92rem] text-theme2">{T.subtitle[lang]}</p>
+        </div>
       </RevealWrapper>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
         {/* Education */}
-        <RevealWrapper className="lg:col-span-2">
-          <div className="glass-card p-5 sm:p-8 h-full">
-            <div className="flex items-start gap-5">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-600 to-blue-500 flex items-center justify-center shadow-[0_8px_20px_rgba(124,58,237,0.35)] shrink-0 icon-box">
-                <GraduationCap size={26} className="text-white" strokeWidth={1.8} />
+        <RevealWrapper>
+          <div className="glass-card p-5 sm:p-7 h-full">
+            <div className="flex flex-col gap-4">
+              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-violet-600 to-blue-500 flex items-center justify-center shadow-[0_8px_20px_rgba(124,58,237,0.35)] shrink-0 icon-box">
+                <GraduationCap size={22} className="text-white" strokeWidth={1.8} />
               </div>
               <div>
                 <div className="text-xs font-bold uppercase tracking-widest text-theme3 mb-2">{T.edLabel[lang]}</div>
@@ -52,8 +52,30 @@ export default function Certifications() {
           </div>
         </RevealWrapper>
 
+        {/* Next certification: a placeholder that shows intent until the cert is earned */}
+        <RevealWrapper delay={60}>
+          <div className="h-full rounded-[20px] border-2 border-dashed border-violet-500/30 bg-violet-500/[0.04] p-5 sm:p-7">
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center justify-between">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-violet-500/10 text-violet-600 dark:text-violet-300">
+                  <Sparkles size={22} strokeWidth={1.8} aria-hidden="true" />
+                </div>
+                <span className="tag-chip tag-chip--highlight">
+                  <span className="tag-chip-dot" aria-hidden="true" />
+                  {T.nextStatus[lang]}
+                </span>
+              </div>
+              <div>
+                <div className="text-xs font-bold uppercase tracking-widest text-theme3 mb-2">{T.nextLabel[lang]}</div>
+                <div className="font-display font-bold text-[1.15rem] text-theme mb-1 leading-tight">{T.nextTitle[lang]}</div>
+                <p className="text-sm text-theme2">{T.nextDesc[lang]}</p>
+              </div>
+            </div>
+          </div>
+        </RevealWrapper>
+
         {/* Languages */}
-        <RevealWrapper delay={100}>
+        <RevealWrapper delay={120}>
           <div className="glass-card p-5 sm:p-7 h-full">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 to-blue-500 flex items-center justify-center shadow-[0_6px_14px_rgba(124,58,237,0.3)] icon-box">
@@ -67,7 +89,7 @@ export default function Certifications() {
                 <div key={l.lang}>
                   <div className="flex justify-between items-center mb-2.5">
                     <span className="font-display font-bold text-[0.95rem] text-theme">{l.lang}</span>
-                    <span className="text-xs font-medium text-violet-600 dark:text-violet-400 bg-violet-500/10 border border-violet-500/20 px-2.5 py-0.5 rounded-full">
+                    <span className="tag-chip tag-chip--neutral">
                       {l.level}
                     </span>
                   </div>

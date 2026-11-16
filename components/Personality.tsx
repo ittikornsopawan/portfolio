@@ -22,86 +22,66 @@ export default function Personality() {
     <section id="personality" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
 
       {/* Section header */}
-      <RevealWrapper className="text-center mb-10 sm:mb-14">
-        <div className="eyebrow-pill mb-4 mx-auto w-fit">
-          <Brain size={12} />
-          {T.eyebrow[lang]}
+      {/* Supporting section: compact left-aligned header so the main sections keep the big centered ones */}
+      <RevealWrapper className="mb-6 flex items-center gap-4 sm:mb-8">
+        <div className="icon-box flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600 to-blue-500 text-white shadow-[0_6px_16px_rgba(124,58,237,0.32)]">
+          <Brain size={22} strokeWidth={2} aria-hidden="true" />
         </div>
-        <h2 className="font-display font-extrabold tracking-tight text-theme text-[clamp(1.9rem,3vw,2.8rem)] mb-4">
-          {T.title[lang]}
-        </h2>
-        <p className="text-theme2 text-base max-w-md mx-auto">
-          {T.subtitle[lang]}
-        </p>
+        <div>
+          <h2 className="font-display text-[clamp(1.4rem,2.2vw,1.8rem)] font-extrabold leading-tight tracking-tight text-theme">
+            {T.title[lang]}
+          </h2>
+          <p className="text-[0.92rem] text-theme2">{T.subtitle[lang]}</p>
+        </div>
       </RevealWrapper>
 
-      {/* SVG illustration banner */}
-      <RevealWrapper className="mb-6">
+      {/* Illustration beside the type and traits instead of a full-width banner */}
+      <RevealWrapper>
         <div className="glass-card overflow-hidden">
-          <Image
-            src="/mediator-desktop.svg"
-            alt="INFP-T The Mediator illustration"
-            width={900}
-            height={350}
-            className="w-full h-auto"
-          />
-        </div>
-      </RevealWrapper>
-
-      {/* MBTI badge + description + traits */}
-      <RevealWrapper delay={80}>
-        <div className="glass-card p-5 sm:p-8">
-          <div className="flex flex-col lg:flex-row gap-8 items-start">
-
-            {/* MBTI badge */}
-            <div className="shrink-0 flex flex-col items-center lg:items-start">
-              <div className="relative">
-                <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-violet-600 to-blue-500 flex items-center justify-center shadow-[0_8px_30px_rgba(124,58,237,0.4)]">
-                  <span className="font-display text-2xl font-extrabold text-white tracking-widest">INFP</span>
+          <div className="grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+            <div className="relative flex flex-col justify-end border-b border-[var(--border2)] lg:border-b-0 lg:border-r">
+              <Image
+                src="/mediator-desktop.svg"
+                alt="INFP-T The Mediator illustration"
+                width={900}
+                height={350}
+                className="h-auto w-full lg:h-full lg:object-cover lg:object-[30%_50%]"
+              />
+              {/* MBTI badge: under the image on mobile, overlaid on wide screens */}
+              <div className="m-4 flex w-fit items-center gap-3 lg:absolute lg:left-4 lg:top-4 lg:m-0 rounded-2xl border border-white/40 bg-white/80 px-3 py-2 shadow-lg backdrop-blur-md dark:border-white/10 dark:bg-slate-900/70">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 to-blue-500 shadow-[0_6px_16px_rgba(124,58,237,0.35)]">
+                  <span className="font-display text-[0.8rem] font-extrabold tracking-wider text-white">INFP</span>
                 </div>
-                <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-xl bg-gradient-to-br from-violet-500 to-blue-400 flex items-center justify-center shadow-md icon-box">
-                  <span className="text-white text-[0.65rem] font-bold">-T</span>
+                <div>
+                  <div className="font-display text-[0.95rem] font-extrabold leading-tight gradient-text">{T.mediator[lang]}</div>
+                  <div className="text-[0.7rem] font-medium uppercase tracking-wider text-theme3">{T.type[lang]}</div>
                 </div>
-              </div>
-              <div className="mt-4 text-center lg:text-left">
-                <div className="font-display font-extrabold text-[1.05rem] gradient-text">{T.mediator[lang]}</div>
-                <div className="text-[0.72rem] text-theme3 font-medium mt-0.5 uppercase tracking-wider">{T.type[lang]}</div>
               </div>
             </div>
 
-            {/* Divider */}
-            <div className="hidden lg:block w-px self-stretch bg-gradient-to-b from-transparent via-[var(--border)] to-transparent" />
-            <div className="lg:hidden w-full h-px bg-gradient-to-r from-transparent via-[var(--border)] to-transparent" />
+            <div className="p-5 sm:p-8">
+              <p className="mb-6 text-[0.92rem] leading-[1.85] text-theme2">{T.desc[lang]}</p>
 
-            {/* Description + traits */}
-            <div className="flex-1">
-              <p className="text-[0.92rem] text-theme2 leading-[1.85] mb-7">
-                {T.desc[lang]}
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+              <ul className="grid list-none grid-cols-1 gap-2.5 sm:grid-cols-2">
                 {traits.map(t => (
-                  <div
+                  <li
                     key={t.label}
-                    className="flex items-center gap-3 text-left sm:flex-col sm:items-center sm:gap-0 sm:text-center p-3.5 rounded-xl bg-[var(--surface2)] border border-[var(--border)] hover:border-violet-500/25 hover:bg-violet-500/[0.06] transition-all duration-200 group"
+                    className="group flex items-start gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface2)] p-3 transition-all duration-200 hover:border-violet-500/25 hover:bg-violet-500/[0.06]"
                   >
-                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600/15 to-blue-500/15 border border-violet-500/20 flex items-center justify-center shrink-0 sm:mb-2.5 icon-box group-hover:from-violet-600 group-hover:to-blue-500 transition-all duration-200">
-                      <t.Icon size={15} className="text-violet-500 dark:text-violet-400 group-hover:text-white transition-colors" strokeWidth={2} />
+                    <div className="icon-box flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-violet-500/20 bg-gradient-to-br from-violet-600/15 to-blue-500/15 transition-all duration-200 group-hover:from-violet-600 group-hover:to-blue-500">
+                      <t.Icon size={15} className="text-violet-500 transition-colors group-hover:text-white dark:text-violet-400" strokeWidth={2} />
                     </div>
                     <div>
-                      <div className="text-[0.8rem] font-bold text-theme leading-tight">{t.label}</div>
-                      <div className="text-[0.72rem] text-theme3 mt-1 leading-snug">{t.desc}</div>
+                      <div className="text-[0.85rem] font-bold leading-tight text-theme">{t.label}</div>
+                      <div className="mt-0.5 text-[0.75rem] leading-snug text-theme3">{t.desc}</div>
                     </div>
-                  </div>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
-
           </div>
         </div>
       </RevealWrapper>
-
-
     </section>
   )
 }

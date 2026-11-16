@@ -1,6 +1,6 @@
 'use client'
 
-import { Smile, Tv, Trophy, PawPrint, UtensilsCrossed, Heart, Sparkles } from 'lucide-react'
+import { Smile, Tv, Trophy, PawPrint, UtensilsCrossed, Heart, Gamepad2 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import RevealWrapper from './RevealWrapper'
 import { useLang } from '@/app/lang-context'
@@ -12,8 +12,11 @@ const ICONS: Record<string, LucideIcon> = {
   paw: PawPrint,
   food: UtensilsCrossed,
   heart: Heart,
-  ai: Sparkles,
+  game: Gamepad2,
 }
+
+// Spread the two solid highlight cards across rows instead of stacking both at the end
+const ORDER = ['tv', 'heart', 'paw', 'food', 'sport', 'game']
 
 export default function Hobbies() {
   const { lang } = useLang()
@@ -33,10 +36,10 @@ export default function Hobbies() {
       </RevealWrapper>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {T.items.map((item, i) => {
+        {[...T.items].sort((a, b) => ORDER.indexOf(a.icon) - ORDER.indexOf(b.icon)).map((item, i) => {
           const Icon = ICONS[item.icon]
           return (
-          <RevealWrapper key={item.title.en} delay={i * 60}>
+          <RevealWrapper key={item.title.en} delay={i * 60} className="h-full">
             <div
               className={`group relative h-full overflow-hidden rounded-[20px] p-5 sm:p-6 transition-all duration-300 hover:-translate-y-1 ${
                 'highlight' in item
@@ -78,7 +81,7 @@ export default function Hobbies() {
                     {item.tags.map(tag => (
                       <span
                         key={tag}
-                        className="rounded-full border border-violet-500/20 bg-gradient-to-r from-violet-500/[0.12] to-blue-500/[0.12] px-2.5 py-1 text-[0.72rem] font-medium text-violet-700 dark:text-violet-300"
+                        className={`tag-chip ${'highlight' in item ? 'tag-chip--on-accent' : 'tag-chip--neutral'}`}
                       >
                         {tag}
                       </span>

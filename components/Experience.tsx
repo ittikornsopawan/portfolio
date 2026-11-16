@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDown, ShieldCheck, Cloud, ShoppingCart, FileCode2, Building2, Code2, Briefcase } from 'lucide-react'
+import { ChevronDown, ShieldCheck, Cloud, ShoppingCart, FileCode2, Building2, Code2, Briefcase, Sparkles } from 'lucide-react'
 import RevealWrapper from './RevealWrapper'
 import type { LucideIcon } from 'lucide-react'
 import { useLang } from '@/app/lang-context'
@@ -13,6 +13,7 @@ interface Experience {
   company: string
   period: string
   current: boolean
+  keyNote: { en: string; th: string }
   type?: string
   bullets: { en: string; th: string }[]
 }
@@ -24,6 +25,10 @@ const experiences: Experience[] = [
     company: 'Socket9',
     period: 'Jun 2024 – Present',
     current: true,
+    keyNote: {
+      en: 'Leads system design for manufacturing and logistics workflows.',
+      th: 'นำการออกแบบระบบสำหรับ Workflow ด้าน Manufacturing และ Logistics',
+    },
     bullets: [
       { en: "Collected and analyzed business requirements, translating them into workflows, use cases, and technical solutions.", th: "เก็บและวิเคราะห์ความต้องการทางธุรกิจ แล้วถ่ายทอดออกมาเป็น Workflow, Use Case และแนวทางเชิงเทคนิคที่ทีมนำไปใช้ได้จริง" },
       { en: "Designed system architecture, database schemas, and API specifications across multiple platforms.", th: "ออกแบบ System Architecture, Database Schema และ API Specification สำหรับระบบที่ทำงานร่วมกันหลายแพลตฟอร์ม" },
@@ -32,7 +37,7 @@ const experiences: Experience[] = [
       { en: "Maintained system documentation and knowledge bases to support delivery and team onboarding.", th: "จัดทำและดูแลเอกสารระบบรวมถึง Knowledge Base ช่วยให้การส่งมอบงานราบรื่น และสมาชิกใหม่เริ่มงานได้เร็วขึ้น" },
       { en: "Supported pre-sales by proposing solutions, defining key features, and delivering client presentations.", th: "ร่วมงาน Pre-sales ตั้งแต่เสนอ Solution กำหนด Key Feature ไปจนถึงนำเสนอให้ลูกค้า" },
       { en: "Led system design for manufacturing and logistics projects, covering factory operations and distribution workflows.", th: "นำการออกแบบระบบให้โปรเจกต์ด้าน Manufacturing และ Logistics ครอบคลุมตั้งแต่การทำงานในโรงงานจนถึงการกระจายสินค้า" },
-      { en: "Applied AI-assisted development tools, including Claude Code, Codex and Hermes Agent, to accelerate solution design, documentation, prototyping, and software development workflows.", th: "นำเครื่องมือ AI อย่าง Claude Code, Codex และ Hermes Agent มาช่วยให้การออกแบบ Solution การทำเอกสาร การทำ Prototype และการพัฒนาซอฟต์แวร์เร็วขึ้น" },
+      { en: "Applied AI-assisted development tools, including Claude, Codex and Hermes Agent, to accelerate solution design, documentation, prototyping, and software development workflows.", th: "นำเครื่องมือ AI อย่าง Claude, Codex และ Hermes Agent มาช่วยให้การออกแบบ Solution การทำเอกสาร การทำ Prototype และการพัฒนาซอฟต์แวร์เร็วขึ้น" },
     ],
   },
   {
@@ -41,6 +46,10 @@ const experiences: Experience[] = [
     company: 'True Internet Data Center',
     period: 'Nov 2022 – May 2024',
     current: false,
+    keyNote: {
+      en: 'Raised billing data accuracy from near-zero to over 90%.',
+      th: 'ยกระดับความแม่นยำของข้อมูล Billing จากแทบเป็นศูนย์ให้สูงกว่า 90%',
+    },
     bullets: [
       { en: "Took on the Product Owner role, gathering requirements from internal users to understand customer-specific billing processes and define product requirements.", th: "รับบทบาท Product Owner พูดคุยกับผู้ใช้งานภายในเพื่อเข้าใจกระบวนการ Billing ของลูกค้าแต่ละราย และกำหนด Product Requirement" },
       { en: "Designed multi-cloud ELT data pipelines across AWS, GCP, and Huawei to deliver unified billing insights.", th: "ออกแบบ Multi-cloud ELT Data Pipeline บน AWS, GCP และ Huawei เพื่อรวมข้อมูล Billing ให้เห็นภาพเดียวกันทั้งหมด" },
@@ -57,6 +66,10 @@ const experiences: Experience[] = [
     company: 'Buzzebees',
     period: 'Nov 2021 – Oct 2022',
     current: false,
+    keyNote: {
+      en: 'Reduced integration errors by 30%+ with standardized REST APIs.',
+      th: 'ลด Integration Error มากกว่า 30% ด้วย REST API ที่เป็นมาตรฐาน',
+    },
     bullets: [
       { en: "Consulted with clients to understand transaction flows and recommend the most suitable integration approach for feeding transaction data into the loyalty platform for points calculation.", th: "ให้คำปรึกษาลูกค้าเพื่อทำความเข้าใจ Transaction Flow และแนะนำวิธี Integration ที่เหมาะสมที่สุดในการส่งข้อมูลเข้า Loyalty Platform เพื่อคำนวณคะแนน" },
       { en: "Translated business requirements into technical specifications, reducing rework and improving delivery efficiency.", th: "แปลง Business Requirement เป็น Technical Specification ที่ชัดเจน ช่วยลดงานแก้ซ้ำและทำให้ส่งมอบงานได้เร็วขึ้น" },
@@ -72,6 +85,10 @@ const experiences: Experience[] = [
     company: 'True Corporation (X10)',
     period: 'Jan 2021 – Oct 2021',
     current: false,
+    keyNote: {
+      en: 'Delivered a contract-renewal system with personalized offers.',
+      th: 'ส่งมอบระบบต่ออายุสัญญาพร้อมข้อเสนอโปรโมชันเฉพาะบุคคล',
+    },
     type: 'Contractor',
     bullets: [
       { en: "Translated business requirements into actionable tickets and API specifications using Domain-Driven Design (DDD) and microservices architecture.", th: "แปลง Business Requirement เป็น Ticket และ API Specification ที่พร้อมนำไปพัฒนา โดยใช้แนวคิด DDD และ Microservices" },
@@ -87,6 +104,10 @@ const experiences: Experience[] = [
     company: 'Pruksa Real Estate',
     period: 'Aug 2019 – Dec 2020',
     current: false,
+    keyNote: {
+      en: 'Designed and integrated role-based approval workflows with K2 BlackPearl.',
+      th: 'ออกแบบและเชื่อม Workflow อนุมัติตามบทบาทด้วย K2 BlackPearl',
+    },
     type: 'Contractor',
     bullets: [
       { en: "Gathered workflow requirements from internal users, including organizational structure, approval hierarchy, and approval logic (parallel vs sequential flows).", th: "เก็บ Requirement ด้าน Workflow จากผู้ใช้งานภายใน ทั้งโครงสร้างองค์กร ลำดับขั้นการอนุมัติ และ Logic การอนุมัติแบบ Parallel และ Sequential" },
@@ -103,6 +124,10 @@ const experiences: Experience[] = [
     company: 'PTT Digital Solution (Infinite)',
     period: 'Jul 2016 – Jul 2019',
     current: false,
+    keyNote: {
+      en: 'Built .NET MVC access-control features and improved database performance.',
+      th: 'พัฒนา Feature ของระบบ Access Control ด้วย .NET MVC และปรับ Performance ฐานข้อมูล',
+    },
     type: 'Contractor',
     bullets: [
       { en: "Worked with SA/BA to clarify requirements, defining screen-level functionality and expected user behavior for an online access control system.", th: "ทำงานร่วมกับ SA/BA เพื่อทำ Requirement ให้ชัดเจน กำหนดการทำงานของแต่ละหน้าจอและพฤติกรรมที่ผู้ใช้คาดหวัง สำหรับระบบ Access Control แบบออนไลน์" },
@@ -116,6 +141,64 @@ const experiences: Experience[] = [
 
 // Show the first few bullets so the timeline stays skimmable; the rest open on request.
 const VISIBLE_BULLETS = 4
+const EXPERIENCE_HIGHLIGHTS = {
+  en: [
+    'system architecture, database schemas, and API specifications',
+    'pre-sales',
+    'manufacturing and logistics projects',
+    'AI-assisted development tools',
+    'Product Owner role',
+    'multi-cloud ELT data pipelines across AWS, GCP, and Huawei',
+    'billing data accuracy from near-zero to over 90%',
+    'standardized integration interfaces and REST APIs',
+    'integration errors by 30%+',
+    '.NET Framework to .NET 5',
+    'Domain-Driven Design (DDD) and microservices architecture',
+    'contract renewal system with personalized, promotion-based offers',
+    'API ownership and data mapping',
+    'SQL Server database schemas',
+    'K2 BlackPearl integration',
+    'role-based approval flows',
+    'ASP.NET MVC (Core) and SQL Server',
+    'online access control system',
+    '.NET MVC',
+    'stored procedures to improve database performance',
+  ],
+  th: [
+    'System Architecture, Database Schema และ API Specification',
+    'Pre-sales',
+    'Manufacturing และ Logistics',
+    'Claude, Codex และ Hermes Agent',
+    'Product Owner',
+    'Multi-cloud ELT Data Pipeline บน AWS, GCP และ Huawei',
+    'ความแม่นยำของข้อมูล Billing จากแทบเป็นศูนย์ให้สูงกว่า 90%',
+    'Integration Interface และ REST API ให้เป็นมาตรฐานเดียวกัน',
+    'ลด Integration Error ได้มากกว่า 30%',
+    '.NET Framework ไปสู่ .NET 5',
+    'DDD และ Microservices',
+    'ระบบต่ออายุสัญญา ที่นำเสนอโปรโมชันให้เหมาะกับลูกค้าแต่ละราย',
+    'API Ownership และ Data Mapping',
+    'Database Schema บน SQL Server',
+    'เชื่อมต่อกับ K2 BlackPearl',
+    'การอนุมัติตามบทบาททำงานได้ถูกต้อง',
+    'ASP.NET MVC (Core) และ SQL Server',
+    'ระบบ Access Control แบบออนไลน์',
+    '.NET MVC',
+    'Stored Procedure มาใช้และปรับให้เหมาะสม',
+    'Performance ของฐานข้อมูล',
+  ],
+}
+
+function HighlightedExperienceText({ text, lang }: { text: string; lang: 'en' | 'th' }) {
+  const highlights = EXPERIENCE_HIGHLIGHTS[lang]
+  const escapedHighlights = [...highlights]
+    .sort((a, b) => b.length - a.length)
+    .map(phrase => phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+  const pattern = new RegExp(`(${escapedHighlights.join('|')})`, 'gi')
+  const highlighted = new Set(highlights.map(phrase => phrase.toLocaleLowerCase()))
+
+  return <>{text.split(pattern).map((part, index) => highlighted.has(part.toLocaleLowerCase()) ? <mark key={index} className="testimonial-mark">{part}</mark> : part)}</>
+}
 
 export default function Experience() {
   const { lang } = useLang()
@@ -133,9 +216,6 @@ export default function Experience() {
         <h2 className="font-display font-extrabold tracking-tight text-theme text-[clamp(1.9rem,3vw,2.8rem)] mb-4">
           {T.title[lang]}
         </h2>
-        <p className="text-theme2 text-base max-w-md mx-auto">
-          {T.subtitle[lang]}
-        </p>
       </RevealWrapper>
 
       {/* Timeline */}
@@ -167,20 +247,35 @@ export default function Experience() {
                       <span className="text-sm font-semibold gradient-text">{exp.company}</span>
                     </div>
                     <div className="flex items-center gap-2 flex-wrap shrink-0">
-                      <span className="text-xs font-medium text-theme3 bg-[var(--surface2)] border border-[var(--border2)] px-3 py-1 rounded-full">
+                      <span className="tag-chip tag-chip--neutral">
                         {exp.period}
                       </span>
                       {exp.current && (
-                        <span className="text-xs font-semibold text-green-700 dark:text-green-400 bg-green-500/10 border border-green-500/25 px-3 py-1 rounded-full flex items-center gap-1.5">
-                          <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                        <span className="tag-chip tag-chip--highlight">
+                          <span className="tag-chip-dot" aria-hidden="true" />
                           {T.active[lang]}
                         </span>
                       )}
-                      {exp.type && (
-                        <span className="text-xs font-medium text-blue-700 dark:text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full">
-                          {T.contractor[lang]}
-                        </span>
-                      )}
+                      <span className={`tag-chip ${exp.type ? 'tag-chip--contractor' : 'tag-chip--fulltime'}`}>
+                        <span className="employment-chip-dot" aria-hidden="true" />
+                        {exp.type ? T.contractor[lang] : T.fullTime[lang]}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mb-4 flex items-start gap-2.5 rounded-xl border border-violet-500/20 bg-violet-500/[0.045] px-3.5 py-3">
+                    <Sparkles
+                      size={15}
+                      aria-hidden="true"
+                      className="mt-0.5 shrink-0 text-violet-600 dark:text-violet-300"
+                    />
+                    <div className="min-w-0">
+                      <p className="mb-0.5 text-[0.65rem] font-bold uppercase tracking-[0.1em] text-violet-700 dark:text-violet-300">
+                        {T.keyHighlight[lang]}
+                      </p>
+                      <p className="text-[0.85rem] font-semibold leading-snug text-theme">
+                        {exp.keyNote[lang]}
+                      </p>
                     </div>
                   </div>
 
@@ -188,7 +283,9 @@ export default function Experience() {
                     {(expanded[i] ? exp.bullets : exp.bullets.slice(0, VISIBLE_BULLETS)).map((b, bi) => (
                       <li key={bi} className="text-[0.875rem] text-theme2 flex gap-2.5 items-start leading-relaxed">
                         <span className="mt-2 w-1 h-1 rounded-full bg-violet-500/60 shrink-0" />
-                        {b[lang]}
+                        <span className="min-w-0 flex-1">
+                          <HighlightedExperienceText text={b[lang]} lang={lang} />
+                        </span>
                       </li>
                     ))}
                   </ul>

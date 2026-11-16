@@ -12,9 +12,8 @@ interface Project {
   Icon: LucideIcon
   accent: Accent
   impact: string
+  metric?: { value: string; label: string } // a hard number, shown big instead of the impact pill
   name: string
-  company: string
-  period: string
   desc: string
   tags: string[]
 }
@@ -24,9 +23,8 @@ const projects: Project[] = [
     Icon: Cloud,
     accent: 'blue',
     impact: '90%+ Accuracy',
+    metric: { value: '90%+', label: 'billing data accuracy, up from near-zero' },
     name: 'Multi-Cloud Billing ELT Platform',
-    company: 'True Internet Data Center',
-    period: '2022 – 2024',
     desc: 'Designed ELT pipelines across AWS, GCP, and Huawei for unified billing insights. Improved billing data accuracy from near-zero to over 90% through workflow redesign and validation logic.',
     tags: ['AWS', 'GCP', 'Huawei', 'ELT', 'Database Design', 'API Spec'],
   },
@@ -35,8 +33,6 @@ const projects: Project[] = [
     accent: 'violet',
     impact: 'Multi-Platform',
     name: 'Manufacturing & Logistics System',
-    company: 'Socket9',
-    period: '2024 – Present',
     desc: 'Led system design for manufacturing and logistics projects covering factory operations and distribution workflows. Designed architecture, database schemas, and API specifications.',
     tags: ['System Architecture', 'Workflow Design', 'API Design', 'Pre-Sales'],
   },
@@ -44,9 +40,8 @@ const projects: Project[] = [
     Icon: ShoppingCart,
     accent: 'indigo',
     impact: '−30% Int. Errors',
+    metric: { value: '−30%', label: 'integration errors' },
     name: 'E-Commerce Integration Platform',
-    company: 'Buzzebees',
-    period: '2021 – 2022',
     desc: 'Designed standardized integration interfaces and APIs reducing integration errors by 30%+. Modernized legacy .NET Framework to .NET Core 5 and validated e-commerce APIs.',
     tags: ['.NET Core 5', 'API Integration', 'Workflow Optimization', 'Legacy Migration'],
   },
@@ -55,8 +50,6 @@ const projects: Project[] = [
     accent: 'violet',
     impact: 'DDD + Microservices',
     name: 'Contract Renewal System',
-    company: 'True Corporation (X10)',
-    period: '2021',
     desc: 'Designed and delivered a contract renewal system with personalized promotion-based offers. Translated business requirements into API specs using DDD and microservices.',
     tags: ['DDD', 'Microservices', 'API Spec', 'Scrum', 'Event-Driven'],
   },
@@ -64,9 +57,7 @@ const projects: Project[] = [
     Icon: Building2,
     accent: 'blue',
     impact: 'Role-Based Workflow',
-    name: 'Real Estate Approval Workflow',
-    company: 'Puksa Real Estate (ADI)',
-    period: '2019 – 2020',
+    name: 'Approval Workflow',
     desc: 'Designed and implemented role-based approval workflows using K2 Black Pearl. Developed full-stack solutions using ASP.NET MVC (Core) and SQL Server.',
     tags: ['ASP.NET MVC', 'SQL Server', 'K2 Black Pearl', 'Workflow Design'],
   },
@@ -75,8 +66,6 @@ const projects: Project[] = [
     accent: 'indigo',
     impact: 'Performance+',
     name: 'Online Access Control System',
-    company: 'PTT Digital Solution (Infinite)',
-    period: '2016 – 2019',
     desc: 'Led development of an online access control system using .NET MVC, improving performance and code efficiency through stored procedures and legacy refactoring.',
     tags: ['.NET MVC', 'SQL Server', 'Stored Procedures', 'Waterfall'],
   },
@@ -114,13 +103,16 @@ export default function Projects() {
       </RevealWrapper>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-        {projects.map((p, i) => (
-          <RevealWrapper key={p.name} delay={i * 65} className="flex">
+        {projects.map((p, i) => {
+          // the first project is the strongest proof: give it a 2×2 tile on wide screens
+          const featured = i === 0
+          return (
+          <RevealWrapper key={p.name} delay={i * 65} className={`flex ${featured ? 'xl:col-span-2 xl:row-span-2' : ''}`}>
             <div className="glass-card flex flex-col w-full overflow-hidden group">
               {/* Top gradient bar */}
               <div className={`h-0.5 bg-gradient-to-r ${accentIcon[p.accent]}`} />
 
-              <div className="p-6 flex flex-col flex-1">
+              <div className={`flex flex-1 flex-col ${featured ? 'p-6 sm:p-8' : 'p-6'}`}>
                 {/* Icon + impact */}
                 <div className="flex items-start justify-between mb-4">
                   <div
@@ -129,28 +121,57 @@ export default function Projects() {
                   >
                     <p.Icon size={20} className="text-white" strokeWidth={2} />
                   </div>
-                  <span className="text-xs font-semibold text-green-700 dark:text-green-400 bg-green-500/10 border border-green-500/20 px-2.5 py-1 rounded-full">
-                    {p.impact}
-                  </span>
+                  {!p.metric && (
+                    <span className="tag-chip tag-chip--highlight" style={{ animationDelay: `${i * 55}ms` }}>
+                      <span className="tag-chip-dot" aria-hidden="true" />
+                      {p.impact}
+                    </span>
+                  )}
                 </div>
+
+                {p.metric && (
+                  <div className="mb-4">
+                    <div className={`font-display font-extrabold leading-none gradient-text ${featured ? 'text-[clamp(3rem,6vw,4.5rem)]' : 'text-[2.4rem]'}`}>
+                      {p.metric.value}
+                    </div>
+                    <div className="mt-1 text-[0.8rem] font-medium text-theme2">{p.metric.label}</div>
+                  </div>
+                )}
 
                 {/* Title */}
-                <h3 className="font-display font-bold text-[1rem] text-theme mb-1 group-hover:gradient-text transition-all duration-200">
+                <h3 className={`font-display font-bold text-theme mb-1 group-hover:gradient-text transition-all duration-200 ${featured ? 'text-[1.35rem]' : 'text-[1rem]'}`}>
                   {p.name}
                 </h3>
-                <div className="text-xs text-theme3 mb-3">
-                  {p.company} · {p.period}
-                </div>
-
                 {/* Desc */}
-                <p className="text-[0.875rem] text-theme2 leading-relaxed flex-1 mb-5">{p.desc}</p>
+                <p className={`text-theme2 leading-relaxed mb-5 ${featured ? 'text-[0.98rem] max-w-xl' : 'flex-1 text-[0.875rem]'}`}>{p.desc}</p>
+
+                {/* Featured tile: before/after of its headline number fills the extra height */}
+                {featured && (
+                  <div className="mb-6 flex flex-1 flex-col justify-center gap-4 rounded-2xl border border-[var(--border2)] bg-[var(--surface2)] p-5">
+                    {[
+                      { label: 'Before', value: '≈ 0%', pct: 3, bar: 'bg-[var(--border)]' },
+                      { label: 'After', value: '90%+', pct: 92, bar: 'bg-gradient-to-r from-violet-600 to-blue-500' },
+                    ].map(row => (
+                      <div key={row.label}>
+                        <div className="mb-1.5 flex items-baseline justify-between text-[0.8rem]">
+                          <span className="font-semibold text-theme2">{row.label}</span>
+                          <span className="font-display font-bold text-theme">{row.value}</span>
+                        </div>
+                        <div className="h-2.5 overflow-hidden rounded-full surface-3">
+                          <div className={`h-full rounded-full ${row.bar}`} style={{ width: `${row.pct}%` }} />
+                        </div>
+                      </div>
+                    ))}
+                    <p className="text-[0.75rem] text-theme3">Billing data accuracy across AWS, GCP and Huawei</p>
+                  </div>
+                )}
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-1.5">
                   {p.tags.map(tag => (
                     <span
                       key={tag}
-                      className="text-[0.72rem] font-medium px-2.5 py-1 rounded-full surface-2 border border-theme2 text-theme2"
+                      className="tag-chip tag-chip--neutral"
                     >
                       {tag}
                     </span>
@@ -159,7 +180,8 @@ export default function Projects() {
               </div>
             </div>
           </RevealWrapper>
-        ))}
+          )
+        })}
       </div>
     </section>
   )

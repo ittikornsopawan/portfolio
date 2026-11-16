@@ -2,8 +2,240 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Consistent skill, project, and profile tags in both color themes. */
+.tag-chip {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid;
+  border-radius: 9999px;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.tag-chip--neutral {
+  border-color: var(--border);
+  background: var(--surface2);
+  color: var(--text2);
+}
+
+.tag-chip--highlight {
+  border-color: rgba(124, 58, 237, 0.34);
+  background: linear-gradient(110deg, rgba(124, 58, 237, 0.13), rgba(59, 130, 246, 0.1));
+  color: #5b21b6;
+  animation: tag-chip-enter 420ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+.dark .tag-chip--highlight {
+  border-color: rgba(167, 139, 250, 0.38);
+  background: linear-gradient(110deg, rgba(139, 92, 246, 0.22), rgba(59, 130, 246, 0.16));
+  color: #ddd6fe;
+}
+
+.tag-chip--on-accent {
+  border-color: rgba(255, 255, 255, 0.32);
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+.tag-chip--contractor {
+  border-color: rgba(234, 88, 12, 0.3);
+  background: rgba(249, 115, 22, 0.1);
+  color: #9a3412;
+}
+
+.dark .tag-chip--contractor {
+  border-color: rgba(251, 146, 60, 0.35);
+  background: rgba(249, 115, 22, 0.16);
+  color: #fdba74;
+}
+
+.tag-chip--fulltime {
+  border-color: rgba(37, 99, 235, 0.25);
+  background: rgba(59, 130, 246, 0.09);
+  color: #1d4ed8;
+}
+
+.dark .tag-chip--fulltime {
+  border-color: rgba(96, 165, 250, 0.3);
+  background: rgba(59, 130, 246, 0.16);
+  color: #bfdbfe;
+}
+
+.employment-chip-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  flex: 0 0 auto;
+  border-radius: 9999px;
+  background: currentColor;
+  opacity: 0.8;
+}
+
+.glass-card.github-repo-card {
+  border-radius: 6px;
+  border-color: #d0d7de;
+  background: #fff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: 0 1px 0 rgba(31, 35, 40, 0.04);
+  transform: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.glass-card.github-repo-card:hover {
+  border-color: #7c3aed;
+  box-shadow: 0 4px 18px rgba(124, 58, 237, 0.1);
+  transform: none;
+}
+
+.dark .glass-card.github-repo-card {
+  border-color: #30363d;
+  background: #0d1117;
+  box-shadow: none;
+}
+
+.dark .glass-card.github-repo-card:hover {
+  border-color: #a78bfa;
+  box-shadow: 0 4px 18px rgba(124, 58, 237, 0.18);
+}
+
+.github-repo-mark {
+  border-color: #d0d7de;
+  background: #f6f8fa;
+  color: #24292f;
+}
+
+.dark .github-repo-mark {
+  border-color: #30363d;
+  background: #161b22;
+  color: #f0f6fc;
+}
+
+.github-repo-link {
+  color: #6d28d9;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.github-repo-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.dark .github-repo-link {
+  color: #c4b5fd;
+}
+
+.github-public-label {
+  border-color: #d0d7de;
+  color: #57606a;
+}
+
+.dark .github-public-label {
+  border-color: #30363d;
+  color: #8b949e;
+}
+
+.github-topic {
+  border-color: #ddd6fe;
+  background: #f5f3ff;
+  color: #6d28d9;
+}
+
+.dark .github-topic {
+  border-color: rgba(167, 139, 250, 0.35);
+  background: rgba(124, 58, 237, 0.2);
+  color: #ddd6fe;
+}
+
+.tag-chip-dot {
+  position: relative;
+  display: inline-block;
+  width: 0.4rem;
+  height: 0.4rem;
+  flex: 0 0 auto;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.12);
+}
+
+.tag-chip-dot--light {
+  background: #fff;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.tag-chip-dot::after,
+.tag-core-indicator::after {
+  position: absolute;
+  inset: -3px;
+  border: 1px solid rgba(124, 58, 237, 0.42);
+  border-radius: inherit;
+  content: '';
+  animation: tag-dot-pulse 700ms ease-out both;
+}
+
+.tag-chip-dot--light::after {
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.tag-core-indicator {
+  animation: tag-dot-pop 420ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+.tag-core-indicator--pulse {
+  animation: tag-core-pulse 1.8s ease-in-out infinite;
+}
+
+.tag-core-indicator--pulse::after {
+  animation: tag-dot-pulse 1.8s ease-out infinite;
+}
+
+.skills-core-dot {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.skills-core-dot::after {
+  position: absolute;
+  inset: -3px;
+  border: 1px solid rgba(124, 58, 237, 0.42);
+  border-radius: inherit;
+  content: '';
+  animation: tag-dot-pulse 850ms ease-out both;
+}
+
+@keyframes tag-chip-enter {
+  from { opacity: 0; transform: translateY(4px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes tag-dot-pop {
+  from { transform: scale(0.4); }
+  to { transform: scale(1); }
+}
+
+@keyframes tag-core-pulse {
+  0%, 100% { opacity: 0.82; scale: 0.95; filter: drop-shadow(0 0 1px rgba(124, 58, 237, 0.2)); }
+  50% { opacity: 1; scale: 1.12; filter: drop-shadow(0 0 5px rgba(124, 58, 237, 0.7)); }
+}
+
+@keyframes tag-dot-pulse {
+  from { opacity: 0.9; transform: scale(0.7); }
+  to { opacity: 0; transform: scale(1.7); }
+}
+
 .open-to-work-dialog::backdrop {
   background: rgb(3 7 18 / 0.76);
+  backdrop-filter: blur(8px);
+}
+
+.resume-preview-dialog::backdrop {
+  background: rgb(3 7 18 / 0.82);
   backdrop-filter: blur(8px);
 }
 
@@ -12,7 +244,11 @@
 }
 
 .open-to-work-dialog[open] .otw-card {
-  animation: otw-pop 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.15);
+  animation: otw-drawer-in 0.52s cubic-bezier(0.22, 0.8, 0.24, 1) both;
+}
+
+.open-to-work-dialog .otw-card {
+  border-radius: 0;
 }
 
 .otw-banner {
@@ -22,7 +258,7 @@
 }
 
 .otw-ring {
-  background: conic-gradient(#22c55e, #4ade80, #a3e635, #22c55e);
+  background: conic-gradient(#7c3aed, #c026d3, #38bdf8, #7c3aed);
   animation: spin 4s linear infinite;
 }
 
@@ -87,6 +323,17 @@
   animation: otw-attract 2.4s ease-in-out infinite;
 }
 
+.floating-otw-avatar::after {
+  position: absolute;
+  z-index: 0;
+  inset: -8px;
+  border: 2px solid rgba(192, 38, 211, 0.6);
+  border-radius: 50%;
+  content: '';
+  pointer-events: none;
+  animation: floating-otw-pulse 2s ease-out infinite;
+}
+
 .otw-yay {
   opacity: 0;
   transform: translateX(-50%);
@@ -97,7 +344,7 @@
   border: 3px solid transparent;
   background:
     linear-gradient(#fff, #fff) padding-box,
-    linear-gradient(90deg, #f472b6, #a78bfa, #38bdf8, #4ade80, #facc15, #f472b6) border-box;
+    linear-gradient(90deg, #f472b6, #a78bfa, #38bdf8, #c026d3, #facc15, #f472b6) border-box;
   background-size: 100% 100%, 200% 100%;
   box-shadow: 0 0 0 6px rgba(255,255,255,0.18), 0 12px 50px rgba(192,38,211,0.55), 0 0 80px rgba(124,58,237,0.45);
   animation: otw-yay-border 1.6s linear infinite;
@@ -106,7 +353,7 @@
 .dark .otw-yay-inner {
   background:
     linear-gradient(#111525, #111525) padding-box,
-    linear-gradient(90deg, #f472b6, #a78bfa, #38bdf8, #4ade80, #facc15, #f472b6) border-box;
+    linear-gradient(90deg, #f472b6, #a78bfa, #38bdf8, #c026d3, #facc15, #f472b6) border-box;
   background-size: 100% 100%, 200% 100%;
 }
 
@@ -122,6 +369,19 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+.supervisor-company {
+  background: linear-gradient(90deg, #7c3aed, #d946ef, #2563eb, #f59e0b, #7c3aed);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: supervisor-spectrum 5s linear infinite;
+}
+
+@keyframes supervisor-spectrum {
+  to { background-position: 250% 0; }
 }
 
 .otw-yay-emoji {
@@ -144,6 +404,10 @@
   0%, 100% { box-shadow: 0 0 0 0 rgba(124,58,237,0.45); }
   50% { box-shadow: 0 0 0 8px rgba(124,58,237,0); }
 }
+@keyframes floating-otw-pulse {
+  from { opacity: 0.9; transform: scale(0.96); }
+  to { opacity: 0; transform: scale(1.22); }
+}
 @keyframes otw-twinkle {
   0%, 100% { opacity: 0; transform: translateY(0) scale(0.4); }
   50% { opacity: 0.9; transform: translateY(-10px) scale(1); }
@@ -156,6 +420,10 @@
 @keyframes otw-swap { from { opacity: 0; transform: translateY(8px); filter: blur(4px); } }
 @keyframes otw-shine { 0% { transform: translateX(-100%); } 40%, 100% { transform: translateX(100%); } }
 @keyframes otw-pop { from { opacity: 0; transform: translateY(24px) scale(0.94); } }
+@keyframes otw-drawer-in {
+  from { opacity: 0.85; transform: translateX(-100%); }
+  to { opacity: 1; transform: translateX(0); }
+}
 @keyframes otw-rise { from { opacity: 0; transform: translateY(10px); } }
 @keyframes otw-flow { 50% { background-position: 100% 50%; } }
 
@@ -173,6 +441,13 @@
   .otw-yay-inner,
   .otw-yay-emoji,
   .otw-attract,
+  .supervisor-company,
+  .floating-otw-avatar::after,
+  .tag-chip--highlight,
+  .tag-chip-dot::after,
+  .tag-core-indicator,
+  .tag-core-indicator::after,
+  .skills-core-dot::after,
   .open-to-work-dialog[open] .otw-celebrate,
   .open-to-work-dialog[open] .otw-confetti {
     animation: none;
