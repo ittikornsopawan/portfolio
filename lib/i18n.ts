@@ -154,12 +154,12 @@ export const i18n = {
           },
           metrics: [
             { value: "Scrum", label: { en: "Led full ceremonies at True (X10)", th: "นำ Scrum ครบทุก Ceremony ที่ True (X10)" } },
-            { value: ".NET Core 5", label: { en: "Legacy modernization at Buzzebees", th: "Modernize ระบบ Legacy ที่ Buzzebees" } },
+            { value: ".NET", label: { en: "Legacy modernization at Buzzebees", th: "Modernize ระบบ Legacy ที่ Buzzebees" } },
             { value: "10 yrs", label: { en: "From developer to supervisor", th: "จาก Developer สู่ Supervisor" } },
           ],
           evidence: [
             { company: "True Corporation (X10)", text: { en: "Delivered a contract-renewal product with personalized promotions; ran grooming, planning, sprint and review across business, dev and QA.", th: "ส่งมอบระบบต่ออายุสัญญาพร้อมโปรโมชันเฉพาะบุคคล นำ Grooming, Planning, Sprint และ Review ร่วมกับ Business, Dev และ QA" } },
-            { company: "Buzzebees", text: { en: "Optimized core workflows and upgraded legacy .NET Framework to .NET Core 5 for an e-commerce platform.", th: "ปรับ Core Workflow และอัปเกรด .NET Framework เป็น .NET Core 5 ให้แพลตฟอร์ม E-Commerce" } },
+            { company: "Buzzebees", text: { en: "Optimized core workflows and upgraded legacy .NET Framework to .NET for an e-commerce platform.", th: "ปรับ Core Workflow และอัปเกรด .NET Framework เป็น .NET ให้แพลตฟอร์ม E-Commerce" } },
             { company: "Socket9", text: { en: "Shape key features with clients in pre-sales, then carry them through to delivery.", th: "กำหนด Key Features ร่วมกับลูกค้าตั้งแต่ Pre-sales และพาไปจนถึง Delivery" } },
           ],
           toolkit: ["Scrum", "Backlog Prioritization", "User Story", "Roadmap", "Stakeholder Alignment", "API Product"],

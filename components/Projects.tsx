@@ -42,8 +42,8 @@ const projects: Project[] = [
     impact: '−30% Int. Errors',
     metric: { value: '−30%', label: 'integration errors' },
     name: 'E-Commerce Integration Platform',
-    desc: 'Designed standardized integration interfaces and APIs reducing integration errors by 30%+. Modernized legacy .NET Framework to .NET Core 5 and validated e-commerce APIs.',
-    tags: ['.NET Core 5', 'API Integration', 'Workflow Optimization', 'Legacy Migration'],
+    desc: 'Designed standardized integration interfaces and APIs reducing integration errors by 30%+. Modernized legacy .NET Framework to .NET and validated e-commerce APIs.',
+    tags: ['.NET', 'API Integration', 'Workflow Optimization', 'Legacy Migration'],
   },
   {
     Icon: FileCode2,
@@ -58,7 +58,7 @@ const projects: Project[] = [
     accent: 'blue',
     impact: 'Role-Based Workflow',
     name: 'Approval Workflow',
-    desc: 'Designed and implemented role-based approval workflows using K2 Black Pearl. Developed full-stack solutions using ASP.NET MVC (Core) and SQL Server.',
+    desc: 'Designed and implemented role-based approval workflows using K2 Black Pearl. Developed full-stack solutions using ASP.NET MVC and SQL Server.',
     tags: ['ASP.NET MVC', 'SQL Server', 'K2 Black Pearl', 'Workflow Design'],
   },
   {
