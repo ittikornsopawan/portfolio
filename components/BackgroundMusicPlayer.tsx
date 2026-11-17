@@ -208,7 +208,7 @@ export default function BackgroundMusicPlayer() {
       />
       <div
         ref={clusterRef}
-        className="fixed bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] right-3 z-[60] hidden h-[4.25rem] flex-row items-center gap-2 overflow-visible rounded-full border border-violet-200/80 bg-white/95 px-2 shadow-[0_10px_30px_rgba(76,29,149,0.32),0_2px_8px_rgba(15,23,42,0.18)] backdrop-blur-xl dark:border-violet-300/20 dark:bg-slate-950/95 dark:shadow-[0_10px_30px_rgba(0,0,0,0.62),0_0_18px_rgba(124,58,237,0.24)] sm:bottom-6 sm:right-6 sm:flex sm:h-auto sm:flex-col sm:gap-8 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-none"
+        className="fixed bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] right-3 z-[60] hidden h-[4.25rem] flex-row items-center gap-2 overflow-visible rounded-full border border-violet-200/80 bg-white/95 px-2 shadow-[0_10px_30px_rgba(76,29,149,0.32),0_2px_8px_rgba(15,23,42,0.18)] backdrop-blur-xl dark:border-violet-300/20 dark:bg-slate-950/95 dark:shadow-[0_10px_30px_rgba(0,0,0,0.62),0_0_18px_rgba(124,58,237,0.24)] sm:bottom-6 sm:right-6 sm:flex sm:h-auto sm:flex-col sm:gap-8 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-none sm:dark:bg-transparent sm:dark:shadow-none"
       >
         <div className="relative flex h-16 w-[5.25rem] shrink-0 items-center justify-center sm:h-auto sm:w-auto sm:flex-col sm:gap-2">
           <button
